@@ -55,7 +55,7 @@ class UserController extends Controller
             $rules = [
                 'email' => 'required',
                 'name' => 'required',
-                'mobile_no' => 'required',
+                'mobile_no' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
                 'password' => 'required|min:6',
                 'repassword' => 'required',
             ];
@@ -130,7 +130,7 @@ class UserController extends Controller
             $rules = [
                 'email' => 'required',
                 'name' => 'required',
-                'mobile_no' => 'required',
+                'mobile_no' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
                 'password' => 'required_with:password_confirmation|confirmed',
             ];
 
@@ -143,7 +143,10 @@ class UserController extends Controller
             unset($data['password']);
             unset($data['password_confirmation']);
             // dd($data);
-            $data['password'] = Hash::make($request->password);
+            if ($request->password) {
+                # code...
+                $data['password'] = Hash::make($request->password);
+            }
             // dd($data);
             $user = User::find($id);
             $user->update($data);

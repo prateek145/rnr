@@ -4,7 +4,7 @@
     <div class="container-fluid pt-4 px-4">
         <div class="bg-light text-start rounded p-4">
             <div class="d-flex align-items-center justify-content-between mb-4">
-                <h6 class="mb-0">User Details</h6>
+                <h6 class="mb-0">User Create</h6>
 
             </div>
             <div class="bg-light rounded h-100 p-4">
@@ -14,7 +14,7 @@
                     <div class="mb-3">
                         <label for="exampleInputEmail1" class="form-label">Name</label>
                         <input type="text" class="form-control @error('name') is-invalid @enderror" name="name"
-                            id="name" aria-describedby="namehelp">
+                            id="name" aria-describedby="namehelp" required>
                         @error('name')
                             <label id="name-error" class="error text-danger" for="name">{{ $message }}</label>
                         @enderror
@@ -25,7 +25,7 @@
                     <div class="mb-3">
                         <label for="exampleInputEmail1" class="form-label">Email</label>
                         <input type="text" class="form-control @error('email') is-invalid @enderror" id="email"
-                            name="email" aria-describedby="namehelp">
+                            name="email" aria-describedby="namehelp" required>
                         @error('email')
                             <label id="email-error" class="error text-danger" for="email">{{ $message }}</label>
                         @enderror
@@ -37,7 +37,7 @@
                         <label for="exampleInputEmail1" class="form-label @error('mobile_no') is-invalid @enderror">Mobile
                             No</label>
                         <input type="text" class="form-control" id="name" name="mobile_no"
-                            aria-describedby="namehelp">
+                            aria-describedby="namehelp" required>
                         @error('mobile_no')
                             <label id="mobile_no-error" class="error text-danger" for="mobile_no">{{ $message }}</label>
                         @enderror
@@ -98,7 +98,7 @@
                         <div class="col-md-6">
                             <label for="exampleInputEmail1"
                                 class="form-label @error('department') is-invalid @enderror">Status</label>
-                            <select name="status" id="" class="form-control">
+                            <select name="status" id="" class="form-control" required>
                                 <option value="">Select Status</option>
                                 <option value="1">Active</option>
                                 <option value="0">Inactive</option>

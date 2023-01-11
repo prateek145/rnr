@@ -66,7 +66,7 @@ class LoginController extends Controller
                 Auth::logout();
                 return redirect()
                     ->back()
-                    ->with('error', 'Login Failure');
+                    ->with('error', 'User is not Active.');
             }
         } catch (\Exception $e) {
             //throw $th;
