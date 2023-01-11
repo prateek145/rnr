@@ -64,9 +64,7 @@ class LoginController extends Controller
             } else {
                 // validation not successful, send back to form
                 Auth::logout();
-                return redirect()
-                    ->back()
-                    ->with('error', 'User is not Active.');
+                throw new \Exception('User is not Active.');
             }
         } catch (\Exception $e) {
             //throw $th;
