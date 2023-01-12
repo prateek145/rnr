@@ -69,7 +69,9 @@
                     <tbody>
                         @foreach ($groups as $item)
                             <tr>
-                                <td>{{ $item->name }}</td>
+                                <td>
+                                    <a href="{{ route('group.edit', $item->id) }}">{{ $item->name }}</a>
+                                </td>
                                 <td>
                                     @if ($item->status == 1)
                                         Active
