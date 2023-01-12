@@ -71,6 +71,8 @@ class UserController extends Controller
                 unset($data['password']);
                 unset($data['repassword']);
                 // dd($data);
+                unset($data['group_id']);
+                $data['group_id'] = json_encode($request->group_id);
                 $data['password'] = Hash::make($request->password);
                 // dd($data);
                 User::create($data);
@@ -112,7 +114,9 @@ class UserController extends Controller
         // dd($id);
         $user = User::find($id);
         $groups = Group::Orderby('id', 'DESC')->get();
-        return view('backend.users.edit', compact('user', 'groups'));
+        $groupids = json_decode($user->group_id);
+        // dd($groupids);
+        return view('backend.users.edit', compact('user', 'groups', 'groupids'));
     }
 
     /**

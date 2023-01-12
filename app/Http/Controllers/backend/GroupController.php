@@ -20,7 +20,7 @@ class GroupController extends Controller
         try {
             //code...
             $groups = Group::latest()->get();
-            $users = User::all();
+            $users = User::orderBy('name')->get();
             return view('backend.group.index', compact('groups', 'users'));
         } catch (\Exception $th) {
             //throw $th;
@@ -113,9 +113,19 @@ class GroupController extends Controller
             //code...
             $group = Group::find($id);
             // dd($application->attachments);
-            $users = User::all();
-            $userids = json_decode($group->userids);
-            return view('backend.group.edit', compact('group', 'users', 'userids'));
+            $users = User::orderBy('name')->get();
+            $selectedusers = [];
+            if ($group->userids != null) {
+                # code...
+                $userids = json_decode($group->userids);
+                for ($i = 0; $i < count($userids); $i++) {
+                    # code...
+                    $user = User::find($userids[$i]);
+                    array_push($selectedusers, $user);
+                }
+            }
+            // dd($userids, $selectedusers);
+            return view('backend.group.edit', compact('group', 'users', 'selectedusers'));
             // dd($audit);
         } catch (\Exception $th) {
             //throw $th;
@@ -141,7 +151,7 @@ class GroupController extends Controller
             $rules = [
                 'name' => 'required',
                 // 'attachments' => 'required|mimes:pdf,jpg,png|min:5|max:2048',
-                'userids' => 'required',
+                // 'userids' => 'required',
                 'user_id' => 'required',
                 'status' => 'required',
             ];
@@ -154,7 +164,10 @@ class GroupController extends Controller
             unset($data['_method']);
             unset($data['userids']);
 
-            $data['userids'] = json_encode($request->userids);
+            if ($request->userids != null) {
+                # code...
+                $data['userids'] = json_encode($request->userids);
+            }
             // dd($data);
             $group = Group::find($id);
             $group->update($data);

@@ -14,7 +14,7 @@
                     <li class="nav-item" role="presentation">
                         <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill"
                             data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home"
-                            aria-selected="true">Genral</button>
+                            aria-selected="true">General</button>
                     </li>
                     <li class="nav-item" role="presentation">
                         <button class="nav-link " id="pills-profile-tab" data-bs-toggle="pill"
@@ -51,7 +51,7 @@
                                 <select name="status" id=""
                                     class="form-control @error('status') is-invalid @enderror" required>
                                     <option value="1">Active</option>
-                                    <option value="0">In Active</option>
+                                    <option value="0">In-Active</option>
                                 </select>
                                 @error('status')
                                     <label id="status-error" class="error text-danger"
@@ -259,7 +259,7 @@
                                                         <select name="status" id=""
                                                             class="form-control @error('status') is-invalid @enderror">
                                                             <option value="1">Active</option>
-                                                            <option value="0">In Active</option>
+                                                            <option value="0">In-Active</option>
                                                         </select>
                                                     </div>
                                                     <input type="hidden" value="{{ $application->id }}"
@@ -305,7 +305,7 @@
                                                         @if ($item->status == 1)
                                                             Active
                                                         @else
-                                                            InActive
+                                                            In-Active
                                                         @endif
                                                     </td>
 

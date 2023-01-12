@@ -6,7 +6,7 @@
             <div class="d-flex align-items-center justify-content-between mb-4">
                 <h6 class="mb-0">Applications</h6>
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"
-                    data-bs-whatever="@mdo">New</button>
+                    data-bs-whatever="@mdo">Add Application</button>
 
             </div>
 
@@ -71,7 +71,7 @@
                                     @if ($item->status == 1)
                                         Active
                                     @else
-                                        InActive
+                                        In-Active
                                     @endif
                                 </td>
                                 @php

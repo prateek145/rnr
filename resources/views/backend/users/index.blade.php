@@ -6,7 +6,7 @@
             <div class="d-flex align-items-center justify-content-between mb-4">
                 <h6 class="mb-0">Users</h6>
                 <a href="{{ route('users.create') }}">
-                    <button type="button" class="btn btn-primary">New</button>
+                    <button type="button" class="btn btn-primary">Add User</button>
                 </a>
 
             </div>
@@ -16,7 +16,8 @@
                         <tr class="text-dark">
                             <th scope="col">Name</th>
                             <th scope="col">Email</th>
-                            <th scope="col">Created At</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Updated At</th>
                             {{-- <th scope="col">Report Date</th>
                             <th scope="col">Expiry</th>
                             <th scope="col">Action</th> --}}
@@ -25,9 +26,21 @@
                     <tbody>
                         @foreach ($users as $item)
                             <tr>
-                                <td>{{ $item->name }}</td>
+                                <td>
+                                    <a href="{{ route('users.edit', $item->id) }}">
+                                        {{ $item->name }}
+                                    </a>
+                                </td>
                                 <td>{{ $item->email }}</td>
-                                <td>{{ $item->created_at }}</td>
+
+                                <td>
+                                    @if ($item->status == 1)
+                                        Active
+                                    @else
+                                        In-Active
+                                    @endif
+                                </td>
+                                <td>{{ $item->updated_at }}</td>
                                 {{-- <td>{{ $item->report_date }}</td>
                                 <td>{{ $item->sharewith }}</td> --}}
 

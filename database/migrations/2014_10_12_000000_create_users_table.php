@@ -17,13 +17,13 @@ return new class extends Migration {
             $table->string('firstname')->nullable();
             $table->string('name')->nullable();
             $table->string('lastname')->nullable();
-            $table->integer('group_id')->nullable();
+            $table->longText('group_id')->nullable();
             $table->integer('status')->default(0);
             $table->string('mobile_no')->nullable();
             $table->string('email')->unique();
             $table->string('ssh_key')->nullable();
             $table->string('token')->nullable();
-            $table->longText('certificate')->nullable();
+            $table->longText('remarks')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();

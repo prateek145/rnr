@@ -64,7 +64,7 @@
 
                             <div class="col-md-6">
                                 <label for="exampleInputEmail1"
-                                    class="form-label @error('repassword') is-invalid @enderror">RePassword</label>
+                                    class="form-label @error('repassword') is-invalid @enderror">Re-Password</label>
                                 <input type="password" class="form-control" id="name" name="password_confirmation"
                                     aria-describedby="namehelp">
                                 @error('repassword')
@@ -83,10 +83,13 @@
                         <div class="col-md-6">
                             <label for="exampleInputEmail1"
                                 class="form-label @error('department') is-invalid @enderror">Groups</label>
-                            <select name="group_id" id="" class="form-control">
+                            <select name="group_id[]" id="" class="form-control" multiple>
                                 <option value="">Select Group</option>
                                 @foreach ($groups as $item)
-                                    <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                    <option value="{{ $item->id }}"
+                                        {{ in_array($item->id, $groupids) ? 'selected' : '' }}>
+                                        {{ $item->name }}
+                                    </option>
                                 @endforeach
                             </select>
                             @error('group_id')
@@ -102,7 +105,7 @@
                             <select name="status" id="" class="form-control">
                                 <option value="">Select Status</option>
                                 <option value="1">Active</option>
-                                <option value="0">Inactive</option>
+                                <option value="0">In-Active</option>
                             </select>
                             @error('group_id')
                                 <label id="group_id-error" class="error text-danger"
@@ -114,6 +117,11 @@
 
                     </div>
 
+                    <div class="col-md-12 mb-2">
+                        <label for="remarks">Remarks</label>
+                        <textarea name="remarks" id="" cols="30" rows="4" class="form-control">{{ $user->remarks }}</textarea>
+                    </div>
+
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
             </div>
@@ -122,19 +130,8 @@
     <!-- Recent Sales End -->
 
     <script>
-        var group = "{{ $user->group_id }}";
         var status = "{{ $user->status }}";
-
-        var groupelement = document.getElementsByName('group_id')[0];
         var statuselement = document.getElementsByName('status')[0];
-
-        for (let index = 0; index < groupelement.length; index++) {
-            console.log(groupelement[index].value, group);
-            if (groupelement[index].value == group) {
-                groupelement[index].selected = true;
-            }
-
-        }
 
         for (let index = 0; index < statuselement.length; index++) {
             if (statuselement[index].value == status) {

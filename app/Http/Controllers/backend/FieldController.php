@@ -88,8 +88,19 @@ class FieldController extends Controller
             $groups = Group::where(['status' => 1])
                 ->latest()
                 ->get();
-            // dd($field);
-            return view('backend.field.edit', compact('field', 'groups'));
+
+            $selectedgroups = [];
+            if ($field->groups != null) {
+                $groupids = json_decode($field->groups);
+                # code...
+                for ($i = 0; $i < count($groupids); $i++) {
+                    # code...
+                    $group = Group::find($groupids[$i]);
+                    array_push($selectedgroups, $group);
+                }
+            }
+            // dd($selectedgroups);
+            return view('backend.field.edit', compact('field', 'groups', 'selectedgroups'));
         } catch (\Exception $th) {
             //throw $th;
             return redirect()

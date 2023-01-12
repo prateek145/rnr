@@ -25,15 +25,58 @@
                     </div>
 
                     <div class="mb-3 text-start">
-                        <label for="message-text" class="col-form-label fw-bold text-left ">Users</label>
-                        <select name="userids[]" id="" class="form-control " multiple required>
-                            @foreach ($users as $item)
-                                <option value="{{ $item->id }}" {{ in_array($item->id, $userids) ? 'selected' : '' }}>
+                        <div class="d-flex justify-content-between mb-2">
+                            <label for="message-text" class="col-form-label fw-bold text-left ">Users</label>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                data-bs-target="#exampleModal" data-bs-whatever="@mdo">Add Users</button>
+
+                        </div>
+
+                        <select id="" class="form-control " multiple disabled>
+                            @foreach ($selectedusers as $item)
+                                <option selected>
                                     {{ $item->name . ' (' . $item->email . ' )' }}
                                 </option>
                             @endforeach
                         </select>
                     </div>
+
+                    {{-- for modal --}}
+                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">New Group</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+
+                                    <div class="mb-3 text-start">
+                                        <label for="message-text" class="col-form-label fw-bold text-left ">Users
+                                            <small> (multiple select ctrl + click)</small></label>
+                                        <select name="userids[]" id="" class="form-control " multiple>
+                                            @foreach ($users as $item)
+                                                {{-- {{ dd($item) }} --}}
+                                                <option value="{{ $item->id }}">{{ $item->name }}
+                                                    ({{ $item->email }})
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    {{-- <button type="submit" class="btn btn-primary">Submit</button> --}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {{-- for modal --}}
+
 
                     <div class="mb-3">
                         <label for="exampleInputEmail1"

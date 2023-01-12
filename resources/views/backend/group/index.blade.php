@@ -6,7 +6,7 @@
             <div class="d-flex align-items-center justify-content-between mb-4">
                 <h6 class="mb-0">Group</h6>
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"
-                    data-bs-whatever="@mdo">New</button>
+                    data-bs-whatever="@mdo">Add Group</button>
 
             </div>
 
@@ -59,17 +59,16 @@
                 <table class="table text-start align-middle table-bordered table-hover mb-0">
                     <thead>
                         <tr class="text-dark">
-                            <th scope="col">Date</th>
                             <th scope="col">Name</th>
                             <th scope="col">Status</th>
-                            <th scope="col">UserName</th>
+                            <th scope="col">Created By</th>
+                            <th scope="col">Created At</th>
                             <th scope="col">Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($groups as $item)
                             <tr>
-                                <td>{{ $item->created_at }}</td>
                                 <td>{{ $item->name }}</td>
                                 <td>
                                     @if ($item->status == 1)
@@ -87,6 +86,7 @@
                                     }
                                 @endphp
                                 <td>{{ $username }}</td>
+                                <td>{{ $item->created_at }}</td>
                                 <td class="d-flex justify-content-between"><a class="btn btn-sm btn-primary"
                                         href="{{ route('group.edit', $item->id) }}">Edit</a>
 

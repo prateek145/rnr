@@ -82,7 +82,7 @@
                         <div class="col-md-6">
                             <label for="exampleInputEmail1"
                                 class="form-label @error('department') is-invalid @enderror">Groups</label>
-                            <select name="group_id" id="" class="form-control">
+                            <select name="group_id[]" id="" class="form-control" multiple>
                                 <option value="">Select Group</option>
                                 @foreach ($groups as $item)
                                     <option value="{{ $item->id }}">{{ $item->name }}</option>
@@ -110,6 +110,13 @@
                             </div>
                         </div>
 
+                    </div>
+
+                    <div class="col-md-12 mb-2">
+                        <label for="remarks">Remarks</label>
+                        <textarea name="remarks" id="" cols="30" rows="4" class="form-control">
+                            
+                        </textarea>
                     </div>
 
                     <button type="submit" class="btn btn-primary">Submit</button>
