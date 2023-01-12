@@ -85,12 +85,20 @@
                                 class="form-label @error('department') is-invalid @enderror">Groups</label>
                             <select name="group_id[]" id="" class="form-control" multiple>
                                 <option value="">Select Group</option>
-                                @foreach ($groups as $item)
-                                    <option value="{{ $item->id }}"
-                                        {{ in_array($item->id, $groupids) ? 'selected' : '' }}>
-                                        {{ $item->name }}
-                                    </option>
-                                @endforeach
+                                @if ($groupids)
+                                    @foreach ($groups as $item)
+                                        <option value="{{ $item->id }}"
+                                            {{ in_array($item->id, $groupids) ? 'selected' : '' }}>
+                                            {{ $item->name }}
+                                        </option>
+                                    @endforeach
+                                @else
+                                    @foreach ($groups as $item)
+                                        <option value="{{ $item->id }}">
+                                            {{ $item->name }}
+                                        </option>
+                                    @endforeach
+                                @endif
                             </select>
                             @error('group_id')
                                 <label id="group_id-error" class="error text-danger" for="group_id">{{ $message }}</label>
