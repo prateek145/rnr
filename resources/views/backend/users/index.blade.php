@@ -19,8 +19,8 @@
                             <th scope="col">Status</th>
                             <th scope="col">Updated At</th>
                             {{-- <th scope="col">Report Date</th>
-                            <th scope="col">Expiry</th>
-                            <th scope="col">Action</th> --}}
+                            <th scope="col">Expiry</th>--}}
+                            <th scope="col">Actions</th> 
                         </tr>
                     </thead>
                     <tbody>
@@ -44,7 +44,7 @@
                                 {{-- <td>{{ $item->report_date }}</td>
                                 <td>{{ $item->sharewith }}</td> --}}
 
-                                <td class="d-flex justify-content-between"><a class="btn btn-sm btn-primary"
+                                <td class="d-flex justify-content-betweenx"><a class="btn btn-sm btn-primary"
                                         href="{{ route('users.edit', $item->id) }}">Edit</a>
 
                                     <form action="{{ route('users.destroy', $item->id) }}" method="post">

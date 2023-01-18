@@ -126,7 +126,7 @@
                     </div>
 
                     <div class="col-md-12 mb-2">
-                        <label for="remarks">Remarks</label>
+                        <label for="remarks" class="form-label"><strong>Remarks</strong></label>
                         <textarea name="remarks" id="" cols="30" rows="4" class="form-control">{{ $user->remarks }}</textarea>
                     </div>
 

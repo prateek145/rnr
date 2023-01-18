@@ -69,8 +69,23 @@
 
                         </div>
                     </div>
+                   
+
+
                     <div class="mb-3">
-                        <label for=""> <strong>Options</strong> </label><br>
+                         <div class="accordion" id="accordionExample">
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingOne">
+                                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                            data-bs-target="#collapseOne" aria-expanded="true"
+                                            aria-controls="collapseOne">
+                                            Options
+                                        </button>
+                                    </h2>
+                                    <div id="collapseOne" class="accordion-collapse collapse show"
+                                        aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                                        <div class="accordion-body">
+                                            
                         @if ($field->requiredfield == 1)
                             <input type="checkbox" id="" name="requiredfield" value="1" checked>
                             <label for=""> Make it required field</label><br>
@@ -94,12 +109,22 @@
                             <input type="checkbox" id="" name="keyfield" value="1">
                             <label for=""> Make it key field</label><br>
                         @endif
-
-                    </div>
-
-
-                    <div class="mb-3">
-                        <label for="exampleInputEmail1" class="form-label"> <strong>Access</strong> </label><br>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingTwo">
+                                        <button class="accordion-button collapsed" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#collapseTwo"
+                                            aria-expanded="false" aria-controls="collapseTwo">
+                                            Access
+                                        </button>
+                                    </h2>
+                                    <div id="collapseTwo" class="accordion-collapse collapse"
+                                        aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                                        <div class="accordion-body">
+                                            
+                                             
                         <input type="radio" name="access" value="public">
                         <label for="">Public</label><br>
 
@@ -125,6 +150,31 @@
                             </select>
 
                         </div>
+                                            
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingThree">
+                                        <button class="accordion-button collapsed" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#collapseThree"
+                                            aria-expanded="false" aria-controls="collapseThree">
+                                            Type Configurations
+                                        </button>
+                                    </h2>
+                                    <div id="collapseThree" class="accordion-collapse collapse"
+                                        aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                                        <div class="accordion-body">
+                                            Dolore eos dolor tempor justo sea eos amet eos kasd dolor, et diam tempor lorem dolores vero. Stet dolore gubergren nonumy diam. Consetetur sit takimata magna invidunt, dolore sea amet consetetur ea et rebum, invidunt et amet sit sea. Dolor eirmod sed magna sadipscing sadipscing lorem lorem sed, sit lorem.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                       
 
                     </div>
 

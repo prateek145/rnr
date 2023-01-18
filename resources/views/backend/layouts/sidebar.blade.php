@@ -17,7 +17,7 @@
             </div>
         </div>
         <div class="navbar-nav w-100">
-            <a href="{{ route('backend.home') }}" class="nav-item nav-link active"><i
+            <a href="{{ route('backend.home') }}" class="nav-item nav-link {{ (request()->is('home')) ? 'active' : '' }}"><i
                     class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
             {{-- <div class="nav-item dropdown">
                 <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
@@ -30,7 +30,7 @@
             </div> --}}
 
             <div class="nav-item dropdown">
-                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
+                <a href="#" class="nav-item nav-link dropdown-toggle {{ (request()->is('users*')) ? 'active' : '' }}" data-bs-toggle="dropdown"><i
                         class="fa fa-user me-2"></i>Users</a>
                 <div class="dropdown-menu bg-transparent border-0">
                     <a href="{{ route('users.index') }}" class="dropdown-item">View All</a>
@@ -40,7 +40,7 @@
             </div>
 
             <div class="nav-item dropdown">
-                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
+                <a href="#" class="nav-item nav-link dropdown-toggle {{ (request()->is('application*')) ? 'active' : '' }}" data-bs-toggle="dropdown"><i
                         class="fa fa-tasks me-2"></i>Applications</a>
                 <div class="dropdown-menu bg-transparent border-0">
                     <a href="{{ route('application.index') }}" class="dropdown-item">View All</a>
@@ -50,7 +50,7 @@
             </div>
 
             <div class="nav-item dropdown">
-                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
+                <a href="#" class="nav-item nav-link dropdown-toggle {{ (request()->is('group*')) ? 'active' : '' }}" data-bs-toggle="dropdown"><i
                         class="fa fa-exclamation-triangle me-2"></i>Groups</a>
                 <div class="dropdown-menu bg-transparent border-0">
                     <a href="{{ route('group.index') }}" class="dropdown-item">View All</a>

@@ -321,7 +321,7 @@
                                                     @endphp
                                                     <td>{{ $udpatedby }}</td>
                                                     <td>{{ $item->updated_at }}</td>
-                                                    <td class="d-flex justify-content-between">
+                                                    <td class="d-flex justify-content-betweenx">
 
                                                         <a class="btn btn-sm btn-primary"
                                                             href="{{ route('field.edit', $item->id) }}">Edit</a>

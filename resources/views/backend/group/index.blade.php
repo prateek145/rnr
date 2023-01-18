@@ -89,7 +89,7 @@
                                 @endphp
                                 <td>{{ $username }}</td>
                                 <td>{{ $item->created_at }}</td>
-                                <td class="d-flex justify-content-between"><a class="btn btn-sm btn-primary"
+                                <td class="d-flex justify-content-betweenx"><a class="btn btn-sm btn-primary"
                                         href="{{ route('group.edit', $item->id) }}">Edit</a>
 
                                     <form action="{{ route('group.destroy', $item->id) }}" method="post">

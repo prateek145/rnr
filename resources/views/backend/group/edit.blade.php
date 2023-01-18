@@ -26,7 +26,7 @@
 
                     <div class="mb-3 text-start">
                         <div class="d-flex justify-content-between mb-2">
-                            <label for="message-text" class="col-form-label fw-bold text-left ">Users</label>
+                            <label for="message-text" class="col-form-label fw-bold text-left form-label ">Users</label>
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                                 data-bs-target="#exampleModal" data-bs-whatever="@mdo">Add Users</button>
 

@@ -137,9 +137,9 @@
                                 @enderror
                             </div>
                             <div class="d-flex align-items-center justify-content-between mb-4">
-                                <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                                    <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                                <div class="form-check ">
+                                    <input type="checkbox" class="form-check-input d-none" id="exampleCheck1">
+                                    <label class="form-check-label d-none" for="exampleCheck1">Check me out</label>
                                 </div>
                                 <a href="{{ route('password.request') }}">Forgot Password</a>
                             </div>
