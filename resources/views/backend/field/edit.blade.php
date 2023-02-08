@@ -37,11 +37,10 @@
                     </div>
                     <div class="class mb-3">
                         <label for="exampleInputEmail1" class="form-label"> <strong>Type</strong> </label>
-                        <select name="type" id="" class="form-control @error('type') is-invalid @enderror"
-                            required>
+                        <select name="type" id="" onclick="fieldtype(this.value);"
+                            class="form-control @error('type') is-invalid @enderror" required>
                             <option value="date">Date</option>
-                            <option value="date_time">Date Time</option>
-                            <option value="attachments">Attachments</option>
+                            <option value="attachment">Attachment</option>
                             <option value="images">Images</option>
                             <option value="ip_address">IP Address</option>
                             <option value="number">Numeric</option>
@@ -64,118 +63,140 @@
 
                         <div class="col-md-6 mt-2">
                             <label for="forder"> <strong>Order</strong> </label>
-                            <input class="form-control" type="number" name="forder" value="{{ $field->forder }}"
-                                placeholder="Field Order">
+                            <input class="form-control" type="number" min="1" name="forder"
+                                value="{{ $field->forder }}" placeholder="Field Order" required>
 
                         </div>
                     </div>
-                   
-
 
                     <div class="mb-3">
-                         <div class="accordion" id="accordionExample">
-                                <div class="accordion-item">
-                                    <h2 class="accordion-header" id="headingOne">
-                                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                            data-bs-target="#collapseOne" aria-expanded="true"
-                                            aria-controls="collapseOne">
-                                            Options
-                                        </button>
-                                    </h2>
-                                    <div id="collapseOne" class="accordion-collapse collapse show"
-                                        aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                                        <div class="accordion-body">
-                                            
-                        @if ($field->requiredfield == 1)
-                            <input type="checkbox" id="" name="requiredfield" value="1" checked>
-                            <label for=""> Make it required field</label><br>
-                        @else
-                            <input type="checkbox" id="" name="requiredfield" value="1">
-                            <label for=""> Make it required field</label><br>
-                        @endif
+                        <div class="accordion" id="accordionExample">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingOne">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                        Options
+                                    </button>
+                                </h2>
+                                <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+                                    data-bs-parent="#accordionExample">
+                                    <div class="accordion-body">
 
-                        @if ($field->requireuniquevalue == 1)
-                            <input type="checkbox" id="" name="requireuniquevalue" checked value="1">
-                            <label for=""> Make it unique field</label><br>
-                        @else
-                            <input type="checkbox" id="" name="requireuniquevalue" value="1">
-                            <label for=""> Make it unique field</label><br>
-                        @endif
+                                        @if ($field->requiredfield == 1)
+                                            <input type="checkbox" id="" name="requiredfield" value="1"
+                                                checked>
+                                            <label for=""> Make it required field</label><br>
+                                        @else
+                                            <input type="checkbox" id="" name="requiredfield" value="1">
+                                            <label for=""> Make it required field</label><br>
+                                        @endif
 
-                        @if ($field->keyfield == 1)
-                            <input type="checkbox" id="" name="keyfield" checked value="1">
-                            <label for=""> Make it key field</label><br>
-                        @else
-                            <input type="checkbox" id="" name="keyfield" value="1">
-                            <label for=""> Make it key field</label><br>
-                        @endif
-                                        </div>
+                                        @if ($field->requireuniquevalue == 1)
+                                            <input type="checkbox" id="" name="requireuniquevalue" checked
+                                                value="1">
+                                            <label for=""> Make it unique field</label><br>
+                                        @else
+                                            <input type="checkbox" id="" name="requireuniquevalue" value="1">
+                                            <label for=""> Make it unique field</label><br>
+                                        @endif
+
+                                        @if ($field->keyfield == 1)
+                                            <input type="checkbox" id="" name="keyfield" checked value="1">
+                                            <label for=""> Make it key field</label><br>
+                                        @else
+                                            <input type="checkbox" id="" name="keyfield" value="1">
+                                            <label for=""> Make it key field</label><br>
+                                        @endif
                                     </div>
                                 </div>
-                                <div class="accordion-item">
-                                    <h2 class="accordion-header" id="headingTwo">
-                                        <button class="accordion-button collapsed" type="button"
-                                            data-bs-toggle="collapse" data-bs-target="#collapseTwo"
-                                            aria-expanded="false" aria-controls="collapseTwo">
-                                            Access
-                                        </button>
-                                    </h2>
-                                    <div id="collapseTwo" class="accordion-collapse collapse"
-                                        aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
-                                        <div class="accordion-body">
-                                            
-                                             
-                        <input type="radio" name="access" value="public">
-                        <label for="">Public</label><br>
-
-                        <div class="row mb-2">
-                            <div class="col-md-10">
-                                <input type="radio" onclick="showgroupsname()" name="access" value="private">
-                                <label for="">Private</label><br>
                             </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingTwo">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                        Access
+                                    </button>
+                                </h2>
+                                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+                                    data-bs-parent="#accordionExample">
+                                    <div class="accordion-body">
 
-                            <div class="col-md-2 d-none showaddbtn">
-                                <button type="button" class="btn btn-primary text-end" data-bs-toggle="modal"
-                                    data-bs-target="#exampleModal" data-bs-whatever="@mdo">Add Group</button>
+
+                                        <input type="radio" name="access" value="public">
+                                        <label for="">Public</label><br>
+
+                                        <div class="row mb-2">
+                                            <div class="col-md-10">
+                                                <input type="radio" onclick="showgroupsname()" name="access"
+                                                    value="private">
+                                                <label for="">Private</label><br>
+                                            </div>
+
+                                            <div class="col-md-2 d-none showaddbtn">
+                                                <button type="button" class="btn btn-primary text-end"
+                                                    data-bs-toggle="modal" data-bs-target="#exampleModal"
+                                                    data-bs-whatever="@mdo">Add Group</button>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-none groupsname">
+                                            <select id="" class="form-control " multiple disabled>
+                                                @foreach ($selectedgroups as $item)
+                                                    <option selected>
+                                                        {{ $item->name }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingThree">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#collapseThree" aria-expanded="false"
+                                        aria-controls="collapseThree">
+                                        Type Configurations
+                                    </button>
+                                </h2>
+                                <div id="collapseThree" class="accordion-collapse collapse"
+                                    aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body changeconfigrations">
+
+                                    </div>
+
+                                    <div class="showvaluelist d-none">
+
+                                        @if (json_decode($field->valuelistvalue) != null)
+                                            @php
+                                                $valuelist = json_decode($field->valuelistvalue);
+                                                // dd($valuelist);
+                                            @endphp
+                                            @foreach ($valuelist as $item)
+                                                <div class="mb-3 valuelistvalue">
+                                                    <input type="text" name="valuelistvalue[]"
+                                                        class="form-control mb-2" placeholder="Enter ValueList value"
+                                                        value="{{ $item }}">
+                                                </div>
+                                            @endforeach
+                                        @else
+                                            <div class="mb-3 valuelistvalue">
+                                                <input type="text" name="valuelistvalue[]" class="form-control mb-2"
+                                                    placeholder="Enter ValueList value">
+                                            </div>
+                                        @endif
+                                        <input type="button" class="btn btn-primary mb-2" onclick="addvaluelist()"
+                                            value="add more">
+                                        <input type="button" class="btn btn-danger mb-2" onclick="removevaluelist()"
+                                            value="remove">
+
+                                    </div>
+                                </div>
                             </div>
                         </div>
-
-                        <div class="d-none groupsname">
-                            <select id="" class="form-control " multiple disabled>
-                                @foreach ($selectedgroups as $item)
-                                    <option selected>
-                                        {{ $item->name }}
-                                    </option>
-                                @endforeach
-                            </select>
-
-                        </div>
-                                            
-                                            
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="accordion-item">
-                                    <h2 class="accordion-header" id="headingThree">
-                                        <button class="accordion-button collapsed" type="button"
-                                            data-bs-toggle="collapse" data-bs-target="#collapseThree"
-                                            aria-expanded="false" aria-controls="collapseThree">
-                                            Type Configurations
-                                        </button>
-                                    </h2>
-                                    <div id="collapseThree" class="accordion-collapse collapse"
-                                        aria-labelledby="headingThree" data-bs-parent="#accordionExample">
-                                        <div class="accordion-body">
-                                            Dolore eos dolor tempor justo sea eos amet eos kasd dolor, et diam tempor lorem dolores vero. Stet dolore gubergren nonumy diam. Consetetur sit takimata magna invidunt, dolore sea amet consetetur ea et rebum, invidunt et amet sit sea. Dolor eirmod sed magna sadipscing sadipscing lorem lorem sed, sit lorem.
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                    </div>
-                    
-                    <div class="mb-3">
-                       
-
                     </div>
 
 
@@ -230,6 +251,15 @@
             }
         }
 
+        var status = "{{ $field->status }}";
+        var currentstatus = document.getElementsByName('status')[0];
+        // console.log(status, currentstatus);
+        for (let index = 0; index < currentstatus.length; index++) {
+            if (currentstatus[index].value == status) {
+                currentstatus[index].selected = true;
+            }
+        }
+
         var radioselected = "{{ $field->access }}";
         var radio = document.getElementsByName('access');
         // console.log(radio);
@@ -255,6 +285,533 @@
 
             var showaddbtn = document.getElementsByClassName('showaddbtn')[0];
             showaddbtn.className = 'col-md-2 d-block showaddbtn';
+        }
+
+        function addvaluelist() {
+            var listlength = document.getElementsByClassName('valuelistvalue');
+            var valuelistvalue = document.getElementsByClassName('valuelistvalue')[listlength.length - 1];
+
+            var input = document.createElement('input');
+            input.name = 'valuelistvalue[]';
+            input.className = 'form-control mb-2';
+            input.required = true;
+            input.placeholder = 'Enter ValueList value';
+
+            valuelistvalue.appendChild(input);
+        }
+
+        function removevaluelist() {
+            var valuelistinput = document.getElementsByName('valuelistvalue[]');
+            if (valuelistinput.length > 1) {
+                valuelistinput[valuelistinput.length - 1].remove();
+
+            }
+        }
+
+        function fieldtype(value) {
+            // console.log(value);
+            if (value == 'date') {
+                var accordion = document.getElementsByClassName('changeconfigrations')[0];
+                accordion.innerText = "";
+                // console.log(accordion);
+                var div = document.createElement('div');
+                div.className = 'form-check';
+
+                var input = document.createElement("input");
+                input.type = "radio";
+                input.name = "datetype";
+                input.value = "date";
+                input.required = true;
+                input.className = "form-check-input";
+                input.id = "form-check-input";
+
+                var label = document.createElement('label');
+                label.className = 'form-check-label';
+                label.for = 'flexCheckDefault';
+                label.innerText = 'Date';
+
+                div.appendChild(input);
+                div.appendChild(label);
+
+                var div1 = document.createElement('div');
+                div1.className = 'form-check';
+
+                var input1 = document.createElement("input");
+                input1.type = "radio";
+                input1.name = "datetype";
+                input1.required = true;
+                input1.value = "datetime-local";
+                input1.className = "form-check-input";
+
+                var label1 = document.createElement('label');
+                label1.className = 'form-check-label';
+                label1.for = 'flexCheckDefault';
+                label1.innerText = 'Date Time';
+
+                div1.appendChild(input1);
+                div1.appendChild(label1);
+
+                accordion.appendChild(div);
+                accordion.appendChild(div1);
+                // console.log(input);
+            }
+
+            if (value == 'attachment') {
+                var accordion = document.getElementsByClassName('changeconfigrations')[0];
+                accordion.innerText = "";
+                var div = document.createElement('div');
+                div.className = 'form-check d-flex justify-content-between';
+
+                var select = document.createElement("select");
+                select.className = 'form-select';
+                select.name = 'attachmenttype';
+                select.required = true;
+                var array = ["pdf", "png", "jpg", "xls"];
+
+                showoption = document.createElement('option');
+                showoption.value = "";
+                showoption.innerText = 'Select Extension';
+
+                select.appendChild(showoption);
+
+                for (var i = 0; i < array.length; i++) {
+                    var option = document.createElement("option");
+                    option.value = array[i];
+                    option.text = array[i];
+                    select.appendChild(option);
+                }
+
+                div.appendChild(select);
+
+                var select1 = document.createElement("select");
+                select1.className = 'form-select';
+                select1.name = 'attachmentsize';
+                select1.required = true;
+                var array1 = ["1", "2", "5", "10"];
+
+                showoption1 = document.createElement('option');
+                showoption1.value = "";
+                showoption1.innerText = 'Select Size';
+
+                select1.appendChild(showoption1);
+
+                for (var i = 0; i < array1.length; i++) {
+                    var option1 = document.createElement("option");
+                    option1.value = array1[i];
+                    option1.text = array1[i];
+                    select1.appendChild(option1);
+                }
+
+                div.appendChild(select1);
+                accordion.appendChild(div);
+            }
+
+            if (value == 'value_list') {
+                document.getElementsByClassName('showvaluelist')[0].className = 'showvaluelist d-block m-5';
+                var accordion = document.getElementsByClassName('changeconfigrations')[0];
+                accordion.innerText = "";
+                // console.log(accordion);
+                var div = document.createElement('div');
+                div.className = 'form-check';
+
+                var input = document.createElement("input");
+                input.type = "radio";
+                input.name = "valuelisttype";
+                input.value = "dropdown";
+                input.className = "form-check-input";
+                input.id = "form-check-input";
+
+                var label = document.createElement('label');
+                label.className = 'form-check-label';
+                label.for = 'flexCheckDefault';
+                label.innerText = 'Dropdown';
+
+                div.appendChild(input);
+                div.appendChild(label);
+
+                //
+                var div1 = document.createElement('div');
+                div1.className = 'form-check';
+
+                var input1 = document.createElement("input");
+                input1.type = "radio";
+                input1.name = "valuelisttype";
+                input1.value = "radio";
+                input1.className = "form-check-input";
+
+                var label1 = document.createElement('label');
+                label1.className = 'form-check-label';
+                label1.for = 'flexCheckDefault';
+                label1.innerText = 'Radio Button';
+
+                div1.appendChild(input1);
+                div1.appendChild(label1);
+
+                //
+
+                var div2 = document.createElement('div');
+                div2.className = 'form-check';
+
+                var input2 = document.createElement("input");
+                input2.type = "radio";
+                input2.name = "valuelisttype";
+                input2.value = "checkinput";
+                input2.className = "form-check-input";
+
+                var label2 = document.createElement('label');
+                label2.className = 'form-check-label';
+                label2.for = 'flexCheckDefault';
+                label2.innerText = 'Check Box';
+
+                div2.appendChild(input2);
+                div2.appendChild(label2);
+
+                //
+
+                var div3 = document.createElement('div');
+                div3.className = 'form-check';
+
+                var input3 = document.createElement("input");
+                input3.type = "radio";
+                input3.name = "valuelisttype";
+                input3.value = "listbox";
+                input3.className = "form-check-input";
+
+                var label3 = document.createElement('label');
+                label3.className = 'form-check-label';
+                label3.for = 'flexCheckDefault';
+                label3.innerText = 'List Box';
+
+                div3.appendChild(input3);
+                div3.appendChild(label3);
+                //
+
+                var div4 = document.createElement('div');
+                div4.className = 'form-check';
+
+                var input4 = document.createElement("input");
+                input4.type = "radio";
+                input4.name = "valuelisttype";
+                input4.value = "valuepopup";
+                input4.className = "form-check-input";
+
+                var label4 = document.createElement('label');
+                label4.className = 'form-check-label';
+                label4.for = 'flexCheckDefault';
+                label4.innerText = 'Values Popup';
+
+                div4.appendChild(input4);
+                div4.appendChild(label4);
+                //
+
+                accordion.appendChild(div);
+                accordion.appendChild(div1);
+                accordion.appendChild(div2);
+                accordion.appendChild(div3);
+                accordion.appendChild(div4);
+                // console.log(input);
+            } else {
+                document.getElementsByClassName('showvaluelist')[0].className = 'showvaluelist d-none m-5';
+
+            }
+
+            if (value == 'user_group_list') {
+                var accordion = document.getElementsByClassName('changeconfigrations')[0];
+                accordion.innerText = "";
+
+            } else {
+                var usergrouplist = document.getElementsByClassName('usergrouplist')[0];
+                usergrouplist.className = 'usergrouplist d-none';
+            }
+
+            if (value == 'images') {
+                var accordion = document.getElementsByClassName('changeconfigrations')[0];
+                accordion.innerText = "";
+            }
+
+            if (value == 'ip_address') {
+                var accordion = document.getElementsByClassName('changeconfigrations')[0];
+                accordion.innerText = "";
+            }
+
+            if (value == 'number') {
+                var accordion = document.getElementsByClassName('changeconfigrations')[0];
+                accordion.innerText = "";
+            }
+
+            if (value == 'text') {
+                var accordion = document.getElementsByClassName('changeconfigrations')[0];
+                accordion.innerText = "";
+            }
+
+        }
+
+        var fieldtype1 = "{{ $field->type }}";
+        // console.log(fieldtype);
+
+        if (fieldtype1 == 'date') {
+            var datetype = "{{ $field->datetype }}";
+
+            var accordion = document.getElementsByClassName('changeconfigrations')[0];
+            accordion.innerText = "";
+            // console.log(accordion);
+            var div = document.createElement('div');
+            div.className = 'form-check';
+
+            var input = document.createElement("input");
+            input.type = "radio";
+            input.name = "datetype";
+            input.value = "date";
+            input.className = "form-check-input";
+            input.id = "form-check-input";
+
+            var label = document.createElement('label');
+            label.className = 'form-check-label';
+            label.for = 'flexCheckDefault';
+            label.innerText = 'Date';
+
+            div.appendChild(input);
+            div.appendChild(label);
+
+            var div1 = document.createElement('div');
+            div1.className = 'form-check';
+
+            var input1 = document.createElement("input");
+            input1.type = "radio";
+            input1.name = "datetype";
+            input1.value = "datetime";
+            input1.className = "form-check-input";
+
+            var label1 = document.createElement('label');
+            label1.className = 'form-check-label';
+            label1.for = 'flexCheckDefault';
+            label1.innerText = 'Date Time';
+
+            div1.appendChild(input1);
+            div1.appendChild(label1);
+
+            accordion.appendChild(div);
+            accordion.appendChild(div1);
+
+            var datetype1 = document.getElementsByName('datetype');
+            // console.log(datetype1);
+            for (let index = 0; index < datetype1.length; index++) {
+                if (datetype1[index].value == datetype) {
+                    datetype1[index].checked = true;
+                }
+
+            }
+
+        }
+
+        if (fieldtype1 == 'attachment') {
+            var attachmenttype = "{{ $field->attachmenttype }}";
+            var attachmentsize = "{{ $field->attachmentsize }}";
+
+            var accordion = document.getElementsByClassName('changeconfigrations')[0];
+            accordion.innerText = "";
+            var div = document.createElement('div');
+            div.className = 'form-check d-flex justify-content-between';
+
+            var select = document.createElement("select");
+            select.className = 'form-select';
+            select.name = 'attachmenttype';
+            select.required = true;
+            var array = ["pdf", "png", "jpg", "xls"];
+
+            showoption = document.createElement('option');
+            showoption.value = "";
+            showoption.innerText = 'Select Extension';
+
+            select.appendChild(showoption);
+
+            for (var i = 0; i < array.length; i++) {
+                var option = document.createElement("option");
+                option.value = array[i];
+                option.text = array[i];
+                select.appendChild(option);
+            }
+
+            div.appendChild(select);
+
+            var select1 = document.createElement("select");
+            select1.className = 'form-select';
+            select1.name = 'attachmentsize';
+            select1.required = true;
+            var array1 = ["1", "2", "5", "10"];
+
+            showoption1 = document.createElement('option');
+            showoption1.value = "";
+            showoption1.innerText = 'Select Size';
+
+            select1.appendChild(showoption1);
+
+            for (var i = 0; i < array1.length; i++) {
+                var option1 = document.createElement("option");
+                option1.value = array1[i];
+                option1.text = array1[i];
+                select1.appendChild(option1);
+            }
+
+            div.appendChild(select1);
+            accordion.appendChild(div);
+
+            var attachmenttype1 = document.getElementsByName('attachmenttype')[0];
+            var attachmentsize1 = document.getElementsByName('attachmentsize')[0];
+            // console.log(attachmenttype1);
+            if (attachmenttype1 != null) {
+                for (let index = 0; index < attachmenttype1.length; index++) {
+                    if (attachmenttype1[index].value == attachmenttype) {
+                        attachmenttype1[index].selected = true;
+                    }
+                }
+            }
+
+            if (attachmentsize1 != null) {
+                for (let index = 0; index < attachmentsize1.length; index++) {
+                    if (attachmentsize1[index].value == attachmentsize) {
+                        attachmentsize1[index].selected = true;
+                    }
+                }
+            }
+
+
+        }
+
+        if (fieldtype1 == 'value_list') {
+            document.getElementsByClassName('showvaluelist')[0].className = 'showvaluelist d-block m-5';
+            var accordion = document.getElementsByClassName('changeconfigrations')[0];
+            accordion.innerText = "";
+            // console.log(accordion);
+            var div = document.createElement('div');
+            div.className = 'form-check';
+
+            var input = document.createElement("input");
+            input.type = "radio";
+            input.name = "valuelisttype";
+            input.value = "dropdown";
+            input.className = "form-check-input";
+            input.id = "form-check-input";
+
+            var label = document.createElement('label');
+            label.className = 'form-check-label';
+            label.for = 'flexCheckDefault';
+            label.innerText = 'Dropdown';
+
+            div.appendChild(input);
+            div.appendChild(label);
+
+            //
+            var div1 = document.createElement('div');
+            div1.className = 'form-check';
+
+            var input1 = document.createElement("input");
+            input1.type = "radio";
+            input1.name = "valuelisttype";
+            input1.value = "radio";
+            input1.className = "form-check-input";
+
+            var label1 = document.createElement('label');
+            label1.className = 'form-check-label';
+            label1.for = 'flexCheckDefault';
+            label1.innerText = 'Radio Button';
+
+            div1.appendChild(input1);
+            div1.appendChild(label1);
+
+            //
+
+            var div2 = document.createElement('div');
+            div2.className = 'form-check';
+
+            var input2 = document.createElement("input");
+            input2.type = "radio";
+            input2.name = "valuelisttype";
+            input2.value = "checkinput";
+            input2.className = "form-check-input";
+
+            var label2 = document.createElement('label');
+            label2.className = 'form-check-label';
+            label2.for = 'flexCheckDefault';
+            label2.innerText = 'Check Box';
+
+            div2.appendChild(input2);
+            div2.appendChild(label2);
+
+            //
+
+            var div3 = document.createElement('div');
+            div3.className = 'form-check';
+
+            var input3 = document.createElement("input");
+            input3.type = "radio";
+            input3.name = "valuelisttype";
+            input3.value = "listbox";
+            input3.className = "form-check-input";
+
+            var label3 = document.createElement('label');
+            label3.className = 'form-check-label';
+            label3.for = 'flexCheckDefault';
+            label3.innerText = 'List Box';
+
+            div3.appendChild(input3);
+            div3.appendChild(label3);
+            //
+
+            var div4 = document.createElement('div');
+            div4.className = 'form-check';
+
+            var input4 = document.createElement("input");
+            input4.type = "radio";
+            input4.name = "valuelisttype";
+            input4.value = "valuepopup";
+            input4.className = "form-check-input";
+
+            var label4 = document.createElement('label');
+            label4.className = 'form-check-label';
+            label4.for = 'flexCheckDefault';
+            label4.innerText = 'Values Popup';
+
+            div4.appendChild(input4);
+            div4.appendChild(label4);
+            //
+
+            accordion.appendChild(div);
+            accordion.appendChild(div1);
+            accordion.appendChild(div2);
+            accordion.appendChild(div3);
+            accordion.appendChild(div4);
+
+            var valuelisttype1 = "{{ $field->valuelisttype }}";
+            var valuelisttype2 = document.getElementsByName('valuelisttype');
+            // console.log(valuelisttype1);
+            for (let index = 0; index < valuelisttype2.length; index++) {
+                console.log(valuelisttype2[index]);
+                if (valuelisttype2[index].value == valuelisttype1) {
+                    valuelisttype2[index].checked = true;
+                }
+
+            }
+        }
+
+        if (fieldtype1 == 'user_group_list') {
+
+        }
+
+        if (fieldtype1 == 'images') {
+
+        }
+
+        if (fieldtype1 == 'ip_address') {
+
+        }
+
+        if (fieldtype1 == 'number') {
+
+        }
+
+        if (fieldtype1 == 'text') {
+
         }
     </script>
 @endsection

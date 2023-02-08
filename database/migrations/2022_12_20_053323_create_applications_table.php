@@ -17,6 +17,8 @@ return new class extends Migration {
             $table->longText('fields')->nullable();
             $table->integer('user_id')->nullable();
             $table->string('name')->nullable();
+            $table->string('access')->nullable();
+            $table->longText('groups')->nullable();
             $table->integer('status')->nullable();
             $table->integer('updated_by')->nullable();
             $table->longText('description')->nullable();

@@ -43,7 +43,7 @@ class LoginController extends Controller
     public function login(Request $request)
     {
         $rules = [
-            'email' => 'required',
+            'email' => 'required|exists:users',
             'password' => 'required',
         ];
 
@@ -60,7 +60,13 @@ class LoginController extends Controller
             unset($data['_token']);
             // dd(Auth::attempt($data), auth()->user()['status'] == 1);
             if (Auth::attempt($data) && auth()->user()['status'] == 1) {
-                return redirect()->route('backend.home');
+                if (auth()->user()->role == 'admin') {
+                    # code...
+                    return redirect()->route('backend.home');
+                } else {
+                    # code...
+                    return redirect()->route('user.backend.home');
+                }
             } else {
                 // validation not successful, send back to form
                 Auth::logout();

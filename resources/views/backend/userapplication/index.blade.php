@@ -5,8 +5,6 @@
         <div class="bg-light text-center rounded p-4">
             <div class="d-flex align-items-center justify-content-between mb-4">
                 <h6 class="mb-0">Applications</h6>
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"
-                    data-bs-whatever="@mdo">Add Application</button>
 
             </div>
 
@@ -32,6 +30,7 @@
                                         class="col-form-label fw-bold text-left @error('status') is-invalid @enderror">Status</label>
                                     <select name="status" id=""
                                         class="form-control @error('status') is-invalid @enderror">
+                                        <option value="1">Active</option>
                                         <option value="0">In Active</option>
                                     </select>
                                 </div>
@@ -52,26 +51,19 @@
                     <thead>
                         <tr class="text-dark">
                             <th scope="col">Name</th>
-                            <th scope="col">Status</th>
                             <th scope="col">Updated By</th>
                             <th scope="col">Updated At</th>
                             <th scope="col">Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($applications as $item)
+                        {{-- {{ dd($userapplication) }} --}}
+                        @foreach ($userapplication as $item)
                             {{-- {{ dd($item) }} --}}
                             <tr>
                                 <td>
-                                    <a href="{{ route('application.edit', $item->id) }}"> {{ $item->name }}</a>
+                                    <a href="{{ route('userapplication.list', $item->id) }}"> {{ $item->name }}</a>
 
-                                </td>
-                                <td>
-                                    @if ($item->status == 1)
-                                        Active
-                                    @else
-                                        In-Active
-                                    @endif
                                 </td>
                                 @php
                                     if ($item->updated_by) {
@@ -83,15 +75,31 @@
                                 @endphp
                                 <td>{{ $username }}</td>
                                 <td>{{ $item->updated_at }}</td>
-                                <td class="d-flex justify-content-betweenx"><a class="btn btn-sm btn-primary"
-                                        href="{{ route('application.edit', $item->id) }}">Edit</a>
+                                <td>
+                                    <a href="{{ route('user-application.edit', $item->id) }}">new</a>
+                                </td>
+                            </tr>
+                        @endforeach
 
-                                    <form action="{{ route('application.destroy', $item->id) }}" method="post">
-                                        @csrf
-                                        @method('DELETE')
-                                        <input class="btn btn-sm btn-danger" onclick="return confirm('Are You Sure ?')"
-                                            type="submit" value="Delete">
-                                    </form>
+                        @foreach ($userapplication1 as $item)
+                            {{-- {{ dd($item) }} --}}
+                            <tr>
+                                <td>
+                                    <a href="{{ route('userapplication.list', $item->id) }}"> {{ $item->name }}</a>
+
+                                </td>
+                                @php
+                                    if ($item->updated_by) {
+                                        $user = App\Models\User::find($item->updated_by);
+                                        $username = $user->name;
+                                    } else {
+                                        $username = 'none';
+                                    }
+                                @endphp
+                                <td>{{ $username }}</td>
+                                <td>{{ $item->updated_at }}</td>
+                                <td>
+                                    <a href="{{ route('user-application.edit', $item->id) }}"> new</a>
                                 </td>
                             </tr>
                         @endforeach

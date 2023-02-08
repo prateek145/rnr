@@ -7,6 +7,8 @@ use App\Http\Controllers\backend\ApplicationController;
 use App\Http\Controllers\backend\GroupController;
 use App\Http\Controllers\backend\UserController;
 use App\Http\Controllers\backend\FieldController;
+use App\Http\Controllers\backend\RoleController;
+use App\Http\Controllers\backend\UserApplicationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,11 +36,16 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
 
 //backend ROutes
 Route::get('/home', [HomeController::class, 'home'])->name('backend.home');
+Route::get('/user/home', [HomeController::class, 'user_home'])->name('user.backend.home');
 Route::resource('audits', AuditController::class);
 Route::resource('users', UserController::class);
 Route::resource('application', ApplicationController::class);
 Route::resource('group', GroupController::class);
 Route::resource('field', FieldController::class);
+Route::resource('role', RoleController::class);
+Route::resource('user-application', UserApplicationController::class);
+Route::get('user-application/list/{id}', [UserApplicationController::class, 'userapplication_list'])->name('userapplication.list');
+Route::get('user-application/edit/{id}', [UserApplicationController::class, 'userapplication_edit'])->name('userapplication.edit');
 Route::delete('attachment/delete/{id}', [ApplicationController::class, 'attachment_delete'])->name('attachment.delete');
 
 Auth::routes();

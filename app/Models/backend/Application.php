@@ -5,6 +5,7 @@ namespace App\Models\backend;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
+use App\Models\backend\Role;
 
 class Application extends Model
 {
@@ -15,5 +16,10 @@ class Application extends Model
     public function username1()
     {
         return $this->hasOne(User::class);
+    }
+
+    public function rolestable()
+    {
+        return $this->hasOne(Role::class);
     }
 }

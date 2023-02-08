@@ -70,19 +70,7 @@
                                 <div id="namehelp" class="form-text">
                                 </div>
                             </div>
-                            {{-- <div class="mb-3">
-                                <label for="exampleInputEmail1"
-                                    class="form-label @error('attachments') is-invalid @enderror">Attachments</label>
-                                @foreach ($images as $item)
-                                    <br><a href="{{ asset('public/application/' . $item) }}" target="_blank">Document</a>
-                                @endforeach
-                                <input type="file" class="form-control @error('attachments') is-invalid @enderror"
-                                    id="description" name="attachments[]" multiple>
-                                @error('attachments')
-                                    <label id="attachments-error" class="error text-danger"
-                                        for="attachments">{{ $message }}</label>
-                                @enderror
-                            </div> --}}
+
 
                             <input type="hidden" value="{{ auth()->id() }}" name="updated_by">
 
@@ -242,8 +230,7 @@
                                                             class="form-control @error('type') is-invalid @enderror"
                                                             required>
                                                             <option value="date">Date</option>
-                                                            <option value="date_time">Date Time</option>
-                                                            <option value="attachments">Attachments</option>
+                                                            <option value="attachment">Attachment</option>
                                                             <option value="images">Images</option>
                                                             <option value="ip_address">IP Address</option>
                                                             <option value="number">Numeric</option>
@@ -258,8 +245,8 @@
                                                             class="form-label fw-bold">Status</label>
                                                         <select name="status" id=""
                                                             class="form-control @error('status') is-invalid @enderror">
-                                                            <option value="1">Active</option>
-                                                            <option value="0">In-Active</option>
+                                                            {{-- <option value="1">Active</option> --}}
+                                                            <option value="0" selected>In-Active</option>
                                                         </select>
                                                     </div>
                                                     <input type="hidden" value="{{ $application->id }}"

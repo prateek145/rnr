@@ -16,6 +16,14 @@ return new class extends Migration {
             $table->id();
             $table->string('name')->nullable();
             $table->string('type')->nullable();
+            $table->string('datetype')->nullable();
+            $table->string('valuelisttype')->nullable();
+            $table->longText('valuelistvalue')->nullable();
+            $table->string('user_list')->nullable();
+            $table->string('group_list')->nullable();
+            $table->string('attachmenttype')->nullable();
+            $table->string('attachmentsize')->nullable();
+            $table->string('datetype')->nullable();
             $table->string('access')->nullable();
             $table->string('status')->nullable();
             $table->integer('forder')->nullable();

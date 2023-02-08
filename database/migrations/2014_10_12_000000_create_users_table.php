@@ -23,6 +23,7 @@ return new class extends Migration {
             $table->string('email')->unique();
             $table->string('ssh_key')->nullable();
             $table->string('token')->nullable();
+            $table->string('role')->nullable();
             $table->longText('remarks')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');

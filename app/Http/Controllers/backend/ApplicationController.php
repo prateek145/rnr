@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\backend\Application;
 use App\Models\backend\Attachments;
 use App\Models\backend\Field;
+use App\Models\backend\Group;
+use App\Models\User;
 
 class ApplicationController extends Controller
 {
@@ -124,8 +126,27 @@ class ApplicationController extends Controller
             $fields = Field::where('application_id', $id)
                 ->latest()
                 ->get();
+
+            $users = User::where('status', 1)
+                ->latest()
+                ->get();
+
+            $groups = Group::where(['status' => 1])
+                ->latest()
+                ->get();
+
+            $selectedgroups = [];
+            if ($application->groups != null) {
+                $groupids = json_decode($application->groups);
+                # code...
+                for ($i = 0; $i < count($groupids); $i++) {
+                    # code...
+                    $group = Group::find($groupids[$i]);
+                    array_push($selectedgroups, $group);
+                }
+            }
             // dd($attachments);
-            return view('backend.applications.edit', compact('application', 'attachments', 'fields'));
+            return view('backend.applications.edit', compact('selectedgroups', 'users', 'groups', 'application', 'attachments', 'fields'));
             // dd($audit);
         } catch (\Exception $th) {
             //throw $th;
@@ -182,10 +203,22 @@ class ApplicationController extends Controller
                 # code...
                 // dd('prateek');
                 $data = $request->all();
+                // dd($data);
                 unset($data['_token']);
                 unset($data['_method']);
+                unset($data['groups']);
 
                 $application = Application::find($id);
+                if ($request->groups != null) {
+                    # code...
+                    $application->groups = json_encode($request->groups);
+                }
+
+                if ($request->access == 'public') {
+                    # code...
+                    $data['groups'] = null;
+                }
+
                 $application->update($data);
                 if ($application) {
                     # code...
