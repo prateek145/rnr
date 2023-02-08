@@ -23,7 +23,6 @@ return new class extends Migration {
             $table->string('group_list')->nullable();
             $table->string('attachmenttype')->nullable();
             $table->string('attachmentsize')->nullable();
-            $table->string('datetype')->nullable();
             $table->string('access')->nullable();
             $table->string('status')->nullable();
             $table->integer('forder')->nullable();
