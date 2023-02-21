@@ -282,48 +282,48 @@
                                             </tr>
                                         </thead>
                                         @foreach ($fields as $item)
-                                            {{-- <tr>
-                                                    <td><a
-                                                            href="{{ route('field.edit', $item->id) }}">{{ $item->name }}</a>
-                                                    </td>
-                                                    <td>{{ strtoupper($item->type) }}</td>
-                                                    <td>
-                                                        @if ($item->status == 1)
-                                                            Active
-                                                        @else
-                                                            In-Active
-                                                        @endif
-                                                    </td>
+                                            <tr>
+                                                <td><a
+                                                        href="{{ route('field.edit', $item->id) }}">{{ $item->name }}</a>
+                                                </td>
+                                                <td>{{ strtoupper($item->type) }}</td>
+                                                <td>
+                                                    @if ($item->status == 1)
+                                                        Active
+                                                    @else
+                                                        In-Active
+                                                    @endif
+                                                </td>
 
-                                                    <td>{{ $item->access }}</td>
+                                                <td>{{ $item->access }}</td>
 
-                                                    @php
-                                                        if ($item->updated_by) {
-                                                            $udpated = App\Models\User::find($item->user_id);
-                                                            $udpatedby = $udpated->name;
-                                                        } else {
-                                                            $udpatedby = 'none';
-                                                        }
-                                                    @endphp
-                                                    <td>{{ $udpatedby }}</td>
-                                                    <td>{{ $item->updated_at }}</td>
-                                                    <td class="d-flex justify-content-betweenx">
+                                                @php
+                                                    if ($item->updated_by) {
+                                                        $udpated = App\Models\User::find($item->user_id);
+                                                        $udpatedby = $udpated->name;
+                                                    } else {
+                                                        $udpatedby = 'none';
+                                                    }
+                                                @endphp
+                                                <td>{{ $udpatedby }}</td>
+                                                <td>{{ $item->updated_at }}</td>
+                                                <td class="d-flex justify-content-betweenx">
 
-                                                        <a class="btn btn-sm btn-primary"
-                                                            href="{{ route('field.edit', $item->id) }}">Edit</a>
+                                                    <a class="btn btn-sm btn-primary"
+                                                        href="{{ route('field.edit', $item->id) }}">Edit</a>
 
-                                                        <form action="{{ route('field.destroy', $item->id) }}"
-                                                            method="post">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                            <input class="btn btn-sm btn-danger"
-                                                                onclick="return confirm('Are You Sure ?')" type="submit"
-                                                                value="Delete">
-                                                        </form>
-                                                    </td>
-                                                </tr> --}}
+                                                    <form action="{{ route('field.destroy', $item->id) }}"
+                                                        method="post">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <input class="btn btn-sm btn-danger"
+                                                            onclick="return confirm('Are You Sure ?')" type="submit"
+                                                            value="Delete">
+                                                    </form>
+                                                </td>
+                                            </tr>
                                         @endforeach
-                                        <tbody id="sortable">
+                                        {{-- <tbody id="sortable">
                                             <tr id="item-1">
                                                 <td><a href="https://omegawebdemo.com.au/rnr/field/4/edit">dashdkasj</a>
                                                 </td>
@@ -389,7 +389,7 @@
                                                     </form>
                                                 </td>
                                             </tr>
-                                        </tbody>
+                                        </tbody> --}}
 
 
                                     </table>
