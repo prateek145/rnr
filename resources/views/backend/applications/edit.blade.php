@@ -482,33 +482,40 @@
 
     <!-- Recent Sales End -->
 
+    <ul id="sortable">
+        <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 1</li>
+        <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 2</li>
+        <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 3</li>
+        <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 4</li>
+        <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 5</li>
+        <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 6</li>
+        <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 7</li>
+      </ul>
+
+    @endsection
 
 
-
-
-
-    <script src="https://cdn.ckeditor.com/4.20.1/standard/ckeditor.js"></script>
+    @section('script')
     <script>
         CKEDITOR.replace('editor1');
     </script>
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script type="text/javascript" src="https://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
-    <link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css">
+    
+    
+    
     <script>
-        $(document).ready(function() {
+        $( function() {
+            $( "#sortable" ).sortable();
+        } );
+        /* $(document).ready(function() {
             $('tbody').sortable({
                 axis: 'y',
                 stop: function(event, ui) {
                     var data = $(this).sortable('serialize');
                     $('span').text(data);
-                    /*$.ajax({
-                            data: oData,
-                        type: 'POST',
-                        url: '/your/url/here'
-                    });*/
+                    
                 }
             });
-        });
+        }); */
 
         var status = "{{ $application->status }}";
         var currentstatus = document.getElementsByName('status')[0];

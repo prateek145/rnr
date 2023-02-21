@@ -27,7 +27,8 @@
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href="{{ asset('public/backend/dashmin/css/bootstrap.min.css') }}" rel="stylesheet">
-
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+  {{-- <link rel="stylesheet" href="/resources/demos/style.css"> --}}
     <!-- Template Stylesheet -->
     <link href="{{ asset('public/backend/dashmin/css/style.css') }}" rel="stylesheet">
     {{-- <script type="text/javascript" src="https://code.jquery.com/jquery-1.9.1.js"></script> --}}
@@ -80,9 +81,8 @@
     </div>
 
     <!-- JavaScript Libraries -->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    {{-- <script type="text/javascript" src="https://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
-    <link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css"> --}}
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="{{ asset('public/backend/dashmin/lib/chart/chart.min.js') }}"></script>
     <script src="{{ asset('public/backend/dashmin/lib/easing/easing.min.js') }}"></script>
@@ -91,10 +91,13 @@
     <script src="{{ asset('public/backend/dashmin/lib/tempusdominus/js/moment.min.js') }}"></script>
     <script src="{{ asset('public/backend/dashmin/lib/tempusdominus/js/moment-timezone.min.js') }}"></script>
     <script src="{{ asset('public/backend/dashmin/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js') }}"></script>
+    <script src="https://cdn.ckeditor.com/4.20.1/standard/ckeditor.js"></script>
+    
 
 
     <!-- Template Javascript -->
     <script src="{{ asset('public/backend/dashmin/js/main.js') }}"></script>
+    @yield('script')
 </body>
 
 </html>
