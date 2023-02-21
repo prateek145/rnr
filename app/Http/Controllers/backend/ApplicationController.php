@@ -72,6 +72,7 @@ class ApplicationController extends Controller
             //code...
             $data = $request->all();
             // dd($data);
+            // $data['access'] = 'public';
             unset($data['_token']);
             if ($request->attachments) {
                 $attachments = [];
@@ -84,7 +85,7 @@ class ApplicationController extends Controller
                 }
                 $data['attachments'] = json_encode($attachments);
             }
-
+            // dd($data);
             Application::create($data);
             return redirect()
                 ->route('application.index')
