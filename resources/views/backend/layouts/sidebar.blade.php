@@ -119,6 +119,9 @@
                         }
                     }
                     $userapplication1 = App\Models\backend\Application::where(['access' => 'public', 'status' => 1])->get();
+                    
+                    // dd($userapplication, $userapplication1);
+                    
                 @endphp
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-item nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
