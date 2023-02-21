@@ -30,6 +30,9 @@
 
     <!-- Template Stylesheet -->
     <link href="{{ asset('public/backend/dashmin/css/style.css') }}" rel="stylesheet">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.9.1.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css">
 </head>
 
 <body>

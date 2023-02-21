@@ -281,9 +281,8 @@
                                                 <th scope="col">Action</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
-                                            @foreach ($fields as $item)
-                                                <tr>
+                                        @foreach ($fields as $item)
+                                            {{-- <tr>
                                                     <td><a
                                                             href="{{ route('field.edit', $item->id) }}">{{ $item->name }}</a>
                                                     </td>
@@ -322,11 +321,77 @@
                                                                 value="Delete">
                                                         </form>
                                                     </td>
-                                                </tr>
-                                            @endforeach
+                                                </tr> --}}
+                                        @endforeach
+                                        <tbody id="sortable">
+                                            <tr id="item-1">
+                                                <td><a href="https://omegawebdemo.com.au/rnr/field/4/edit">dashdkasj</a>
+                                                </td>
+                                                <td>TEXT</td>
+                                                <td>In-Active</td>
+                                                <td>public</td>
+                                                <td>none</td>
+                                                <td>2023-02-08 15:09:25</td>
+                                                <td class="d-flex justify-content-betweenx">
+                                                    <a class="btn btn-sm btn-primary"
+                                                        href="https://omegawebdemo.com.au/rnr/field/4/edit">Edit</a>
+                                                    <form action="https://omegawebdemo.com.au/rnr/field/4" method="post">
+                                                        <input type="hidden" name="_token"
+                                                            value="fXLOVBuKYCzv6cw6QUOTaHDjaK3NIJ5AN2lzv78u">
+                                                        <input type="hidden" name="_method" value="DELETE">
+                                                        <input class="btn btn-sm btn-danger"
+                                                            onclick="return confirm('Are You Sure ?')" type="submit"
+                                                            value="Delete">
+                                                    </form>
 
-
+                                                </td>
+                                            </tr>
+                                            <tr id="item-2">
+                                                <td><a href="https://omegawebdemo.com.au/rnr/field/2/edit">Employee
+                                                        Id</a>
+                                                </td>
+                                                <td>IMAGES</td>
+                                                <td>Active</td>
+                                                <td>public</td>
+                                                <td>admin</td>
+                                                <td>2023-02-08 15:06:11</td>
+                                                <td class="d-flex justify-content-betweenx">
+                                                    <a class="btn btn-sm btn-primary"
+                                                        href="https://omegawebdemo.com.au/rnr/field/2/edit">Edit</a>
+                                                    <form action="https://omegawebdemo.com.au/rnr/field/2" method="post">
+                                                        <input type="hidden" name="_token"
+                                                            value="fXLOVBuKYCzv6cw6QUOTaHDjaK3NIJ5AN2lzv78u">
+                                                        <input type="hidden" name="_method" value="DELETE">
+                                                        <input class="btn btn-sm btn-danger"
+                                                            onclick="return confirm('Are You Sure ?')" type="submit"
+                                                            value="Delete">
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                            <tr id="item-3">
+                                                <td><a href="https://omegawebdemo.com.au/rnr/field/1/edit">Username</a>
+                                                </td>
+                                                <td>TEXT</td>
+                                                <td>Active</td>
+                                                <td>public</td>
+                                                <td>admin</td>
+                                                <td>2023-02-08 15:04:19</td>
+                                                <td class="d-flex justify-content-betweenx">
+                                                    <a class="btn btn-sm btn-primary"
+                                                        href="https://omegawebdemo.com.au/rnr/field/1/edit">Edit</a>
+                                                    <form action="https://omegawebdemo.com.au/rnr/field/1" method="post">
+                                                        <input type="hidden" name="_token"
+                                                            value="fXLOVBuKYCzv6cw6QUOTaHDjaK3NIJ5AN2lzv78u">
+                                                        <input type="hidden" name="_method" value="DELETE">
+                                                        <input class="btn btn-sm btn-danger"
+                                                            onclick="return confirm('Are You Sure ?')" type="submit"
+                                                            value="Delete">
+                                                    </form>
+                                                </td>
+                                            </tr>
                                         </tbody>
+
+
                                     </table>
                                 </div>
                             </div>
@@ -427,6 +492,21 @@
         CKEDITOR.replace('editor1');
     </script>
     <script>
+        $(document).ready(function() {
+            $('tbody').sortable({
+                axis: 'y',
+                stop: function(event, ui) {
+                    var data = $(this).sortable('serialize');
+                    $('span').text(data);
+                    /*$.ajax({
+                            data: oData,
+                        type: 'POST',
+                        url: '/your/url/here'
+                    });*/
+                }
+            });
+        });
+
         var status = "{{ $application->status }}";
         var currentstatus = document.getElementsByName('status')[0];
         for (let index = 0; index < currentstatus.length; index++) {
