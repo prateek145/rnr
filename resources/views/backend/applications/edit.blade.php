@@ -281,8 +281,9 @@
                                                 <th scope="col">Action</th>
                                             </tr>
                                         </thead>
+                                        <tbody id="sortable">
                                         @foreach ($fields as $item)
-                                            <tr>
+                                            <tr class="ui-state-default">
                                                 <td><a
                                                         href="{{ route('field.edit', $item->id) }}">{{ $item->name }}</a>
                                                 </td>
@@ -323,6 +324,7 @@
                                                 </td>
                                             </tr>
                                         @endforeach
+                                        </tbody>
                                         {{-- <tbody id="sortable">
                                             <tr id="item-1">
                                                 <td><a href="https://omegawebdemo.com.au/rnr/field/4/edit">dashdkasj</a>
@@ -482,7 +484,7 @@
 
     <!-- Recent Sales End -->
 
-    <ul id="sortable">
+    <!--<ul id="sortable">
         <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 1</li>
         <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 2</li>
         <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 3</li>
@@ -490,7 +492,7 @@
         <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 5</li>
         <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 6</li>
         <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 7</li>
-      </ul>
+      </ul>-->
 
     @endsection
 
