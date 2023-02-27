@@ -8,6 +8,7 @@ use App\Models\backend\Field;
 use App\Models\User;
 use App\Models\backend\Group;
 use App\Models\backend\Application;
+use Illuminate\Support\Facades\Log;
 
 class FieldController extends Controller
 {
@@ -54,9 +55,13 @@ class FieldController extends Controller
             unset($data['_token']);
             $data['access'] = 'public';
             // dd($data);
-            $field = Field::create($data);
-            // dd($field, $field->id);
             $application = Application::find($request->application_id);
+            $applicationfields = Field::where('application_id', $application->id)->get();
+            $data['forder'] = count($applicationfields) + 1;
+            $field = Field::create($data);
+            Log::channel('custom')->info('Field Created by ' . auth()->user()->name . ' ' . auth()->user()->lastname . ' Field Name -> ' . $field->name);
+
+            // dd($field, $field->id);
             if ($application->fields == null) {
                 # code...
                 $fieldid = [];
@@ -173,7 +178,7 @@ class FieldController extends Controller
             //code...
             $rules = [
                 'name' => 'required',
-                'forder' => 'required',
+                // 'forder' => 'required',
                 'type' => 'required',
                 'status' => 'required',
             ];
@@ -223,8 +228,9 @@ class FieldController extends Controller
                 $data['groups'] = null;
             }
             // dd($data);
-            $audit = Field::find($id);
-            $audit->update($data);
+            $field = Field::find($id);
+            $field->update($data);
+            Log::channel('custom')->info('Field Edited by ' . auth()->user()->name . ' ' . auth()->user()->lastname . ' Field Name -> ' . $field->name);
 
             return redirect()
                 ->back()
@@ -262,6 +268,7 @@ class FieldController extends Controller
             // dd($fieldid);
             $application->fields = json_encode($fieldid);
             $application->save();
+            Log::channel('custom')->info('Field Deleted by ' . auth()->user()->name . ' ' . auth()->user()->lastname . ' Field Name -> ' . $field->name);
             Field::destroy($id);
             return redirect()
                 ->back()

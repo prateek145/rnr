@@ -282,197 +282,57 @@
                                             </tr>
                                         </thead>
                                         <tbody id="sortable">
-                                        @foreach ($fields as $item)
-                                            <tr class="ui-state-default">
-                                                <td><a
-                                                        href="{{ route('field.edit', $item->id) }}">{{ $item->name }}</a>
-                                                </td>
-                                                <td>{{ strtoupper($item->type) }}</td>
-                                                <td>
-                                                    @if ($item->status == 1)
-                                                        Active
-                                                    @else
-                                                        In-Active
-                                                    @endif
-                                                </td>
+                                            @foreach ($fields as $item)
+                                                <tr class="ui-state-default {{ $item->id }} sortablearray "
+                                                    id="{{ $item->forder }}">
+                                                    <td><a
+                                                            href="{{ route('field.edit', $item->id) }}">{{ $item->name }}</a>
+                                                    </td>
+                                                    <td>{{ strtoupper($item->type) }}</td>
+                                                    <td>
+                                                        @if ($item->status == 1)
+                                                            Active
+                                                        @else
+                                                            In-Active
+                                                        @endif
+                                                    </td>
 
-                                                <td>{{ $item->access }}</td>
+                                                    <td>{{ $item->access }}</td>
 
-                                                @php
-                                                    if ($item->updated_by) {
-                                                        $udpated = App\Models\User::find($item->user_id);
-                                                        $udpatedby = $udpated->name;
-                                                    } else {
-                                                        $udpatedby = 'none';
-                                                    }
-                                                @endphp
-                                                <td>{{ $udpatedby }}</td>
-                                                <td>{{ $item->updated_at }}</td>
-                                                <td class="d-flex justify-content-betweenx">
+                                                    @php
+                                                        if ($item->updated_by) {
+                                                            $udpated = App\Models\User::find($item->user_id);
+                                                            $udpatedby = $udpated->name;
+                                                        } else {
+                                                            $udpatedby = 'none';
+                                                        }
+                                                    @endphp
+                                                    <td>{{ $udpatedby }}</td>
+                                                    <td>{{ $item->updated_at }}</td>
+                                                    <td class="d-flex justify-content-betweenx">
 
-                                                    <a class="btn btn-sm btn-primary"
-                                                        href="{{ route('field.edit', $item->id) }}">Edit</a>
+                                                        <a class="btn btn-sm btn-primary"
+                                                            href="{{ route('field.edit', $item->id) }}">Edit</a>
 
-                                                    <form action="{{ route('field.destroy', $item->id) }}"
-                                                        method="post">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <input class="btn btn-sm btn-danger"
-                                                            onclick="return confirm('Are You Sure ?')" type="submit"
-                                                            value="Delete">
-                                                    </form>
-                                                </td>
-                                            </tr>
-                                        @endforeach
+                                                        <form action="{{ route('field.destroy', $item->id) }}"
+                                                            method="post">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <input class="btn btn-sm btn-danger"
+                                                                onclick="return confirm('Are You Sure ?')" type="submit"
+                                                                value="Delete">
+                                                        </form>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
                                         </tbody>
-                                        {{-- <tbody id="sortable">
-                                            <tr id="item-1">
-                                                <td><a href="https://omegawebdemo.com.au/rnr/field/4/edit">dashdkasj</a>
-                                                </td>
-                                                <td>TEXT</td>
-                                                <td>In-Active</td>
-                                                <td>public</td>
-                                                <td>none</td>
-                                                <td>2023-02-08 15:09:25</td>
-                                                <td class="d-flex justify-content-betweenx">
-                                                    <a class="btn btn-sm btn-primary"
-                                                        href="https://omegawebdemo.com.au/rnr/field/4/edit">Edit</a>
-                                                    <form action="https://omegawebdemo.com.au/rnr/field/4" method="post">
-                                                        <input type="hidden" name="_token"
-                                                            value="fXLOVBuKYCzv6cw6QUOTaHDjaK3NIJ5AN2lzv78u">
-                                                        <input type="hidden" name="_method" value="DELETE">
-                                                        <input class="btn btn-sm btn-danger"
-                                                            onclick="return confirm('Are You Sure ?')" type="submit"
-                                                            value="Delete">
-                                                    </form>
-
-                                                </td>
-                                            </tr>
-                                            <tr id="item-2">
-                                                <td><a href="https://omegawebdemo.com.au/rnr/field/2/edit">Employee
-                                                        Id</a>
-                                                </td>
-                                                <td>IMAGES</td>
-                                                <td>Active</td>
-                                                <td>public</td>
-                                                <td>admin</td>
-                                                <td>2023-02-08 15:06:11</td>
-                                                <td class="d-flex justify-content-betweenx">
-                                                    <a class="btn btn-sm btn-primary"
-                                                        href="https://omegawebdemo.com.au/rnr/field/2/edit">Edit</a>
-                                                    <form action="https://omegawebdemo.com.au/rnr/field/2" method="post">
-                                                        <input type="hidden" name="_token"
-                                                            value="fXLOVBuKYCzv6cw6QUOTaHDjaK3NIJ5AN2lzv78u">
-                                                        <input type="hidden" name="_method" value="DELETE">
-                                                        <input class="btn btn-sm btn-danger"
-                                                            onclick="return confirm('Are You Sure ?')" type="submit"
-                                                            value="Delete">
-                                                    </form>
-                                                </td>
-                                            </tr>
-                                            <tr id="item-3">
-                                                <td><a href="https://omegawebdemo.com.au/rnr/field/1/edit">Username</a>
-                                                </td>
-                                                <td>TEXT</td>
-                                                <td>Active</td>
-                                                <td>public</td>
-                                                <td>admin</td>
-                                                <td>2023-02-08 15:04:19</td>
-                                                <td class="d-flex justify-content-betweenx">
-                                                    <a class="btn btn-sm btn-primary"
-                                                        href="https://omegawebdemo.com.au/rnr/field/1/edit">Edit</a>
-                                                    <form action="https://omegawebdemo.com.au/rnr/field/1" method="post">
-                                                        <input type="hidden" name="_token"
-                                                            value="fXLOVBuKYCzv6cw6QUOTaHDjaK3NIJ5AN2lzv78u">
-                                                        <input type="hidden" name="_method" value="DELETE">
-                                                        <input class="btn btn-sm btn-danger"
-                                                            onclick="return confirm('Are You Sure ?')" type="submit"
-                                                            value="Delete">
-                                                    </form>
-                                                </td>
-                                            </tr>
-                                        </tbody> --}}
-
 
                                     </table>
                                 </div>
                             </div>
                         </div>
-
-                        {{-- <div class="container-fluid pt-4 px-4">
-                            <div class="bg-light text-start rounded p-4">
-                                <div class="d-flex align-items-center justify-content-between mb-4">
-
-
-                                </div>
-                                <div class="bg-light rounded h-100 p-4">
-                                    <h6 class="mb-4">Field Create</h6>
-                                    <form action="{{ route('field.store') }}" class="form-horizontal"
-                                        enctype="multipart/form-data" method="post">
-                                        @csrf
-                                        <div class="mb-3">
-                                            <label for="exampleInputEmail1" class="form-label">Name</label>
-                                            <input type="text" class="form-control @error('name') is-invalid @enderror"
-                                                id="description" name="name" required>
-                                            @error('name')
-                                                <label id="name-error" class="error text-danger"
-                                                    for="name">{{ $message }}</label>
-                                            @enderror
-                                        </div>
-
-                                        <div class="mb-3">
-                                            <label for="exampleInputEmail1" class="form-label">Type</label>
-                                            <select name="type" id=""
-                                                class="form-control @error('type') is-invalid @enderror" required>
-                                                <option value="date">Date</option>
-                                                <option value="file">File</option>
-                                                <option value="file">Images</option>
-                                                <option value="number">Ip Address</option>
-                                                <option value="number">Numeric</option>
-                                                <option value="text">Text</option>
-                                                <option value="text">Value</option>
-                                                <option value="text">User Group List</option>
-                                            </select>
-                                            @error('type')
-                                                <label id="type-error" class="error text-danger"
-                                                    for="type">{{ $message }}</label>
-                                            @enderror
-                                            <div id="namehelp" class="form-text">
-                                            </div>
-                                        </div>
-
-
-                                        <div class="mb-3">
-                                            <label for="exampleInputEmail1" class="form-label">Status</label>
-                                            <select name="status" id=""
-                                                class="form-control @error('status') is-invalid @enderror">
-                                                <option value="1">Active</option>
-                                                <option value="0">In Active</option>
-                                            </select>
-                                            @error('status')
-                                                <label id="status-error" class="error text-danger"
-                                                    for="status">{{ $message }}</label>
-                                            @enderror
-                                            <div id="namehelp" class="form-text">
-                                            </div>
-                                        </div>
-
-                                        <input type="hidden" value="{{ $application->id }}" name="application_id">
-                                        <input type="hidden" value="{{ auth()->id() }}" name="user_id">
-
-                                        <button type="submit" class="btn btn-primary">Submit</button>
-                                    </form>
-                                </div>
-
-
-                            </div>
-                        </div> --}}
                     </div>
-                    {{-- <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
-                        Et diam et est sed vero ipsum voluptua dolor et, sit eos justo ipsum no ipsum amet sed aliquyam
-                        dolore, ut ipsum sanctus et consetetur. Sit ea sit clita lorem ea gubergren. Et dolore vero sanctus
-                        voluptua ipsum sadipscing amet at. Et sed dolore voluptua dolor eos tempor, erat amet.
-                    </div> --}}
+
                 </div>
 
             </div>
@@ -480,34 +340,47 @@
 
         </div>
     </div>
+@endsection
 
 
-    <!-- Recent Sales End -->
-
-    <!--<ul id="sortable">
-        <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 1</li>
-        <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 2</li>
-        <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 3</li>
-        <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 4</li>
-        <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 5</li>
-        <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 6</li>
-        <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 7</li>
-      </ul>-->
-
-    @endsection
-
-
-    @section('script')
+@section('script')
     <script>
         CKEDITOR.replace('editor1');
     </script>
-    
-    
-    
+
+
+
     <script>
-        $( function() {
-            $( "#sortable" ).sortable();
-        } );
+        $(function() {
+            $("#sortable").sortable({
+                connectWith: '.quadrants',
+                cursor: 'move',
+                dropOnEmpty: true,
+                update: function(e, ui) {
+                    var sortablearray = document.getElementsByClassName('sortablearray');
+                    var newarray = [];
+                    for (let index = 0; index < sortablearray.length; index++) {
+                        console.log(sortablearray[index]);
+                        newarray.push(sortablearray[index].id);
+                    }
+                    $.ajax({
+                        url: "{{ route('change.forder') }}",
+                        method: "POST",
+                        data: {
+                            '_token': "{{ csrf_token() }}",
+                            "forderarray": newarray,
+                            'application_id': "{{ $application->id }}"
+
+                        },
+                        success: function(response) {
+                            console.log(response);
+
+                        }
+                    });
+
+                }
+            });
+        });
         /* $(document).ready(function() {
             $('tbody').sortable({
                 axis: 'y',

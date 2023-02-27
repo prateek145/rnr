@@ -19,8 +19,8 @@
                             <th scope="col">Status</th>
                             <th scope="col">Updated At</th>
                             {{-- <th scope="col">Report Date</th>
-                            <th scope="col">Expiry</th>--}}
-                            <th scope="col">Actions</th> 
+                            <th scope="col">Expiry</th> --}}
+                            <th scope="col">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -28,7 +28,7 @@
                             <tr>
                                 <td>
                                     <a href="{{ route('users.edit', $item->id) }}">
-                                        {{ $item->name }}
+                                        {{ $item->name . ' ' . $item->lastname }}
                                     </a>
                                 </td>
                                 <td>{{ $item->email }}</td>

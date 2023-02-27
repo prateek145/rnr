@@ -13,13 +13,24 @@
                     @method('PUT')
                     @csrf
                     <div class="mb-3">
-                        <label for="exampleInputEmail1" class="form-label">Name</label>
+                        <label for="exampleInputEmail1" class="form-label">FirstName</label>
                         <input type="text" class="form-control @error('name') is-invalid @enderror" name="name"
-                            id="name" aria-describedby="namehelp" value="{{ $user->name }}">
+                            id="name" aria-describedby="namehelp" value="{{ $user->name }}" required>
                         @error('name')
                             <label id="name-error" class="error text-danger" for="name">{{ $message }}</label>
                         @enderror
                         <div id="namehelp" class="form-text">
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">LastName</label>
+                        <input type="text" class="form-control @error('lastname') is-invalid @enderror" name="lastname"
+                            id="lastname" aria-describedby="lastnamehelp" value="{{ $user->lastname }}" required>
+                        @error('lastname')
+                            <label id="lastname-error" class="error text-danger" for="lastname">{{ $message }}</label>
+                        @enderror
+                        <div id="lastnamehelp" class="form-text">
                         </div>
                     </div>
 
@@ -101,7 +112,8 @@
                                 @endif
                             </select>
                             @error('group_id')
-                                <label id="group_id-error" class="error text-danger" for="group_id">{{ $message }}</label>
+                                <label id="group_id-error" class="error text-danger"
+                                    for="group_id">{{ $message }}</label>
                             @enderror
                             <div id="namehelp" class="form-text">
                             </div>
@@ -126,7 +138,7 @@
                     </div>
 
                     <div class="col-md-12 mb-2">
-                        <label for="remarks" class="form-label"><strong>Remarks</strong></label>
+                        <label for="remarks" class="form-label"><strong>SHHkey/Token/Certificate</strong></label>
                         <textarea name="remarks" id="" cols="30" rows="4" class="form-control">{{ $user->remarks }}</textarea>
                     </div>
 

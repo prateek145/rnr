@@ -10,6 +10,7 @@ use App\Models\backend\Formdata;
 use App\Models\User;
 use App\Models\backend\Group;
 use App\Models\backend\ApplicationIndexing;
+use Illuminate\Support\Facades\Log;
 
 class UserApplicationController extends Controller
 {
@@ -164,7 +165,9 @@ class UserApplicationController extends Controller
                 }
             }
 
-            return view('backend.userapplication.edit', compact('groups', 'users', 'application', 'fields'));
+            // dd($fields);
+
+            return view('backend.userapplication.edit', compact('groups', 'id', 'users', 'application', 'fields'));
             // dd($application);
         } catch (\Exception $th) {
             //throw $th;
@@ -183,22 +186,40 @@ class UserApplicationController extends Controller
      */
     public function update(Request $request, $id)
     {
-        try {
-            //code...
-            $data = $request->all();
-            unset($data['_token']);
-            unset($data['_method']);
-            // dd($data);
+        //code...
+        $data = $request->all();
+        unset($data['_token']);
+        unset($data['_method']);
+
+        $application = Application::find($id);
+
+        if (isset($request->formdataid)) {
+            # code...
             $data1['data'] = json_encode($data);
             $data1['userid'] = $request->userid;
             $data1['application_id'] = $id;
-            $data1['type123'] = json_encode($request->type123);
+            // dd($data1);
+            $formdata = Formdata::find($request->formdataid);
+            $formdata->update($data1);
+            Log::channel('custom')->info('Application Edited by ' . auth()->user()->name . ' ' . auth()->user()->lastname . ' Application Name -> ' . $application->name);
+
+            return redirect()
+                ->back()
+                ->with('success', 'Form Updated.');
+        } else {
+            # code...
+            $data1['data'] = json_encode($data);
+            $data1['userid'] = $request->userid;
+            $data1['application_id'] = $id;
             // dd($data1);
             Formdata::create($data1);
+            Log::channel('custom')->info('Application Created by ' . auth()->user()->name . ' ' . auth()->user()->lastname . ' Application Name -> ' . $application->name);
+
             return redirect()
-                ->route('user-application.index')
+                ->route('userapplication.list', $id)
                 ->with('success', 'Form Saved.');
-            // dd($data1);
+        }
+        try {
         } catch (\Exception $th) {
             //throw $th;
             //throw $th;
@@ -220,7 +241,10 @@ class UserApplicationController extends Controller
         try {
             //code...
             // dd($id);
-            $audit = Formdata::destroy($id);
+            $form = Formdata::find($id);
+            $application = Application::find($form->application_id);
+            Log::channel('custom')->info('Application Deleted by ' . auth()->user()->name . ' ' . auth()->user()->lastname . ' Application Name -> ' . $application->name);
+            Formdata::destroy($id);
             return redirect()
                 ->back()
                 ->with('success', 'Successfully Deleted.');
@@ -294,6 +318,7 @@ class UserApplicationController extends Controller
             // dd($index, $fields);
             // dd($fields);
             // dd($application->rolestable()->get());
+            // dd($forms, $fields, $index);
             return view('backend.userapplication.applicationlist', compact('forms', 'index', 'id', 'application', 'roles', 'fields'));
         } catch (\Exception $th) {
             //throw $th;
@@ -308,9 +333,7 @@ class UserApplicationController extends Controller
     {
         try {
             //code...
-            // dd($id);
             $form_data = Formdata::find($id);
-            // dd($form_data);
             $application = Application::find($form_data->application_id);
             $users = User::latest()->get();
             $groups = Group::latest()->get();
@@ -357,7 +380,7 @@ class UserApplicationController extends Controller
 
             $filledformdata = json_decode($form_data->data, true);
             unset($filledformdata['type123']);
-            return view('backend.userapplication.applicationedit', compact('groups', 'users', 'application', 'fields', 'filledformdata'));
+            return view('backend.userapplication.applicationedit', compact('groups', 'id', 'users', 'application', 'fields', 'filledformdata'));
             // dd($id);
         } catch (\Exception $th) {
             //throw $th;
@@ -497,7 +520,7 @@ class UserApplicationController extends Controller
     {
         try {
             // dd($request->all());
-            $user = ApplicationIndexing::where('userid', $request->userid)->first();
+            $user = ApplicationIndexing::where(['userid' => $request->userid, 'application_id' => $request->application_id])->first();
             // dd($user);
             if ($user) {
                 # code...

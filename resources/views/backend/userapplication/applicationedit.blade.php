@@ -12,7 +12,13 @@
             <div class="bg-light rounded h-100 p-4">
                 <div class="tab-content" id="pills-tabContent">
                     <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-                        <h6 class="mb-4">Application Form</h6>
+                        <div class="d-flex align-items-center justify-content-between mb-4">
+                            <h6 class="mb-4">Application Form</h6>
+                            <button type="button" class="btn btn-danger">
+                                <a href="{{ route('userapplication.list', $application->id) }}" style="color:aliceblue">
+                                    <- back</a>
+                            </button>
+                        </div>
                         <form action="{{ route('user-application.update', $application->id) }}" class="form-horizontal"
                             enctype="multipart/form-data" method="post">
                             @method('PUT')
@@ -297,6 +303,7 @@
 
 
                             <input type="hidden" value="{{ auth()->id() }}" name="userid">
+                            <input type="hidden" value="{{ $id }}" name="formdataid">
 
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </form>

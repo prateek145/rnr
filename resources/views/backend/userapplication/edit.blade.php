@@ -12,7 +12,14 @@
             <div class="bg-light rounded h-100 p-4">
                 <div class="tab-content" id="pills-tabContent">
                     <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-                        <h6 class="mb-4">Application Form</h6>
+                        <div class="d-flex align-items-center justify-content-between mb-4">
+                            <h6 class="mb-4">Application Form</h6>
+                            <button type="button" class="btn btn-danger">
+                                <a href="{{ route('userapplication.list', $id) }}" style="color:aliceblue">
+                                    <- back</a>
+                            </button>
+                        </div>
+
                         <form action="{{ route('user-application.update', $application->id) }}" class="form-horizontal"
                             enctype="multipart/form-data" method="post">
                             @method('PUT')
@@ -27,7 +34,6 @@
                                             @if ($item->requiredfield == 1) required @endif>
 
                                     </div>
-                                    <input type="hidden" name="type123[]" value="date">
                                 @endif
 
                                 @if ($item->type == 'attachment')
@@ -38,7 +44,6 @@
                                             @if ($item->requiredfield == 1) required @endif>
 
                                     </div>
-                                    <input type="hidden" name="type123[]" value="attachment">
                                 @endif
 
                                 @if ($item->type == 'images')
@@ -49,20 +54,18 @@
                                             @if ($item->requiredfield == 1) required @endif>
 
                                     </div>
-                                    <input type="hidden" name="type123[]" value="images">
                                 @endif
 
                                 @if ($item->type == 'ip_address')
                                     <div class="mb-3">
                                         <label for="exampleInputEmail1"
                                             class="form-label">{{ strtoupper($item->name) }}</label>
-                                        <input type="text" class="form-control" name="{{ $item->name }}" minlength="7"
-                                            maxlength="15" size="15"
+                                        <input type="text" class="form-control" name="{{ $item->name }}"
+                                            minlength="7" maxlength="15" size="15"
                                             pattern="^((\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.){3}(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$"
                                             @if ($item->requiredfield == 1) required @endif>
 
                                     </div>
-                                    <input type="hidden" name="type123[]" value="ip_address">
                                 @endif
 
                                 @if ($item->type == 'number')
@@ -73,7 +76,6 @@
                                             @if ($item->requiredfield == 1) required @endif>
 
                                     </div>
-                                    <input type="hidden" name="type123[]" value="number">
                                 @endif
 
                                 @if ($item->type == 'text')
@@ -84,7 +86,6 @@
                                             @if ($item->requiredfield == 1) required @endif>
 
                                     </div>
-                                    <input type="hidden" name="type123[]" value="text">
                                 @endif
 
 
@@ -158,7 +159,6 @@
                                         @endif
 
                                     </div>
-                                    <input type="hidden" name="type123[]" value="value_list">
                                 @endif
 
                                 @if ($item->type == 'user_group_list')
@@ -291,7 +291,6 @@
                                         </div>
 
                                     </div>
-                                    <input type="hidden" name="type123[]" value="user_group_list">
                                 @endif
                             @endforeach
 

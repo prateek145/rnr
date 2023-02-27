@@ -7,6 +7,7 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class LoginController extends Controller
 {
@@ -62,13 +63,16 @@ class LoginController extends Controller
             if (Auth::attempt($data) && auth()->user()['status'] == 1) {
                 if (auth()->user()->role == 'admin') {
                     # code...
+                    Log::channel('custom')->info('Userlogin ' . 'UserName -> ' . auth()->user()->name . ' ' . auth()->user()->lastname);
                     return redirect()->route('backend.home');
                 } else {
                     # code...
+                    Log::channel('custom')->info('Userlogin ' . 'UserName -> ' . auth()->user()->name . ' ' . auth()->user()->lastname);
                     return redirect()->route('user.backend.home');
                 }
             } else {
                 // validation not successful, send back to form
+
                 Auth::logout();
                 throw new \Exception('User is not Active.');
             }

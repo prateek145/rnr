@@ -61,12 +61,6 @@
 
                         </div>
 
-                        <div class="col-md-6 mt-2">
-                            <label for="forder"> <strong>Order</strong> </label>
-                            <input class="form-control" type="number" min="1" name="forder"
-                                value="{{ $field->forder }}" placeholder="Field Order" required>
-
-                        </div>
                     </div>
 
                     <div class="mb-3">

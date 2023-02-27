@@ -8,6 +8,7 @@ use App\Models\backend\Application;
 use App\Models\backend\Group;
 use App\Models\backend\Role;
 use App\Models\User;
+use Illuminate\Support\Facades\Log;
 
 class RoleController extends Controller
 {
@@ -138,6 +139,8 @@ class RoleController extends Controller
             //code...
             // dd($request->all());
             $role = Role::where('application_id', $request->application_id)->first();
+            $application = Application::find($request->application_id);
+
             // dd($role);
             if ($role) {
                 # code...
@@ -183,6 +186,8 @@ class RoleController extends Controller
                 }
                 // dd($data);
                 $role->update($data);
+                Log::channel('custom')->info('Role Edited by ' . auth()->user()->name . ' ' . auth()->user()->lastname . ' Application Name -> ' . $application->name);
+
                 return redirect()
                     ->back()
                     ->with('success', 'Successfully Roles Updated.');
@@ -202,6 +207,8 @@ class RoleController extends Controller
                     $data['user_list'] = json_encode($request->user_list);
                     $data['group_list'] = json_encode($request->group_list);
                     Role::create($data);
+                    Log::channel('custom')->info('Role Edited by ' . auth()->user()->name . ' ' . auth()->user()->lastname . ' Application Name -> ' . $application->name);
+
                     return redirect()
                         ->route('role.index')
                         ->with('success', 'Successfully Roles Created.');

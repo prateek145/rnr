@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\backend\Group;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 
 class UserController extends Controller
 {
@@ -75,7 +76,9 @@ class UserController extends Controller
                 $data['group_id'] = json_encode($request->group_id);
                 $data['password'] = Hash::make($request->password);
                 // dd($data);
-                User::create($data);
+                $user = User::create($data);
+                Log::channel('custom')->info('User Created by ' . auth()->user()->name . ' ' . auth()->user()->lastname . ' User Name -> ' . $user->name);
+
                 return redirect()
                     ->route('users.index')
                     ->with('success', 'User Created');
@@ -154,6 +157,8 @@ class UserController extends Controller
             // dd($data);
             $user = User::find($id);
             $user->update($data);
+            Log::channel('custom')->info('User Edited by ' . auth()->user()->name . ' ' . auth()->user()->lastname . ' User Name -> ' . $user->name);
+
             return redirect()
                 ->back()
                 ->with('success', 'User Updated.');
@@ -175,7 +180,10 @@ class UserController extends Controller
     {
         try {
             //code...
-            $user = User::destroy($id);
+            $user = User::find($id);
+            Log::channel('custom')->info('User Edited by ' . auth()->user()->name . ' ' . auth()->user()->lastname . ' User Name -> ' . $user->name);
+            User::destroy($id);
+
             return redirect()
                 ->back()
                 ->with('success', 'Successfully User Delete.');

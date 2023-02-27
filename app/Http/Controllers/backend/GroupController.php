@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\backend\Group;
 use App\Models\User;
+use Illuminate\Support\Facades\Log;
 
 class GroupController extends Controller
 {
@@ -78,7 +79,9 @@ class GroupController extends Controller
 
             $data['userids'] = json_encode($request->userids);
             // dd($data);
-            Group::create($data);
+            $group = Group::create($data);
+            Log::channel('custom')->info('Group Created by ' . auth()->user()->name . ' ' . auth()->user()->lastname . ' Group Name -> ' . $group->name);
+
             return redirect()
                 ->route('group.index')
                 ->with('success', 'Group Created.');
@@ -171,6 +174,8 @@ class GroupController extends Controller
             // dd($data);
             $group = Group::find($id);
             $group->update($data);
+            Log::channel('custom')->info('Group Updated by ' . auth()->user()->name . ' ' . auth()->user()->lastname . ' Group Name -> ' . $group->name);
+
             // dd($group);
             # code...
             return redirect()
@@ -194,7 +199,10 @@ class GroupController extends Controller
     {
         try {
             //code...
-            $audit = Group::destroy($id);
+            $group = Group::find($id);
+            Log::channel('custom')->info('Group Deleted by ' . auth()->user()->name . ' ' . auth()->user()->lastname . ' Group Name -> ' . $group->name);
+            Group::destroy($id);
+
             return redirect()
                 ->back()
                 ->with('success', 'Successfully Group Delete.');

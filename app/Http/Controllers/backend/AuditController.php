@@ -5,6 +5,7 @@ namespace App\Http\Controllers\backend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\backend\Audit;
+use Illuminate\Support\Facades\Log;
 
 class AuditController extends Controller
 {

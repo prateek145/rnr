@@ -9,6 +9,9 @@ use App\Http\Controllers\backend\UserController;
 use App\Http\Controllers\backend\FieldController;
 use App\Http\Controllers\backend\RoleController;
 use App\Http\Controllers\backend\UserApplicationController;
+use App\Http\Controllers\backend\ImportController;
+use App\Http\Controllers\backend\AjaxController;
+use App\Http\Controllers\backend\LogController;
 
 /*
 |--------------------------------------------------------------------------
@@ -46,10 +49,19 @@ Route::resource('role', RoleController::class);
 Route::resource('user-application', UserApplicationController::class);
 Route::get('user-application/list/{id}', [UserApplicationController::class, 'userapplication_list'])->name('userapplication.list');
 Route::get('user-application/edit/{id}', [UserApplicationController::class, 'userapplication_edit'])->name('userapplication.edit');
+Route::post('change/forder', [AjaxController::class, 'change_forder'])->name('change.forder');
 Route::get('user-application/index/{id}', [UserApplicationController::class, 'userapplication_index'])->name('userapplication.index');
 Route::post('user-application/index/save', [UserApplicationController::class, 'userapplication_index_save'])->name('userapplication.index.save');
 Route::delete('attachment/delete/{id}', [ApplicationController::class, 'attachment_delete'])->name('attachment.delete');
 
+//import routes
+Route::get('user-application/import/{id}', [ImportController::class, 'getImport'])->name('csv.import');
+Route::post('user-application/import_parse', [ImportController::class, 'parseImport'])->name('import_parse');
+Route::post('user-application/import_process', [ImportController::class, 'processImport'])->name('import_process');
+
 Auth::routes();
+
+//logs functionality
+Route::get('index/logs', [LogController::class, 'index'])->name('log.index');
 
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

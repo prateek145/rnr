@@ -18,7 +18,7 @@
 
                     @if ($roles->import == 1)
                         <button type="button" class="btn btn-success ">
-                            <a href="{{ route('user-application.edit', $id) }}" style="color:aliceblue">Import</a>
+                            <a href="{{ route('csv.import', $id) }}" style="color:aliceblue">Import</a>
                         </button>
                     @endif
 
@@ -70,6 +70,7 @@
                                 @for ($j = 0; $j < count($fields); $j++)
                                     {{-- {{ dd($fields[$j]->id, $index) }} --}}
                                     @if (in_array($fields[$j]->id, $index))
+                                        {{-- {{ dd($fields[$j]) }} --}}
                                         <th>{{ $fields[$j]->name }}</th>
                                     @endif
                                 @endfor

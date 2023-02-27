@@ -12,13 +12,24 @@
                 <form action="{{ route('users.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="mb-3">
-                        <label for="exampleInputEmail1" class="form-label">Name</label>
+                        <label for="exampleInputEmail1" class="form-label">First Name</label>
                         <input type="text" class="form-control @error('name') is-invalid @enderror" name="name"
                             id="name" aria-describedby="namehelp" required>
                         @error('name')
                             <label id="name-error" class="error text-danger" for="name">{{ $message }}</label>
                         @enderror
                         <div id="namehelp" class="form-text">
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Last Name</label>
+                        <input type="text" class="form-control @error('lastname') is-invalid @enderror" name="lastname"
+                            id="lastname" aria-describedby="lastnamehelp" required>
+                        @error('lastname')
+                            <label id="lastname-error" class="error text-danger" for="lastname">{{ $message }}</label>
+                        @enderror
+                        <div id="lastnamehelp" class="form-text">
                         </div>
                     </div>
 
@@ -63,7 +74,7 @@
 
                             <div class="col-md-6">
                                 <label for="exampleInputEmail1"
-                                    class="form-label @error('repassword') is-invalid @enderror">RePassword</label>
+                                    class="form-label @error('repassword') is-invalid @enderror">Re-Password</label>
                                 <input type="password" class="form-control" id="name" name="repassword"
                                     aria-describedby="namehelp">
                                 @error('repassword')
@@ -104,7 +115,8 @@
                                 <option value="0">Inactive</option>
                             </select>
                             @error('group_id')
-                                <label id="group_id-error" class="error text-danger" for="group_id">{{ $message }}</label>
+                                <label id="group_id-error" class="error text-danger"
+                                    for="group_id">{{ $message }}</label>
                             @enderror
                             <div id="namehelp" class="form-text">
                             </div>
@@ -113,7 +125,7 @@
                     </div>
 
                     <div class="col-md-12 mb-2">
-                        <label for="remarks">Remarks</label>
+                        <label for="remarks"> <strong>SHHkey/Token/Certificate</strong> </label>
                         <textarea name="remarks" id="" cols="30" rows="4" class="form-control">
                             
                         </textarea>

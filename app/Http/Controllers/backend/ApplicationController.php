@@ -9,6 +9,7 @@ use App\Models\backend\Attachments;
 use App\Models\backend\Field;
 use App\Models\backend\Group;
 use App\Models\User;
+use Illuminate\Support\Facades\Log;
 
 class ApplicationController extends Controller
 {
@@ -86,7 +87,8 @@ class ApplicationController extends Controller
                 $data['attachments'] = json_encode($attachments);
             }
             // dd($data);
-            Application::create($data);
+            $application = Application::create($data);
+            Log::channel('custom')->info('Application Created by ' . auth()->user()->name . ' ' . auth()->user()->lastname . ' Application Name -> ' . $application->name);
             return redirect()
                 ->route('application.index')
                 ->with('success', 'Application Created.');
@@ -125,8 +127,9 @@ class ApplicationController extends Controller
                 ->latest()
                 ->get();
             $fields = Field::where('application_id', $id)
-                ->latest()
+                ->orderBy('forder', 'ASC')
                 ->get();
+            // dd($fields);
 
             $users = User::where('status', 1)
                 ->latest()
@@ -188,7 +191,9 @@ class ApplicationController extends Controller
                 $destination_path = public_path('/application');
                 $request->attachments->move($destination_path, $data['imagename']);
                 // dd($data);
+                $applicaton = Application::find($request->application_id);
                 $attachment = Attachments::create($data);
+                Log::channel('custom')->info('Attachment Created by ' . auth()->user()->name . ' ' . auth()->user()->lastname . ' Application Name -> ' . $application->name);
                 if ($attachment) {
                     # code...
                     return redirect()
@@ -221,6 +226,8 @@ class ApplicationController extends Controller
                 }
 
                 $application->update($data);
+                Log::channel('custom')->info('Application Edited by ' . auth()->user()->name . ' ' . auth()->user()->lastname . ' Application Name -> ' . $application->name);
+
                 if ($application) {
                     # code...
                     return redirect()
@@ -251,7 +258,10 @@ class ApplicationController extends Controller
     {
         try {
             //code...
-            $audit = Application::destroy($id);
+            $application = Application::find($id);
+            Log::channel('custom')->info('Application Deleted by ' . auth()->user()->name . ' ' . auth()->user()->lastname . ' Application Name -> ' . $application->name);
+            Application::destroy($id);
+
             return redirect()
                 ->back()
                 ->with('success', 'Successfully Application Delete.');
@@ -269,7 +279,10 @@ class ApplicationController extends Controller
         try {
             //code...
             // dd($id);
-            $audit = Attachments::destroy($id);
+            $attachment = Attachments::find($id);
+            Log::channel('custom')->info('Attachment Deleted by ' . auth()->user()->name . ' ' . auth()->user()->lastname . ' Attachment Name -> ' . $attachment->name);
+            Attachments::destroy($id);
+
             return redirect()
                 ->back()
                 ->with('success', 'Successfully Attachments Delete.');
