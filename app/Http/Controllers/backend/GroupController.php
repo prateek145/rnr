@@ -80,7 +80,7 @@ class GroupController extends Controller
             $data['userids'] = json_encode($request->userids);
             // dd($data);
             $group = Group::create($data);
-            Log::channel('custom')->info('Group Created by ' . auth()->user()->name . ' ' . auth()->user()->lastname . ' Group Name -> ' . $group->name);
+            Log::channel('custom')->info('Userid -> ' . auth()->user()->custom_userid . ' , Group Created by -> ' . auth()->user()->name . ' ' . auth()->user()->lastname . ' Group Name -> ' . $group->name);
 
             return redirect()
                 ->route('group.index')
@@ -173,8 +173,66 @@ class GroupController extends Controller
             }
             // dd($data);
             $group = Group::find($id);
+
+            $changearray = [];
+            if ($group->status == 1) {
+                # code...
+                $currentstatus = 'Active';
+            } else {
+                # code...
+                $currentstatus = 'InActive';
+            }
+
+            $currentarray = [
+                'name' => $group->name,
+                'status' => $currentstatus,
+            ];
+
+            $currentarray['Usernames'] = [];
+            // dd(json_decode($group->userids));
+            for ($i = 0; $i < count(json_decode($group->userids)); $i++) {
+                # code...
+                // dd(json_decode($group->userids)[$i]);
+                $u = User::find(json_decode($group->userids)[$i]);
+                // dd($request->userids, $u);
+                array_push($currentarray['Usernames'], $u->name . ' ' . $u->lastname);
+            }
+            // dd($currentarray);
+
+            if (isset($data['name']) && $group->name != $data['name']) {
+                # code...
+                $changearray['name'] = $data['name'];
+            }
+
+            if (isset($data['userids']) && $group->userids != $data['userids']) {
+                # code...
+                // dd($data);
+                $changearray['Usernames'] = [];
+                for ($i = 0; $i < count($request->userids); $i++) {
+                    # code...
+                    $u = User::find($request->userids[$i]);
+                    // dd($request->userids, $u);
+                    array_push($changearray['Usernames'], $u->name . ' ' . $u->lastname);
+                }
+                $changearray['UsersChange'] = 'True';
+                // dd($changearray);
+            }
+
+            if ($group->status != $data['status']) {
+                # code...
+                if ($data['status'] == 1) {
+                    # code...
+                    $changearray['status'] = 'Active';
+                } else {
+                    # code...
+                    $changearray['status'] = 'InActive';
+                }
+            }
+
+            // dd($currentarray, $changearray);
+
             $group->update($data);
-            Log::channel('custom')->info('Group Updated by ' . auth()->user()->name . ' ' . auth()->user()->lastname . ' Group Name -> ' . $group->name);
+            Log::channel('custom')->info('Userid -> ' . auth()->user()->custom_userid . ' , Group Updated by -> ' . auth()->user()->name . ' ' . auth()->user()->lastname . ' , Group Name -> ' . $group->name . ' , Current Data -> ' . json_encode($currentarray) . ' , Changed Data -> ' . json_encode($changearray));
 
             // dd($group);
             # code...
@@ -200,7 +258,7 @@ class GroupController extends Controller
         try {
             //code...
             $group = Group::find($id);
-            Log::channel('custom')->info('Group Deleted by ' . auth()->user()->name . ' ' . auth()->user()->lastname . ' Group Name -> ' . $group->name);
+            Log::channel('custom')->info('Userid -> ' . auth()->user()->custom_userid . ' , Group Deleted by -> ' . auth()->user()->name . ' ' . auth()->user()->lastname . ' Group Name -> ' . $group->name);
             Group::destroy($id);
 
             return redirect()

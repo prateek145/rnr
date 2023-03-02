@@ -99,7 +99,7 @@
                     <a href="#" class="nav-item nav-link dropdown-toggle " data-bs-toggle="dropdown"><i
                             class="fa fa-exclamation-triangle me-2"></i>Logs</a>
                     <div class="dropdown-menu bg-transparent border-0">
-                        <a href="{{ url('/log-viewer') }}" class="dropdown-item">View All</a>
+                        <a href="{{ url('logs') }}" class="dropdown-item">View All</a>
                         {{-- <a href="{{ route('group.create') }}" class="dropdown-item">New</a> --}}
 
                     </div>

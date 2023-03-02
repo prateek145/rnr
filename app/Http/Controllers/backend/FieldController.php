@@ -59,7 +59,7 @@ class FieldController extends Controller
             $applicationfields = Field::where('application_id', $application->id)->get();
             $data['forder'] = count($applicationfields) + 1;
             $field = Field::create($data);
-            Log::channel('custom')->info('Field Created by ' . auth()->user()->name . ' ' . auth()->user()->lastname . ' Field Name -> ' . $field->name);
+            Log::channel('custom')->info('Userid -> ' . auth()->user()->custom_userid . ' , Field Created by -> ' . auth()->user()->name . ' ' . auth()->user()->lastname . ' Field Name -> ' . $field->name . ' Field Type -> ' . $field->type);
 
             // dd($field, $field->id);
             if ($application->fields == null) {
@@ -174,67 +174,177 @@ class FieldController extends Controller
      */
     public function update(Request $request, $id)
     {
+        //code...
+        $rules = [
+            'name' => 'required',
+            // 'forder' => 'required',
+            'type' => 'required',
+            'status' => 'required',
+        ];
+
+        $custommessages = [
+            'forder' => 'Order is required',
+        ];
+
+        $this->validate($request, $rules, $custommessages);
+
+        $data = $request->all();
+
+        unset($data['_token']);
+        unset($data['_method']);
+        unset($data['groups']);
+
+        if ($request->valuelistvalue) {
+            # code...
+            unset($data['valuelistvalue']);
+            $data['valuelistvalue'] = json_encode($request->valuelistvalue);
+        }
+
+        if ($request->user_list) {
+            # code...
+            unset($data['user_list']);
+            $data['user_list'] = json_encode($request->user_list);
+        }
+
+        if ($request->group_list) {
+            # code...
+            unset($data['group_list']);
+            $data['group_list'] = json_encode($request->group_list);
+        }
+
+        // dd($data);
+        if ($request->groups) {
+            # code...
+            if (count($request->groups) > 0) {
+                // dd($request->groups);
+                # code...
+                $data['groups'] = json_encode($request->groups);
+            }
+        }
+
+        if ($request->access == 'public') {
+            # code...
+            $data['groups'] = null;
+        }
+        // dd($data);
+
+        //for logs
+        $field = Field::find($id);
+        // dd($field);
+        $changearray = [];
+        if ($field->status == 1) {
+            # code...
+            $currentstatus = 'Active';
+        } else {
+            # code...
+            $currentstatus = 'InActive';
+        }
+
+        if ($field->requiredfield == 1) {
+            # code...
+            $currentrequiredfield = 'Active';
+        } else {
+            # code...
+            $currentrequiredfield = 'InActive';
+        }
+
+        if ($field->requireuniquevalue == 1) {
+            # code...
+            $currentrequireuniquevalue = 'Active';
+        } else {
+            # code...
+            $currentrequireuniquevalue = 'InActive';
+        }
+
+        if ($field->keyfield == 1) {
+            # code...
+            $currentkeyfield = 'Active';
+        } else {
+            # code...
+            $currentkeyfield = 'InActive';
+        }
+        $currentarray = [
+            'name' => $field->name,
+            'type' => $field->type,
+            'status' => $field->currentstatus,
+            'requiredfield' => $field->currentrequiredfield,
+            'requireuniquevalue' => $field->currentrequireuniquevalue,
+            'keyfield' => $field->keyfield,
+            'access' => $field->access,
+            'description' => $field->description,
+        ];
+
+        if ($field->name != $data['name']) {
+            # code...
+            $changearray['name'] = $data['name'];
+        }
+
+        if ($field->type != $data['type']) {
+            # code...
+            $changearray['type'] = $data['type'];
+        }
+
+        if ($field->access != $data['access']) {
+            # code...
+            $changearray['access'] = $data['access'];
+        }
+
+        if ($field->status != $data['status']) {
+            # code...
+            if ($data['status'] == 1) {
+                # code...
+                $changearray['status'] = 'Active';
+            } else {
+                # code...
+                $changearray['status'] = 'InActive';
+            }
+        }
+
+        if (isset($data['requiredfield']) && $field->requiredfield != $data['requiredfield']) {
+            # code...
+            if ($data['requiredfield'] == 1) {
+                # code...
+                $changearray['requiredfield'] = 'Active';
+            } else {
+                # code...
+                $changearray['requiredfield'] = 'InActive';
+            }
+        }
+
+        if (isset($data['requireuniquevalue']) && $field->requireuniquevalue != $data['requireuniquevalue']) {
+            # code...
+            if ($data['requireuniquevalue'] == 1) {
+                # code...
+                $changearray['requireuniquevalue'] = 'Active';
+            } else {
+                # code...
+                $changearray['requireuniquevalue'] = 'InActive';
+            }
+        }
+
+        if (isset($data['keyfield']) && $field->keyfield != $data['keyfield']) {
+            # code...
+            if ($data['keyfield'] == 1) {
+                # code...
+                $changearray['keyfield'] = 'Active';
+            } else {
+                # code...
+                $changearray['keyfield'] = 'InActive';
+            }
+        }
+
+        if (isset($data['description']) && $field->description != $data['description']) {
+            # code...
+            $changearray['description'] = $data['description'];
+        }
+
+        $field->update($data);
+        Log::channel('custom')->info('Userid -> ' . auth()->user()->custom_userid . ' , Field Edited by -> ' . auth()->user()->name . ' ' . auth()->user()->lastname . ' Field Name -> ' . $field->name . ' Current Data -> ' . json_encode($currentarray) . ' Changed Data -> ' . json_encode($changearray));
+
+        return redirect()
+            ->back()
+            ->with(['success' => 'Successfully Field Edit.']);
         try {
-            //code...
-            $rules = [
-                'name' => 'required',
-                // 'forder' => 'required',
-                'type' => 'required',
-                'status' => 'required',
-            ];
-
-            $custommessages = [
-                'forder' => 'Order is required',
-            ];
-
-            $this->validate($request, $rules, $custommessages);
-
-            $data = $request->all();
-
-            unset($data['_token']);
-            unset($data['_method']);
-            unset($data['groups']);
-
-            if ($request->valuelistvalue) {
-                # code...
-                unset($data['valuelistvalue']);
-                $data['valuelistvalue'] = json_encode($request->valuelistvalue);
-            }
-
-            if ($request->user_list) {
-                # code...
-                unset($data['user_list']);
-                $data['user_list'] = json_encode($request->user_list);
-            }
-
-            if ($request->group_list) {
-                # code...
-                unset($data['group_list']);
-                $data['group_list'] = json_encode($request->group_list);
-            }
-
-            // dd($data);
-            if ($request->groups) {
-                # code...
-                if (count($request->groups) > 0) {
-                    // dd($request->groups);
-                    # code...
-                    $data['groups'] = json_encode($request->groups);
-                }
-            }
-
-            if ($request->access == 'public') {
-                # code...
-                $data['groups'] = null;
-            }
-            // dd($data);
-            $field = Field::find($id);
-            $field->update($data);
-            Log::channel('custom')->info('Field Edited by ' . auth()->user()->name . ' ' . auth()->user()->lastname . ' Field Name -> ' . $field->name);
-
-            return redirect()
-                ->back()
-                ->with(['success' => 'Successfully Field Edit.']);
         } catch (\Exception $th) {
             //throw $th;
             return redirect()
@@ -268,7 +378,7 @@ class FieldController extends Controller
             // dd($fieldid);
             $application->fields = json_encode($fieldid);
             $application->save();
-            Log::channel('custom')->info('Field Deleted by ' . auth()->user()->name . ' ' . auth()->user()->lastname . ' Field Name -> ' . $field->name);
+            Log::channel('custom')->info('Userid ' . auth()->user()->custom_userid . ' , Field Deleted by ' . auth()->user()->name . ' ' . auth()->user()->lastname . ' Field Name -> ' . $field->name);
             Field::destroy($id);
             return redirect()
                 ->back()

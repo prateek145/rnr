@@ -88,7 +88,8 @@ class ApplicationController extends Controller
             }
             // dd($data);
             $application = Application::create($data);
-            Log::channel('custom')->info('Application Created by ' . auth()->user()->name . ' ' . auth()->user()->lastname . ' Application Name -> ' . $application->name);
+            // dd('Userid ' . auth()->user()->custom_userid . ' Application Created by ' . auth()->user()->name . ' ' . auth()->user()->lastname . ' Application Name -> ' . $application->name . ', Application Status -> ' . $application->status);
+            Log::channel('custom')->info('Userid -> ' . auth()->user()->custom_userid . ' , Application Created by -> ' . auth()->user()->name . ' ' . auth()->user()->lastname . ' , Application Name -> ' . $application->name);
             return redirect()
                 ->route('application.index')
                 ->with('success', 'Application Created.');
@@ -193,7 +194,7 @@ class ApplicationController extends Controller
                 // dd($data);
                 $applicaton = Application::find($request->application_id);
                 $attachment = Attachments::create($data);
-                Log::channel('custom')->info('Attachment Created by ' . auth()->user()->name . ' ' . auth()->user()->lastname . ' Application Name -> ' . $application->name);
+                Log::channel('custom')->info('Userid -> ' . auth()->user()->custom_userid . ' , Attachment Created by -> ' . auth()->user()->name . ' ' . auth()->user()->lastname . ' Application Name -> ' . $application->name);
                 if ($attachment) {
                     # code...
                     return redirect()
@@ -225,8 +226,45 @@ class ApplicationController extends Controller
                     $data['groups'] = null;
                 }
 
+                $changearray = [];
+                if ($application->status == 1) {
+                    # code...
+                    $currentstatus = 'Active';
+                } else {
+                    # code...
+                    $currentstatus = 'InActive';
+                }
+                $currentarray = [
+                    'name' => $application->name,
+                    'description' => $application->description,
+                    'status' => $currentstatus,
+                ];
+
+                if ($application->name != $data['name']) {
+                    # code...
+                    $changearray['name'] = $data['name'];
+                }
+
+                if ($application->status != $data['status']) {
+                    # code...
+                    if ($data['status'] == 1) {
+                        # code...
+                        $changearray['status'] = 'Active';
+                    } else {
+                        # code...
+                        $changearray['status'] = 'InActive';
+                    }
+                }
+
+                if ($application->description != $data['description']) {
+                    # code...
+                    $changearray['description'] = $data['description'];
+                }
+
+                // dd($changearray);
+
                 $application->update($data);
-                Log::channel('custom')->info('Application Edited by ' . auth()->user()->name . ' ' . auth()->user()->lastname . ' Application Name -> ' . $application->name);
+                Log::channel('custom')->info('Userid -> ' . auth()->user()->custom_userid . ' , Application Edited by -> ' . auth()->user()->name . ' ' . auth()->user()->lastname . ' , Application Name -> ' . $application->name . ' , Current data -> ' . json_encode($currentarray) . ' , Changed data -> ' . json_encode($changearray));
 
                 if ($application) {
                     # code...
@@ -259,7 +297,7 @@ class ApplicationController extends Controller
         try {
             //code...
             $application = Application::find($id);
-            Log::channel('custom')->info('Application Deleted by ' . auth()->user()->name . ' ' . auth()->user()->lastname . ' Application Name -> ' . $application->name);
+            Log::channel('custom')->info('Userid -> ' . auth()->user()->custom_userid . ' , Application Deleted by -> ' . auth()->user()->name . ' ' . auth()->user()->lastname . ' , Application Name -> ' . $application->name);
             Application::destroy($id);
 
             return redirect()
@@ -280,7 +318,7 @@ class ApplicationController extends Controller
             //code...
             // dd($id);
             $attachment = Attachments::find($id);
-            Log::channel('custom')->info('Attachment Deleted by ' . auth()->user()->name . ' ' . auth()->user()->lastname . ' Attachment Name -> ' . $attachment->name);
+            Log::channel('custom')->info('Userid -> ' . auth()->user()->custom_userid . ' , Attachment Deleted by -> ' . auth()->user()->name . ' ' . auth()->user()->lastname . ' , Attachment Name -> ' . $attachment->name);
             Attachments::destroy($id);
 
             return redirect()

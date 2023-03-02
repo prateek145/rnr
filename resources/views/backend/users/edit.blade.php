@@ -13,7 +13,7 @@
                     @method('PUT')
                     @csrf
                     <div class="mb-3">
-                        <label for="exampleInputEmail1" class="form-label">FirstName</label>
+                        <label for="exampleInputEmail1" class="form-label">First Name</label>
                         <input type="text" class="form-control @error('name') is-invalid @enderror" name="name"
                             id="name" aria-describedby="namehelp" value="{{ $user->name }}" required>
                         @error('name')
@@ -24,13 +24,26 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="exampleInputEmail1" class="form-label">LastName</label>
+                        <label for="exampleInputEmail1" class="form-label">Last Name</label>
                         <input type="text" class="form-control @error('lastname') is-invalid @enderror" name="lastname"
                             id="lastname" aria-describedby="lastnamehelp" value="{{ $user->lastname }}" required>
                         @error('lastname')
                             <label id="lastname-error" class="error text-danger" for="lastname">{{ $message }}</label>
                         @enderror
                         <div id="lastnamehelp" class="form-text">
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">User ID</label>
+                        <input type="text" class="form-control @error('custom_userid') is-invalid @enderror"
+                            name="custom_userid" id="custom_userid" aria-describedby="custom_useridhelp"
+                            value="{{ $user->custom_userid }}" required>
+                        @error('custom_userid')
+                            <label id="custom_userid-error" class="error text-danger"
+                                for="custom_userid">{{ $message }}</label>
+                        @enderror
+                        <div id="custom_useridhelp" class="form-text">
                         </div>
                     </div>
 

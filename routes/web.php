@@ -8,6 +8,7 @@ use App\Http\Controllers\backend\GroupController;
 use App\Http\Controllers\backend\UserController;
 use App\Http\Controllers\backend\FieldController;
 use App\Http\Controllers\backend\RoleController;
+use App\Http\Controllers\backend\MultipleroleController;
 use App\Http\Controllers\backend\UserApplicationController;
 use App\Http\Controllers\backend\ImportController;
 use App\Http\Controllers\backend\AjaxController;
@@ -46,6 +47,7 @@ Route::resource('application', ApplicationController::class);
 Route::resource('group', GroupController::class);
 Route::resource('field', FieldController::class);
 Route::resource('role', RoleController::class);
+Route::resource('multiplerole', MultipleroleController::class);
 Route::resource('user-application', UserApplicationController::class);
 Route::get('user-application/list/{id}', [UserApplicationController::class, 'userapplication_list'])->name('userapplication.list');
 Route::get('user-application/edit/{id}', [UserApplicationController::class, 'userapplication_edit'])->name('userapplication.edit');
@@ -62,6 +64,4 @@ Route::post('user-application/import_process', [ImportController::class, 'proces
 Auth::routes();
 
 //logs functionality
-Route::get('index/logs', [LogController::class, 'index'])->name('log.index');
-
-// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('logs', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index']);

@@ -34,6 +34,17 @@
                     </div>
 
                     <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">User ID</label>
+                        <input type="text" class="form-control @error('lastname') is-invalid @enderror"
+                            name="custom_userid" id="lastname" aria-describedby="lastnamehelp" required>
+                        @error('lastname')
+                            <label id="lastname-error" class="error text-danger" for="lastname">{{ $message }}</label>
+                        @enderror
+                        <div id="lastnamehelp" class="form-text">
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
                         <label for="exampleInputEmail1" class="form-label">Email</label>
                         <input type="text" class="form-control @error('email') is-invalid @enderror" id="email"
                             name="email" aria-describedby="namehelp" required>
@@ -100,7 +111,8 @@
                                 @endforeach
                             </select>
                             @error('group_id')
-                                <label id="group_id-error" class="error text-danger" for="group_id">{{ $message }}</label>
+                                <label id="group_id-error" class="error text-danger"
+                                    for="group_id">{{ $message }}</label>
                             @enderror
                             <div id="namehelp" class="form-text">
                             </div>

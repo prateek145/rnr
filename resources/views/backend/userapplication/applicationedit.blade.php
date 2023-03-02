@@ -32,9 +32,15 @@
                                         <label for="exampleInputEmail1"
                                             class="form-label">{{ strtoupper($item->name) }}</label>
                                         {{-- {{ dd($filledformdata, $item->name) }} --}}
-                                        <input type="{{ $item->datetype }}" class="form-control" name="{{ $item->name }}"
-                                            value="{{ $filledformdata[$item->name] }}"
-                                            @if ($item->requiredfield == 1) required @endif>
+                                        @if (isset($filledformdata[$item->name]))
+                                            <input type="{{ $item->datetype }}" class="form-control"
+                                                name="{{ $item->name }}" value="{{ $filledformdata[$item->name] }}"
+                                                @if ($item->requiredfield == 1) required @endif>
+                                        @else
+                                            <input type="{{ $item->datetype }}" class="form-control"
+                                                name="{{ $item->name }}"
+                                                @if ($item->requiredfield == 1) required @endif>
+                                        @endif
 
                                     </div>
                                 @endif
@@ -44,8 +50,13 @@
                                         <label for="exampleInputEmail1"
                                             class="form-label">{{ strtoupper($item->name) }}</label>
                                         {{-- {{ dd($filledformdata, $item->name) }} --}}
-                                        <input type="file" class="form-control" name="{{ $item->name }}"
-                                            @if ($item->requiredfield == 1) required @endif>
+                                        @if (isset($item->name))
+                                            <input type="file" class="form-control" name="{{ $item->name }}"
+                                                @if ($item->requiredfield == 1) required @endif>
+                                        @else
+                                            <input type="file" class="form-control" name="{{ $item->name }}"
+                                                @if ($item->requiredfield == 1) required @endif>
+                                        @endif
 
                                     </div>
                                 @endif
@@ -54,8 +65,14 @@
                                     <div class="mb-3">
                                         <label for="exampleInputEmail1"
                                             class="form-label">{{ strtoupper($item->name) }}</label>
-                                        <input type="file" class="form-control" name="{{ $item->name }}"
-                                            @if ($item->requiredfield == 1) required @endif>
+                                        @if (isset($item->name))
+                                            <input type="file" class="form-control" name="{{ $item->name }}"
+                                                @if ($item->requiredfield == 1) required @endif>
+                                        @else
+                                            <input type="file" class="form-control" name="{{ $item->name }}"
+                                                @if ($item->requiredfield == 1) required @endif>
+                                        @endif
+
 
                                     </div>
                                 @endif
@@ -64,11 +81,18 @@
                                     <div class="mb-3">
                                         <label for="exampleInputEmail1"
                                             class="form-label">{{ strtoupper($item->name) }}</label>
-                                        <input type="text" class="form-control" name="{{ $item->name }}"
-                                            minlength="7" maxlength="15" size="15"
-                                            pattern="^((\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.){3}(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$"
-                                            value="{{ $filledformdata[$item->name] }}"
-                                            @if ($item->requiredfield == 1) required @endif>
+                                        @if (isset($filledformdata[$item->name]))
+                                            <input type="text" class="form-control" name="{{ $item->name }}"
+                                                minlength="7" maxlength="15" size="15"
+                                                pattern="^((\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.){3}(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$"
+                                                value="{{ $filledformdata[$item->name] }}"
+                                                @if ($item->requiredfield == 1) required @endif>
+                                        @else
+                                            <input type="text" class="form-control" name="{{ $item->name }}"
+                                                minlength="7" maxlength="15" size="15"
+                                                pattern="^((\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.){3}(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$"
+                                                @if ($item->requiredfield == 1) required @endif>
+                                        @endif
 
                                     </div>
                                 @endif
@@ -77,9 +101,14 @@
                                     <div class="mb-3">
                                         <label for="exampleInputEmail1"
                                             class="form-label">{{ strtoupper($item->name) }}</label>
-                                        <input type="number" class="form-control" name="{{ $item->name }}"
-                                            value="{{ $filledformdata[$item->name] }}"
-                                            @if ($item->requiredfield == 1) required @endif>
+                                        @if ($filledformdata[$item->name])
+                                            <input type="number" class="form-control" name="{{ $item->name }}"
+                                                value="{{ $filledformdata[$item->name] }}"
+                                                @if ($item->requiredfield == 1) required @endif>
+                                        @else
+                                            <input type="number" class="form-control" name="{{ $item->name }}"
+                                                @if ($item->requiredfield == 1) required @endif>
+                                        @endif
 
                                     </div>
                                 @endif
@@ -88,9 +117,14 @@
                                     <div class="mb-3">
                                         <label for="exampleInputEmail1"
                                             class="form-label">{{ strtoupper($item->name) }}</label>
-                                        <input type="text" class="form-control" name="{{ $item->name }}"
-                                            value="{{ $filledformdata[$item->name] }}"
-                                            @if ($item->requiredfield == 1) required @endif>
+                                        @if (isset($filledformdata[$item->name]))
+                                            <input type="text" class="form-control" name="{{ $item->name }}"
+                                                value="{{ $filledformdata[$item->name] }}"
+                                                @if ($item->requiredfield == 1) required @endif>
+                                        @else
+                                            <input type="text" class="form-control" name="{{ $item->name }}"
+                                                @if ($item->requiredfield == 1) required @endif>
+                                        @endif
 
                                     </div>
                                 @endif

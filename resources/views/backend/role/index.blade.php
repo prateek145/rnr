@@ -12,7 +12,7 @@
                 <table class="table text-start align-middle table-bordered table-hover mb-0">
                     <thead>
                         <tr class="text-dark">
-                            <th scope="col">Name</th>
+                            <th scope="col">Application Name</th>
                             <th scope="col">Status</th>
                             <th scope="col">Updated By</th>
                             <th scope="col">Updated At</th>
@@ -43,9 +43,9 @@
                                     }
                                 @endphp
                                 <td>{{ $username }}</td>
-                                <td>{{ $item->updated_at }}</td>
+                                <td>{{ $item->updated_at->toDateString() }}</td>
                                 <td class="d-flex justify-content-betweenx"><a class="btn btn-sm btn-primary"
-                                        href="{{ route('role.edit', $item->id) }}">Assign Role</a>
+                                        href="{{ route('multiplerole.show', $item->id) }}">Assign Role</a>
 
                                 </td>
                             </tr>

@@ -92,7 +92,11 @@
                                                 // dd($data);
                                             @endphp
                                             {{-- {{ dd($fields[$k]->name, $data[$fields[$k]->name]) }} --}}
-                                            <td>{{ $data[$fields[$k]->name] }}</td>
+                                            @if (isset($data[$fields[$k]->name]))
+                                                <td>{{ $data[$fields[$k]->name] }}</td>
+                                            @else
+                                                <td>No Data</td>
+                                            @endif
                                         @endif
                                     @endfor
                                 @else
