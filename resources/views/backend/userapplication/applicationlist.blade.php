@@ -89,11 +89,17 @@
                                         @if (in_array($fields[$k]->id, $index))
                                             @php
                                                 $data = json_decode($item->data, true);
-                                                // dd($data);
+                                                // dd($data, $fields);
+                                                // dd($data, $data['second']);
+                                                // dd(array_key_exists('four', $data));
                                             @endphp
-                                            {{-- {{ dd($fields[$k]->name, $data[$fields[$k]->name]) }} --}}
-                                            @if (isset($data[$fields[$k]->name]))
-                                                <td>{{ $data[$fields[$k]->name] }}</td>
+
+                                            @if (array_key_exists($fields[$k]->name, $data) && isset($data[$fields[$k]->name]))
+                                                @if (is_array($data[$fields[$k]->name]))
+                                                    <td>Value List/ User Group List</td>
+                                                @else
+                                                    <td>{{ $data[$fields[$k]->name] }}</td>
+                                                @endif
                                             @else
                                                 <td>No Data</td>
                                             @endif

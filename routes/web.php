@@ -65,3 +65,9 @@ Auth::routes();
 
 //logs functionality
 Route::get('logs', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index']);
+
+
+//for workflow
+Route::group(['middleware' => ['auth']], function () {
+    \the42coders\Workflows\Workflows::routes();
+});

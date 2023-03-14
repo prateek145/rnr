@@ -92,6 +92,8 @@
                                         <input class="btn btn-sm btn-danger" onclick="return confirm('Are You Sure ?')"
                                             type="submit" value="Delete">
                                     </form>
+                                    <a class="btn btn-sm btn-success"
+                                        href="{{ url('/public/workflows') }}">Workflow</a>
                                 </td>
                             </tr>
                         @endforeach

@@ -162,6 +162,7 @@
                                 @endif
 
                                 @if ($item->type == 'user_group_list')
+                                    {{-- {{ dd($item) }} --}}
                                     <div class="mb-3">
                                         <label for="exampleInputEmail1"
                                             class="form-label">{{ strtoupper($item->name) }}</label>
@@ -226,11 +227,11 @@
                                                                 <label for="message-text"
                                                                     class="col-form-label fw-bold text-left ">Groups
                                                                     <small>(ctrl + click) multiple select</small> </label>
-                                                                <select name="user_list[]" id=""
-                                                                    class="form-control" multiple>
-                                                                    @foreach ($users as $item)
-                                                                        <option value="{{ $item->id }}">
-                                                                            {{ $item->name }}
+                                                                <select name="{{ $item->name }}[user_list][]"
+                                                                    id="" class="form-control" multiple>
+                                                                    @foreach ($users as $item2)
+                                                                        <option value="{{ $item2->id }}">
+                                                                            {{ $item2->name }}
                                                                         </option>
                                                                     @endforeach
 
@@ -265,11 +266,11 @@
                                                                 <label for="message-text"
                                                                     class="col-form-label fw-bold text-left ">Groups
                                                                     <small>(ctrl + click) multiple select</small> </label>
-                                                                <select name="group_list[]" id=""
-                                                                    class="form-control" multiple>
-                                                                    @foreach ($groups as $item)
-                                                                        <option value="{{ $item->id }}">
-                                                                            {{ $item->name }}
+                                                                <select name="{{ $item->name }}[group_list][]"
+                                                                    id="" class="form-control" multiple>
+                                                                    @foreach ($groups as $item1)
+                                                                        <option value="{{ $item1->id }}">
+                                                                            {{ $item1->name }}
                                                                         </option>
                                                                     @endforeach
 

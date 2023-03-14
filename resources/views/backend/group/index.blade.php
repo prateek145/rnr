@@ -155,10 +155,10 @@
             if (document.getElementById(name).checked) {
                 var userselect = document.getElementsByName('userids[]')[0];
                 var option = document.createElement('option');
-                option.selected = true;
                 option.value = value;
                 option.id = value;
                 option.innerText = name;
+                option.selected = true;
                 userselect.appendChild(option);
             } else {
                 var userselect = document.getElementsByName('userids[]')[0];

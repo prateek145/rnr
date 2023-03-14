@@ -186,42 +186,56 @@ class UserApplicationController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //code...
-        $data = $request->all();
-        unset($data['_token']);
-        unset($data['_method']);
-
-        $application = Application::find($id);
-
-        if (isset($request->formdataid)) {
-            # code...
-            $data1['data'] = json_encode($data);
-            $data1['userid'] = $request->userid;
-            $data1['application_id'] = $id;
-            // dd($data1);
-            $formdata = Formdata::find($request->formdataid);
-            $currentarray = $formdata->data;
-            $changearray = $data1['data'];
-            $formdata->update($data1);
-            Log::channel('custom')->info('Userid -> ' . auth()->user()->custom_userid . ' , Application Edited by -> ' . auth()->user()->name . ' ' . auth()->user()->lastname . ' Application Name -> ' . $application->name . ' Current Data -> ' . $currentarray . ' Change Data -> ' . $changearray);
-
-            return redirect()
-                ->back()
-                ->with('success', 'Form Updated.');
-        } else {
-            # code...
-            $data1['data'] = json_encode($data);
-            $data1['userid'] = $request->userid;
-            $data1['application_id'] = $id;
-            // dd($data1);
-            Formdata::create($data1);
-            Log::channel('custom')->info('Application Created by -> ' . auth()->user()->name . ' ' . auth()->user()->lastname . ' Application Name -> ' . $application->name . ' Current Data -> ' . $data1['data']);
-
-            return redirect()
-                ->route('userapplication.list', $id)
-                ->with('success', 'Form Saved.');
-        }
         try {
+            //code...
+            $data = $request->all();
+            unset($data['_token']);
+            unset($data['_method']);
+            unset($data['userid']);
+            unset($data['formdataid']);
+            // dd($data);
+            foreach (request()->allFiles() as $key => $value) {
+                if ($value->getSize() > 2e6) {
+                    # code...
+                    throw new Exception('File Size is more then 2 mb');
+                } else {
+                    # code...
+                    unset($data[$key]);
+                    $filename = rand() . $value->getClientOriginalName();
+                    $value->move(public_path('files'), $filename);
+                    $data[$key] = $filename;
+                }
+            }
+            // dd($data);
+            $application = Application::find($id);
+
+            if (isset($request->formdataid)) {
+                # code...
+                $data1['data'] = json_encode($data);
+                $data1['userid'] = $request->userid;
+                $data1['application_id'] = $id;
+                // dd($data1);
+                $formdata = Formdata::find($request->formdataid);
+                $currentarray = $formdata->data;
+                $changearray = $data1['data'];
+                $formdata->update($data1);
+                Log::channel('custom')->info('Userid -> ' . auth()->user()->custom_userid . ' , Application Edited by -> ' . auth()->user()->name . ' ' . auth()->user()->lastname . ' Application Name -> ' . $application->name . ' Current Data -> ' . $currentarray . ' Change Data -> ' . $changearray);
+
+                return redirect()
+                    ->back()
+                    ->with('success', 'Form Updated.');
+            } else {
+                # code...
+                $data1['data'] = json_encode($data);
+                $data1['userid'] = $request->userid;
+                $data1['application_id'] = $id;
+                Formdata::create($data1);
+                Log::channel('custom')->info('Application Created by -> ' . auth()->user()->name . ' ' . auth()->user()->lastname . ' Application Name -> ' . $application->name . ' Current Data -> ' . $data1['data']);
+
+                return redirect()
+                    ->route('userapplication.list', $id)
+                    ->with('success', 'Form Saved.');
+            }
         } catch (\Exception $th) {
             //throw $th;
             //throw $th;

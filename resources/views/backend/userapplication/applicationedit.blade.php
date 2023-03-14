@@ -49,6 +49,11 @@
                                     <div class="mb-3">
                                         <label for="exampleInputEmail1"
                                             class="form-label">{{ strtoupper($item->name) }}</label>
+
+                                        @if (isset($filledformdata[$item->name]))
+                                            <a href="{{ asset('public/files/' . $filledformdata[$item->name]) }}"
+                                                target="_blank">(uploaded file)</a>
+                                        @endif
                                         {{-- {{ dd($filledformdata, $item->name) }} --}}
                                         @if (isset($item->name))
                                             <input type="file" class="form-control" name="{{ $item->name }}"
@@ -62,9 +67,15 @@
                                 @endif
 
                                 @if ($item->type == 'images')
+                                    {{-- {{ dd($item->name) }} --}}
                                     <div class="mb-3">
                                         <label for="exampleInputEmail1"
                                             class="form-label">{{ strtoupper($item->name) }}</label>
+                                        @if (isset($filledformdata[$item->name]))
+                                            <a href="{{ asset('public/files/' . $filledformdata[$item->name]) }}"
+                                                target="_blank">(uploaded file)</a>
+                                        @endif
+
                                         @if (isset($item->name))
                                             <input type="file" class="form-control" name="{{ $item->name }}"
                                                 @if ($item->requiredfield == 1) required @endif>
