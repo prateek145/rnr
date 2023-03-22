@@ -17,7 +17,8 @@
                 <table class="table text-start align-middle table-bordered table-hover mb-0">
                     <thead>
                         <tr class="text-dark">
-                            <th scope="col">Application Name</th>
+                            {{-- <th scope="col">Application Name</th> --}}
+                            <th scope="col"> Name</th>
                             <th scope="col">Import</th>
                             <th scope="col">Create</th>
                             <th scope="col">Read</th>
@@ -33,9 +34,10 @@
                             <tr>
                                 <td>
                                     <a href="{{ route('role.edit', $item->id) }}">
-                                        {{ $item->role_applicationname->name }}</a>
+                                        {{ $item->name }}</a>
 
                                 </td>
+
                                 <td>
                                     @if ($item->import == 1)
                                         Active

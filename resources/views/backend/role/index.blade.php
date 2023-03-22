@@ -13,6 +13,7 @@
                     <thead>
                         <tr class="text-dark">
                             <th scope="col">Application Name</th>
+                            {{-- <th scope="col">Name</th> --}}
                             <th scope="col">Status</th>
                             <th scope="col">Updated By</th>
                             <th scope="col">Updated At</th>
@@ -24,7 +25,7 @@
                             {{-- {{ dd($item) }} --}}
                             <tr>
                                 <td>
-                                    <a href="{{ route('role.edit', $item->id) }}"> {{ $item->name }}</a>
+                                    <a href="{{ route('multiplerole.show', $item->id) }}"> {{ $item->name }}</a>
 
                                 </td>
                                 <td>

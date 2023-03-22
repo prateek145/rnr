@@ -53,7 +53,8 @@ class MultipleroleController extends Controller
     {
         try {
             //code...
-            $application = Application::find($id)->first();
+            $application = Application::find($id);
+            // dd($id);
             $roles = Role::where('application_id', $id)
                 ->latest()
                 ->get();

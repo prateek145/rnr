@@ -219,7 +219,7 @@ class UserApplicationController extends Controller
                 $currentarray = $formdata->data;
                 $changearray = $data1['data'];
                 $formdata->update($data1);
-                Log::channel('custom')->info('Userid -> ' . auth()->user()->custom_userid . ' , Application Edited by -> ' . auth()->user()->name . ' ' . auth()->user()->lastname . ' Application Name -> ' . $application->name . ' Current Data -> ' . $currentarray . ' Change Data -> ' . $changearray);
+                Log::channel('user')->info('Userid -> ' . auth()->user()->custom_userid . ' , Application Edited by -> ' . auth()->user()->name . ' ' . auth()->user()->lastname . ' Application Name -> ' . $application->name . ' Current Data -> ' . $currentarray . ' Change Data -> ' . $changearray);
 
                 return redirect()
                     ->back()
@@ -230,7 +230,7 @@ class UserApplicationController extends Controller
                 $data1['userid'] = $request->userid;
                 $data1['application_id'] = $id;
                 Formdata::create($data1);
-                Log::channel('custom')->info('Application Created by -> ' . auth()->user()->name . ' ' . auth()->user()->lastname . ' Application Name -> ' . $application->name . ' Current Data -> ' . $data1['data']);
+                Log::channel('user')->info('Application Created by -> ' . auth()->user()->name . ' ' . auth()->user()->lastname . ' Application Name -> ' . $application->name . ' Current Data -> ' . $data1['data']);
 
                 return redirect()
                     ->route('userapplication.list', $id)
@@ -259,7 +259,7 @@ class UserApplicationController extends Controller
             // dd($id);
             $form = Formdata::find($id);
             $application = Application::find($form->application_id);
-            Log::channel('custom')->info('Userid ' . auth()->user()->custom_userid . ' , Application Deleted by ' . auth()->user()->name . ' ' . auth()->user()->lastname . ' Application Name -> ' . $application->name);
+            Log::channel('user')->info('Userid ' . auth()->user()->custom_userid . ' , Application Deleted by ' . auth()->user()->name . ' ' . auth()->user()->lastname . ' Application Name -> ' . $application->name);
             Formdata::destroy($id);
             return redirect()
                 ->back()

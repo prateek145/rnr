@@ -11,10 +11,31 @@
 
                 <div class="tab-content" id="pills-tabContent">
                     <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-                        <h6 class="mb-4"> {{ strtoupper($application->name) }} Role </h6>
-                        <form action="{{ route('role.update', $application->id) }}" class="form-horizontal" method="post">
+                        <div class="d-flex justify-content-between">
+                            <div >
+                                <h6 class="mb-4"> {{ strtoupper($application->name) }} Role </h6>
+                            </div>
+                            <div >
+                                <a href="{{ route('multiplerole.show', $applicationrole->id) }}">
+                                    <button type="button" class="btn btn-danger"><- Return</button>
+                                </a>
+                            </div>
+
+                        </div>
+                        <form action="{{ route('role.update', $applicationrole->id) }}" class="form-horizontal" method="post">
                             @csrf
                             @method('PUT')
+
+                            <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label">Name</label>
+                                <input type="text" class="form-control @error('name') is-invalid @enderror" name="name"
+                                    id="name" aria-describedby="namehelp" value="{{$applicationrole->name}}" required>
+                                @error('name')
+                                    <label id="name-error" class="error text-danger" for="name">{{ $message }}</label>
+                                @enderror
+                                <div id="namehelp" class="form-text">
+                                </div>
+                            </div>
 
                             @if ($applicationrole != null)
                                 <div class="mb-3">

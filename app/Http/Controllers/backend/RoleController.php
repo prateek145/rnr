@@ -59,6 +59,7 @@ class RoleController extends Controller
             $data['user_list'] = json_encode($request->user_list);
             $data['group_list'] = json_encode($request->group_list);
             $application = Application::find($request->application_id);
+            // dd($application);
             Role::create($data);
             Log::channel('custom')->info('Userid -> ' . auth()->user()->custom_userid . ' , Role Created by -> ' . auth()->user()->name . ' ' . auth()->user()->lastname . ' Application Name -> ' . $application->name);
 
@@ -99,8 +100,9 @@ class RoleController extends Controller
     {
         try {
             //code...
-            $application = Application::find($id);
-            $role = Role::where('application_id', $id)->first();
+            $role = Role::find($id);
+            // dd($role);
+            $application = Application::find($role->application_id);
             if ($role != null) {
                 # code...
                 $applicationrole = $role;
@@ -162,7 +164,7 @@ class RoleController extends Controller
         try {
             //code...
             // dd($request->all());
-            $role = Role::where('application_id', $request->application_id)->first();
+            $role = Role::find($id);
             $application = Application::find($request->application_id);
 
             // dd($role);

@@ -11,9 +11,31 @@
 
                 <div class="tab-content" id="pills-tabContent">
                     <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-                        <h6 class="mb-4"> {{ strtoupper($application->name) }} Role </h6>
+                        <div class="d-flex justify-content-between">
+                            <div >
+                                <h6 class="mb-4"> {{ strtoupper($application->name) }} Role </h6>
+                            </div>
+                            <div >
+                                <a href="{{ route('role.index') }}">
+                                    <button type="button" class="btn btn-danger"><- Return</button>
+                                </a>
+                            </div>
+
+                        </div>
+
                         <form action="{{ route('role.store') }}" class="form-horizontal" method="post">
                             @csrf
+
+                            <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label">Name</label>
+                                <input type="text" class="form-control @error('name') is-invalid @enderror" name="name"
+                                    id="name" aria-describedby="namehelp" required>
+                                @error('name')
+                                    <label id="name-error" class="error text-danger" for="name">{{ $message }}</label>
+                                @enderror
+                                <div id="namehelp" class="form-text">
+                                </div>
+                            </div>
 
                             <div class="mb-3">
                                 <input type="checkbox" id="" name="import" value="1">

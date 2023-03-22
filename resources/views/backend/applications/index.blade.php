@@ -93,7 +93,7 @@
                                             type="submit" value="Delete">
                                     </form>
                                     <a class="btn btn-sm btn-success"
-                                        href="{{ url('/public/workflows') }}">Workflow</a>
+                                        href="{{ route('workflow.show', $item->id) }}">Workflow</a>
                                 </td>
                             </tr>
                         @endforeach

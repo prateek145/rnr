@@ -23,17 +23,17 @@ return [
     |
     */
     'tasks' => [
-        'SendMail' => the42coders\Workflows\Tasks\SendMail::class,
-        'Execute' => the42coders\Workflows\Tasks\Execute::class,
-        'PregReplace' => the42coders\Workflows\Tasks\PregReplace::class,
-        'HtmlInput' => the42coders\Workflows\Tasks\HtmlInput::class,
-        'DomPDF' => the42coders\Workflows\Tasks\DomPDF::class,
-        'HttpStatus' => the42coders\Workflows\Tasks\HttpStatus::class,
-        'LoadModel' => the42coders\Workflows\Tasks\LoadModel::class,
-        'ChangeModel' => the42coders\Workflows\Tasks\ChangeModel::class,
-        'SaveModel' => the42coders\Workflows\Tasks\SaveModel::class,
-        'SendSlackMessage' => the42coders\Workflows\Tasks\SendSlackMessage::class,
-        'TextInput' => the42coders\Workflows\Tasks\TextInput::class,
+        'TextNode' => the42coders\Workflows\Tasks\SendMail::class,
+        'Transition' => the42coders\Workflows\Tasks\Execute::class,
+        'EvaluateContent' => the42coders\Workflows\Tasks\PregReplace::class,
+        'SendNotification' => the42coders\Workflows\Tasks\HtmlInput::class,
+        'UpdateContent' => the42coders\Workflows\Tasks\DomPDF::class,
+        'UserAction' => the42coders\Workflows\Tasks\HttpStatus::class,
+        // 'LoadModel' => the42coders\Workflows\Tasks\LoadModel::class,
+        // 'ChangeModel' => the42coders\Workflows\Tasks\ChangeModel::class,
+        // 'SaveModel' => the42coders\Workflows\Tasks\SaveModel::class,
+        // 'SendSlackMessage' => the42coders\Workflows\Tasks\SendSlackMessage::class,
+        // 'TextInput' => the42coders\Workflows\Tasks\TextInput::class,
     ],
 
     'task_settings' => [
@@ -80,8 +80,8 @@ return [
     'triggers' => [
 
         'types' => [
-            'ObserverTrigger' => the42coders\Workflows\Triggers\ObserverTrigger::class,
-            'ButtonTrigger' => the42coders\Workflows\Triggers\ButtonTrigger::class,
+            'Start' => the42coders\Workflows\Triggers\Start::class,
+            'Stop' => the42coders\Workflows\Triggers\Stop::class,
         ],
 
         'Observers' => [

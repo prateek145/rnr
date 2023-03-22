@@ -19,7 +19,7 @@
         }
     </style>
 
-    <script src="{{ asset('vendor/workflows/js/workflow.js') }}"></script>
+    <script src="{{ asset('public/vendor/workflows/js/workflow.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/trix/1.2.3/trix-core.js"></script>
 
     <!-- Fonts -->
@@ -28,7 +28,7 @@
 
 
     <!-- Styles -->
-    <link href="{{ asset('vendor/workflows/css/workflow.css') }}" rel="stylesheet">
+    <link href="{{ asset('public/vendor/workflows/css/workflow.css') }}" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/trix/1.2.3/trix.css" rel="stylesheet">
 
     <script>
@@ -37,7 +37,7 @@
     </script>
     <style>
         #drawflow {
-            background-image: url({{ asset('vendor/workflows/img/nature_background.jpeg') }});
+            background-image: url({{ asset('public/vendor/workflows/img/nature_background.jpeg') }});
         }
     </style>
 
@@ -45,21 +45,27 @@
 <body>
 <header>
     <div style="width: 250px; ">
-        <a href="{{ route('workflow.index') }}"><img src="{{ asset('vendor/workflows/img/42workflows.png') }}" class="img-fluid"/></a>
+        <a href="{{ route('backend.home') }}"><h3 class="text-primary ml-5 mt-3">RNR</h3></a>
     </div>
 </header>
 <div class="wrapper">
     <div class="col">
+        <h3 class="mt-3">STANDERED</h3>
         @foreach(config('workflows.triggers.types') as $taskName => $taskClass)
         {{-- {{dd( $taskName, $taskClass, $taskClass::getTranslation() )}} --}}
             <div class="drag-drawflow" draggable="true" ondragstart="drag(event)" data-node="{{ $taskName }}">
-                {!! $taskClass::$icon !!}<span> {{$taskClass::getTranslation() }}</span>
+                {!! $taskClass::$icon !!}<span> {{$taskName }}</span>
             </div>
         @endforeach
+
+        
         @foreach(config('workflows.tasks') as $taskName => $taskClass)
             <div class="drag-drawflow" draggable="true" ondragstart="drag(event)" data-node="{{ $taskName }}">
-                {!! $taskClass::$icon !!}<span> {{ __('workflows::workflows.Elements.'.$taskName) }}</span>
+                {!! $taskClass::$icon !!}<span> {{ $taskName }}</span>
             </div>
+            @if ($taskName == 'Transition')
+            <h3 class="mt-3">GENRAL</h3>
+            @endif
         @endforeach
     </div>
     <div class="col-right">
@@ -92,7 +98,7 @@
     editor.start();
 
     @foreach($workflow->tasks as $task)
-        var new_node = `@include('workflows::layouts.task_node_html', ['elementName' => $task->getTranslation(), 'element' => $task, 'type' => 'task', 'icon' => $task::$icon])`;
+        var new_node = `@include('workflows::layouts.task_node_html', ['elementName' => $task->name, 'element' => $task, 'type' => 'task', 'icon' => $task::$icon])`;
         editor.addNode(0, '{{ $task->name }}', 1, 1, {{$task->pos_x}}, {{ $task->pos_y }}, '{{ $task->name }}', {
             task_id: {{$task->id}},
             type: 'task'
@@ -100,7 +106,7 @@
     @endforeach
 
     @foreach($workflow->triggers as $trigger)
-        var new_node = `@include('workflows::layouts.task_node_html', ['elementName' => $trigger->getTranslation(), 'element' => $trigger, 'type' => 'trigger', 'icon' => $trigger::$icon])`;
+        var new_node = `@include('workflows::layouts.task_node_html', ['elementName' => $trigger->name, 'element' => $trigger, 'type' => 'trigger', 'icon' => $trigger::$icon])`;
         editor.addNode(0, '{{ $trigger->name }}', 0, 1, {{$trigger->pos_x}}, {{ $trigger->pos_y }}, '{{ $trigger->name }}', {
             trigger_id: {{$trigger->id}},
             type: 'trigger'
@@ -125,9 +131,9 @@
             },
             dataType: "json",
             success: function (answer) {
-                console.log(answer);
-                console.log('#' + answer.id);
-                console.log($('#' + answer.id).length);
+                // console.log(answer);
+                // console.log('#' + answer.id);
+                // console.log($('#' + answer.id).length);
                 $('#' + answer.id).html(answer.html);
             }
         });
@@ -135,7 +141,7 @@
 
     function saveConditions(id, type) {
         var data = $('#builder').queryBuilder('getRules');
-        console.log(data);
+        // console.log(data);
         $.ajax({
             type: "POST",
             url: "{{ route('workflow.changeConditions', ['workflow' => $workflow]) }}",
@@ -147,7 +153,7 @@
             },
             dataType: "json",
             success: function (answer) {
-                console.log(answer);
+                // console.log(answer);
                 //editor.editor_mode = 'edit';
                 //changeMode('lock');
                 //$('#' + answer.name + '_' + answer.id).modal('hide');
@@ -161,7 +167,7 @@
         $('#settings-overlay').find('.form-control').each(function (index) {
             data[$(this).attr('name')] = $(this).val();
         });
-        console.log(data);
+        // console.log(data);
         $.ajax({
             type: "POST",
             url: "{{ route('workflow.changeValues', ['workflow' => $workflow]) }}",
@@ -173,7 +179,7 @@
             },
             dataType: "json",
             success: function (answer) {
-                console.log(answer);
+                // console.log(answer);
                 //editor.editor_mode = 'edit';
                 //changeMode('lock');
                 //$('#' + answer.name + '_' + answer.id).modal('hide');
@@ -195,8 +201,8 @@
 
     // Events!
     editor.on('nodeCreated', function (node) {
-        console.log('Data Typ: ' + node.data.type);
-        console.log('Node Id: ' + node.id);
+        // console.log('Data Typ: ' + node.data.type);
+        // console.log('Node Id: ' + node.id);
         switch (node.data.type) {
             case 'task':
                 $.ajax({
@@ -205,8 +211,8 @@
                     data: node,
                     dataType: "json",
                     success: function (data) {
-                        console.log('BE: Node ID: ' + data.node_id);
-                        console.log('BE: Task ID: ' + data.task.id);
+                        // console.log('BE: Node ID: ' + data.node_id);
+                        // console.log('BE: Task ID: ' + data.task.id);
                         editor.setData(data.node_id, 'task_id', data.task.id);
                         $('#node-' + data.node_id).attr('data-task_id', data.task.id);
                     }
@@ -238,7 +244,7 @@
             },
             dataType: "json",
             success: function (data) {
-                console.log(data);
+                // console.log(data);
             }
         });
 
@@ -247,7 +253,7 @@
     var nodeDragDelay = null;
 
     function updateNodePosition(node) {
-        console.log(node);
+        // console.log(node);
         $.ajax({
             type: "POST",
             url: "{{ route('workflow.updateNodePosition', ['workflow' => $workflow]) }}",
@@ -256,13 +262,13 @@
             },
             dataType: "json",
             success: function (data) {
-                console.log(data);
+                // console.log(data);
             }
         });
     }
 
     editor.on('nodeSelected', function (id) {
-        console.log("Node selected " + id);
+        // console.log("Node selected " + id);
     })
 
     editor.on('nodeMoved', function (node) {
@@ -271,11 +277,11 @@
     });
 
     editor.on('moduleCreated', function (name) {
-        console.log("Module Created " + name);
+        // console.log("Module Created " + name);
     })
 
     editor.on('moduleChanged', function (name) {
-        console.log("Module Changed " + name);
+        // console.log("Module Changed " + name);
     })
 
     editor.on('connectionCreated', function (connection) {
@@ -290,12 +296,12 @@
             },
             dataType: "json",
             success: function (data) {
-                console.log(data);
+                // console.log(data);
             }
         });
 
-        console.log('Connection created');
-        console.log(connection);
+        // console.log('Connection created');
+        // console.log(connection);
     })
 
     editor.on('connectionRemoved', function (connection) {
@@ -305,18 +311,18 @@
             data: connection,
             dataType: "json",
             success: function (data) {
-                console.log(data);
+                // console.log(data);
             }
         });
-        console.log('Connection removed');
-        console.log(connection);
+        // console.log('Connection removed');
+        // console.log(connection);
     })
 
     editor.on('mouseMove', function (position) {
     })
 
     editor.on('zoom', function (zoom) {
-        console.log('Zoom level ' + zoom);
+        // console.log('Zoom level ' + zoom);
     })
 
     editor.on('translate', function (position) {
@@ -346,15 +352,19 @@
     }
 
     function drag(ev) {
+        // console.log(ev.dataTransfer);
         if (ev.type === "touchstart") {
             mobile_item_selec = ev.target.closest(".drag-drawflow").getAttribute('data-node');
+            // console.log(mobile_item_selec, 'prateek');
         } else {
+            // console.log('elsepart', ev.target.getAttribute('data-node'));
             ev.dataTransfer.setData("node", ev.target.getAttribute('data-node'));
         }
     }
 
     function drop(ev) {
         if (ev.type === "touchend") {
+            // console.log('touchend');
             var parentdrawflow = document.elementFromPoint(mobile_last_move.touches[0].clientX, mobile_last_move.touches[0].clientY).closest("#drawflow");
             if (parentdrawflow != null) {
                 addNodeToDrawFlow(mobile_item_selec, mobile_last_move.touches[0].clientX, mobile_last_move.touches[0].clientY);
@@ -369,6 +379,7 @@
     }
 
     function addNodeToDrawFlow(name, pos_x, pos_y) {
+        
         if (editor.editor_mode === 'fixed') {
             return false;
         }
@@ -378,14 +389,15 @@
 
         switch (name) {
             @foreach(config('workflows.tasks') as $taskName => $taskClass)
+
             case '{{ $taskName }}':
-                var {{$taskName}}_new_node = `@include('workflows::layouts.task_node_html', ['elementName' => $taskClass::getTranslation(), 'fields' => $taskClass::$fields, 'type' => 'task', 'icon' => $taskClass::$icon])`;
+                var {{$taskName}}_new_node = `@include('workflows::layouts.task_node_html', ['elementName' => $taskName, 'fields' => $taskClass::$fields, 'type' => 'task', 'icon' => $taskClass::$icon])`;
                 editor.addNode(0, '{{ $taskName }}', 1, 1, pos_x, pos_y, '{{ $taskName }}', {type: 'task'}, {{$taskName}}_new_node);
                 break;
             @endforeach
             @foreach(config('workflows.triggers.types') as $triggerName => $triggerClass)
             case '{{$triggerName}}':
-                var {{$taskName}}_new_node = `@include('workflows::layouts.task_node_html', ['elementName' => $triggerClass::getTranslation(), 'fields' => $triggerClass::$fields, 'type' => 'trigger', 'icon' => $triggerClass::$icon])`;
+                var {{$taskName}}_new_node = `@include('workflows::layouts.task_node_html', ['elementName' => $triggerName, 'fields' => $triggerClass::$fields, 'type' => 'trigger', 'icon' => $triggerClass::$icon])`;
                 editor.addNode(0, '{{$triggerName}}', 0, 1, pos_x, pos_y, '{{$triggerName}}', {type: 'trigger'}, {{$taskName}}_new_node);
                 break;
             @endforeach
@@ -405,7 +417,7 @@
         editor.precanvas.style.transform = '';
         editor.precanvas.style.left = editor.canvas_x + 'px';
         editor.precanvas.style.top = editor.canvas_y + 'px';
-        console.log(transform);
+        // console.log(transform);
 
         //e.target.children[0].style.top  =  -editor.canvas_y - editor.container.offsetTop +'px';
         //e.target.children[0].style.left  =  -editor.canvas_x  - editor.container.offsetLeft +'px';
@@ -447,6 +459,7 @@
     function closeSettings() {
         $('#settings-container').html('');
         $('#settings-container').fadeOut();
+        location.reload();
     }
 
     function closeConditions() {
@@ -461,6 +474,7 @@
             data: {},
             dataType: "text",
             success: function (data) {
+                console.log(data);
                 $('#settings-container').html(data);
                 $('#settings-container').fadeIn();
             }
@@ -469,6 +483,7 @@
 
     function loadSettings(type, element_id = 0, element) {
 
+        // console.log(type , element_id, element);
         if (element_id == 0) {
             var div = $(element);
             var count = 0;
@@ -479,6 +494,7 @@
             element_id = div.attr('data-' + type + '_id');
         }
 
+        // console.log($workflow);
         $.ajax({
             type: "POST",
             url: "{{ route('workflow.getElementSettings', ['workflow' => $workflow]) }}",
@@ -515,7 +531,7 @@
             },
             dataType: "text",
             success: function (data) {
-                console.log('test');
+                // console.log('test');
                 $('#conditions-container').html(data);
                 $('#conditions-container').fadeIn();
             }
