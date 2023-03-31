@@ -24,8 +24,8 @@
             @csrf
 
             <div class="mb-3">
-              <label for="exampleInputEmail1" class="form-label">Key Name</label>
-              <input type="text" class="form-control" name="keyname">
+              <label for="exampleInputEmail1" class="form-label">Name</label>
+              <input type="text" class="form-control" name="name">
 
             </div>
 
@@ -245,6 +245,7 @@
 
 
             <input type="hidden" value="{{ auth()->id() }}" name="userid">
+            <input type="hidden" value="{{ $task->id }}" name="taskid">
 
             <button type="submit" class="btn btn-primary">Submit</button>
           </form>

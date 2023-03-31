@@ -25,14 +25,14 @@
 
             <div class="mb-3">
               <label for="exampleInputEmail1" class="form-label">Name</label>
-              <input type="text" class="form-control" name="name">
+              <input type="text" class="form-control" name="name" value="{{$content->name}}">
 
             </div>
 
 
             <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label">Value</label>
-                <input type="text" class="form-control" name="value" placeholder="Value">
+                <input type="text" class="form-control" name="value" value="{{$content->value}}" placeholder="Value">
               </div>
 
 

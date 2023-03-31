@@ -68,6 +68,8 @@
             @endif
         @endforeach
     </div>
+
+    
     <div class="col-right">
         <div id="drawflow" ondrop="drop(event)" ondragover="allowDrop(event)">
             <div class="btn-logs">
@@ -98,11 +100,27 @@
     editor.start();
 
     @foreach($workflow->tasks as $task)
-        var new_node = `@include('workflows::layouts.task_node_html', ['elementName' => $task->name, 'element' => $task, 'type' => 'task', 'icon' => $task::$icon])`;
-        editor.addNode(0, '{{ $task->name }}', 1, 1, {{$task->pos_x}}, {{ $task->pos_y }}, '{{ $task->name }}', {
-            task_id: {{$task->id}},
-            type: 'task'
-        }, new_node);
+        console.log('{{$task->name}}');
+        if ('{{$task->name}}' == 'Start') {
+            var new_node = `@include('workflows::layouts.task_node_html', ['elementName' => $task->name, 'element' => $task,'showname'=>json_decode($task->data_fields), 'type' => 'task', 'icon' => $task::$icon])`;
+            editor.addNode(0, '{{ $task->name }}', 0, 1, {{$task->pos_x}}, {{ $task->pos_y }}, '{{ $task->name }}', {
+                task_id: {{$task->id}},
+                type: 'task'
+            }, new_node);
+            
+        }else if('{{$task->name}}' == 'Stop'){
+            var new_node = `@include('workflows::layouts.task_node_html', ['elementName' => $task->name, 'element' => $task,'showname'=>json_decode($task->data_fields), 'type' => 'task', 'icon' => $task::$icon])`;
+            editor.addNode(0, '{{ $task->name }}', 1, 0, {{$task->pos_x}}, {{ $task->pos_y }}, '{{ $task->name }}', {
+                task_id: {{$task->id}},
+                type: 'task'
+            }, new_node);
+        }else{
+            var new_node = `@include('workflows::layouts.task_node_html', ['elementName' => $task->name, 'element' => $task,'showname'=>json_decode($task->data_fields), 'type' => 'task', 'icon' => $task::$icon])`;
+            editor.addNode(0, '{{ $task->name }}', 1, 1, {{$task->pos_x}}, {{ $task->pos_y }}, '{{ $task->name }}', {
+                task_id: {{$task->id}},
+                type: 'task'
+            }, new_node);
+        }
     @endforeach
 
     @foreach($workflow->triggers as $trigger)
@@ -285,6 +303,7 @@
     })
 
     editor.on('connectionCreated', function (connection) {
+        console.log(connection);
         $inputNode = editor.getNode(connection.input_id);
         $outputNode = editor.getNode(connection.ouput_id);
         $.ajax({
@@ -296,7 +315,7 @@
             },
             dataType: "json",
             success: function (data) {
-                // console.log(data);
+                console.log(data);
             }
         });
 
@@ -391,14 +410,27 @@
             @foreach(config('workflows.tasks') as $taskName => $taskClass)
 
             case '{{ $taskName }}':
-                var {{$taskName}}_new_node = `@include('workflows::layouts.task_node_html', ['elementName' => $taskName, 'fields' => $taskClass::$fields, 'type' => 'task', 'icon' => $taskClass::$icon])`;
-                editor.addNode(0, '{{ $taskName }}', 1, 1, pos_x, pos_y, '{{ $taskName }}', {type: 'task'}, {{$taskName}}_new_node);
-                break;
+                // console.log();
+                if ('{{ $taskName }}' == 'Stop') {
+                    var {{$taskName}}_new_node = `@include('workflows::layouts.task_node_html', ['elementName' => $taskName, 'fields' => $taskClass::$fields, 'type' => 'task', 'icon' => $taskClass::$icon])`;
+                    editor.addNode(0, '{{ $taskName }}', 1, 0, pos_x, pos_y, '{{ $taskName }}', {type: 'task'}, {{$taskName}}_new_node);
+                    break;
+                }else if('{{ $taskName }}' == 'Start'){
+                    var {{$taskName}}_new_node = `@include('workflows::layouts.task_node_html', ['elementName' => $taskName, 'fields' => $taskClass::$fields, 'type' => 'task', 'icon' => $taskClass::$icon])`;
+                    editor.addNode(0, '{{ $taskName }}', 0, 1, pos_x, pos_y, '{{ $taskName }}', {type: 'task'}, {{$taskName}}_new_node);
+                    break;
+                }
+                else{
+                    var {{$taskName}}_new_node = `@include('workflows::layouts.task_node_html', ['elementName' => $taskName, 'fields' => $taskClass::$fields, 'type' => 'task', 'icon' => $taskClass::$icon])`;
+                    editor.addNode(0, '{{ $taskName }}', 1, 1, pos_x, pos_y, '{{ $taskName }}', {type: 'task'}, {{$taskName}}_new_node);
+                    break;
+
+                }
             @endforeach
             @foreach(config('workflows.triggers.types') as $triggerName => $triggerClass)
             case '{{$triggerName}}':
                 var {{$taskName}}_new_node = `@include('workflows::layouts.task_node_html', ['elementName' => $triggerName, 'fields' => $triggerClass::$fields, 'type' => 'trigger', 'icon' => $triggerClass::$icon])`;
-                editor.addNode(0, '{{$triggerName}}', 0, 1, pos_x, pos_y, '{{$triggerName}}', {type: 'trigger'}, {{$taskName}}_new_node);
+                editor.addNode(0, '{{$triggerName}}', 1, 1, pos_x, pos_y, '{{$triggerName}}', {type: 'trigger'}, {{$taskName}}_new_node);
                 break;
             @endforeach
             default:
@@ -459,7 +491,7 @@
     function closeSettings() {
         $('#settings-container').html('');
         $('#settings-container').fadeOut();
-        location.reload();
+        // location.reload();
     }
 
     function closeConditions() {

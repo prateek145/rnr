@@ -16,7 +16,7 @@
                                 <h6 class="mb-4"> {{ strtoupper($application->name) }} Role </h6>
                             </div>
                             <div >
-                                <a href="{{ route('multiplerole.show', $applicationrole->id) }}">
+                                <a href="{{ route('multiplerole.show', $application->id) }}">
                                     <button type="button" class="btn btn-danger"><- Return</button>
                                 </a>
                             </div>

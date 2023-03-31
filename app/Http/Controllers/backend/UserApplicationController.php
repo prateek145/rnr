@@ -10,7 +10,11 @@ use App\Models\backend\Formdata;
 use App\Models\User;
 use App\Models\backend\Group;
 use App\Models\backend\ApplicationIndexing;
+use the42coders\Workflows\Workflow;
 use Illuminate\Support\Facades\Log;
+use the42coders\Workflows\Tasks\Task;
+use Illuminate\Support\Facades\Mail;
+
 
 class UserApplicationController extends Controller
 {
@@ -186,56 +190,101 @@ class UserApplicationController extends Controller
      */
     public function update(Request $request, $id)
     {
-        try {
-            //code...
-            $data = $request->all();
-            unset($data['_token']);
-            unset($data['_method']);
-            unset($data['userid']);
-            unset($data['formdataid']);
-            // dd($data);
-            foreach (request()->allFiles() as $key => $value) {
-                if ($value->getSize() > 2e6) {
-                    # code...
-                    throw new Exception('File Size is more then 2 mb');
-                } else {
-                    # code...
-                    unset($data[$key]);
-                    $filename = rand() . $value->getClientOriginalName();
-                    $value->move(public_path('files'), $filename);
-                    $data[$key] = $filename;
-                }
-            }
-            // dd($data);
-            $application = Application::find($id);
-
-            if (isset($request->formdataid)) {
+        //code...
+        $data = $request->all();
+        unset($data['_token']);
+        unset($data['_method']);
+        unset($data['userid']);
+        unset($data['formdataid']);
+        // dd($data);
+        foreach (request()->allFiles() as $key => $value) {
+            if ($value->getSize() > 2e6) {
                 # code...
-                $data1['data'] = json_encode($data);
-                $data1['userid'] = $request->userid;
-                $data1['application_id'] = $id;
-                // dd($data1);
-                $formdata = Formdata::find($request->formdataid);
-                $currentarray = $formdata->data;
-                $changearray = $data1['data'];
-                $formdata->update($data1);
-                Log::channel('user')->info('Userid -> ' . auth()->user()->custom_userid . ' , Application Edited by -> ' . auth()->user()->name . ' ' . auth()->user()->lastname . ' Application Name -> ' . $application->name . ' Current Data -> ' . $currentarray . ' Change Data -> ' . $changearray);
-
-                return redirect()
-                    ->back()
-                    ->with('success', 'Form Updated.');
+                throw new Exception('File Size is more then 2 mb');
             } else {
                 # code...
-                $data1['data'] = json_encode($data);
-                $data1['userid'] = $request->userid;
-                $data1['application_id'] = $id;
-                Formdata::create($data1);
-                Log::channel('user')->info('Application Created by -> ' . auth()->user()->name . ' ' . auth()->user()->lastname . ' Application Name -> ' . $application->name . ' Current Data -> ' . $data1['data']);
-
-                return redirect()
-                    ->route('userapplication.list', $id)
-                    ->with('success', 'Form Saved.');
+                unset($data[$key]);
+                $filename = rand() . $value->getClientOriginalName();
+                $value->move(public_path('files'), $filename);
+                $data[$key] = $filename;
             }
+        }
+        // dd($data);
+        $application = Application::find($id);
+
+        if (isset($request->formdataid)) {
+            # code...
+            $data1['data'] = json_encode($data);
+            $data1['userid'] = $request->userid;
+            $data1['application_id'] = $id;
+            // dd($data1);
+            $formdata = Formdata::find($request->formdataid);
+            $currentarray = $formdata->data;
+            $changearray = $data1['data'];
+            $formdata->update($data1);
+            Log::channel('user')->info('Userid -> ' . auth()->user()->custom_userid . ' , Application Edited by -> ' . auth()->user()->name . ' ' . auth()->user()->lastname . ' Application Name -> ' . $application->name . ' Current Data -> ' . $currentarray . ' Change Data -> ' . $changearray);
+
+            return redirect()
+                ->back()
+                ->with('success', 'Form Updated.');
+        } else {
+            # code...
+            $data1['data'] = json_encode($data);
+            $data1['userid'] = $request->userid;
+            $data1['application_id'] = $id;
+            // dd($data);
+            //workflow functionality
+            $workflow = Workflow::where('application_id', $id)->first();
+            $tasks = Task::where('workflow_id', $workflow->id)
+                ->latest()
+                ->get();
+
+            for ($i = 0; $i < count($tasks); $i++) {
+                # code...
+                if ($tasks[$i]->name == 'SendNotification') {
+                    # code...
+                    $sendmail = false;
+                    $wdata = json_decode($tasks[$i]->data_fields);
+                    // dd($data);
+                    $subject = $wdata->name;
+                    $notification = $wdata->notification;
+                }
+             
+                $parenttask = Task::where('id', $tasks[$i]->parentable_id)->first();
+                // dd($parenttask);
+                if (isset($parenttask->name) && $parenttask->name == 'EvaluateContent') {
+                    $wdata1 = json_decode($parenttask->data_fields);
+                    // dd($wdata1);
+                    for ($j = 0; $j < count($wdata1->fieldname); $j++) {
+                        # code...
+                        if (array_key_exists($wdata1->fieldname[$j], $data)) {
+                            # code...
+                            // dd($wdata1->fieldname[$j], $data);
+                            if ($wdata1->operators[$j] == 'equal') {
+                                # code...
+                                if ($data[$wdata1->fieldname[$j]] == $wdata1->values[$j]) {
+                                    
+                                    # code...
+                                    // dd($notification);
+                                    $mailsend = Mail::send('email.useraction', ['data' => $notification], function ($message) use($notification, $subject) {
+                                        $message->sender('jakpower@omegawebdemo.com.au');
+                                        $message->subject($subject);
+                                        $message->to(auth()->user()->email);
+                                    });
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            Log::channel('user')->info('Application Created by -> ' . auth()->user()->name . ' ' . auth()->user()->lastname . ' Application Name -> ' . $application->name . ' Current Data -> ' . $data1['data']);
+            dd('Demo purpose only ask if condition match form create or not.');
+            Formdata::create($data1);
+            return redirect()
+                ->route('userapplication.list', $id)
+                ->with('success', 'Form Saved.');
+        }
+        try {
         } catch (\Exception $th) {
             //throw $th;
             //throw $th;

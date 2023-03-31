@@ -11,6 +11,7 @@ use App\Http\Controllers\backend\RoleController;
 use App\Http\Controllers\backend\MultipleroleController;
 use App\Http\Controllers\backend\UserApplicationController;
 use App\Http\Controllers\backend\ImportController;
+use App\Http\Controllers\backend\NotificationController;
 use App\Http\Controllers\backend\AjaxController;
 use App\Http\Controllers\backend\LogController;
 
@@ -46,6 +47,8 @@ Route::resource('users', UserController::class);
 Route::resource('application', ApplicationController::class);
 Route::resource('group', GroupController::class);
 Route::resource('field', FieldController::class);
+Route::resource('notifications', NotificationController::class);
+Route::get('customedit/notifications/{id}', [NotificationController::class, 'custom_edit'])->name('notification.custom.edit');
 Route::resource('role', RoleController::class);
 Route::resource('multiplerole', MultipleroleController::class);
 Route::resource('user-application', UserApplicationController::class);

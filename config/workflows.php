@@ -23,6 +23,8 @@ return [
     |
     */
     'tasks' => [
+        'Start' => the42coders\Workflows\Tasks\Start::class,
+        'Stop' => the42coders\Workflows\Tasks\Stop::class,
         'TextNode' => the42coders\Workflows\Tasks\SendMail::class,
         'Transition' => the42coders\Workflows\Tasks\Execute::class,
         'EvaluateContent' => the42coders\Workflows\Tasks\PregReplace::class,
@@ -80,8 +82,8 @@ return [
     'triggers' => [
 
         'types' => [
-            'Start' => the42coders\Workflows\Triggers\Start::class,
-            'Stop' => the42coders\Workflows\Triggers\Stop::class,
+            // 'Start' => the42coders\Workflows\Triggers\Start::class,
+            // 'Stop' => the42coders\Workflows\Triggers\Stop::class,
         ],
 
         'Observers' => [

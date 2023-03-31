@@ -1,9 +1,12 @@
 <div>
     <div class="title-box">
-        {!! $icon !!} {{ $elementName }}
+        {!! $icon !!} {{ $elementName }} 
     </div>
+
     <div class="box">
-        {{ $element->data_fields['description']['value'] ?? '' }}
+        {{ ($showname->name) ?? '' }} <br><hr>
+        {{ ($showname->description) ?? ''}}
+        {{ ($showname->notification) ?? ''}}
     </div>
     <div class="footer-box" style="text-align: right; padding: 5px;">
         <i class="fas fa-tasks settings-button" onclick="loadContitions('{{ $type }}', {{ isset($element) ? $element->id : 0 }}, this);"></i>

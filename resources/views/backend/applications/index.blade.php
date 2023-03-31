@@ -94,6 +94,7 @@
                                     </form>
                                     <a class="btn btn-sm btn-success"
                                         href="{{ route('workflow.show', $item->id) }}">Workflow</a>
+
                                 </td>
                             </tr>
                         @endforeach
