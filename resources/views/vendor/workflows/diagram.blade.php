@@ -35,6 +35,7 @@
 
 
     </script>
+    <script src="https://kit.fontawesome.com/7129e05817.js" crossorigin="anonymous"></script>
     <style>
         #drawflow {
             background-image: url({{ asset('public/vendor/workflows/img/nature_background.jpeg') }});
