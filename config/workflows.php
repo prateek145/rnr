@@ -25,8 +25,8 @@ return [
     'tasks' => [
         'Start' => the42coders\Workflows\Tasks\Start::class,
         'Stop' => the42coders\Workflows\Tasks\Stop::class,
-        'TextNode' => the42coders\Workflows\Tasks\SendMail::class,
-        'Transition' => the42coders\Workflows\Tasks\Execute::class,
+        // 'TextNode' => the42coders\Workflows\Tasks\SendMail::class,
+        // 'Transition' => the42coders\Workflows\Tasks\Execute::class,
         'EvaluateContent' => the42coders\Workflows\Tasks\PregReplace::class,
         'SendNotification' => the42coders\Workflows\Tasks\HtmlInput::class,
         'UpdateContent' => the42coders\Workflows\Tasks\DomPDF::class,

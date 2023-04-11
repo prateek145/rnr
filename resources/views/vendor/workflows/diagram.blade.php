@@ -64,7 +64,7 @@
             <div class="drag-drawflow" draggable="true" ondragstart="drag(event)" data-node="{{ $taskName }}">
                 {!! $taskClass::$icon !!}<span> {{ $taskName }}</span>
             </div>
-            @if ($taskName == 'Transition')
+            @if ($taskName == 'Stop')
             <h3 class="mt-3">GENRAL</h3>
             @endif
         @endforeach
@@ -76,6 +76,13 @@
             <div class="btn-logs">
                 <i id="log" class="fas fa-binoculars" onclick="loadLogs()"></i>
             </div>
+
+            {{-- @foreach ($tasks as $item)
+            <div style="top: {{$item->pos_x}}px; left: {{$item->pos_y}}px; position: relative;">
+                prateek
+            </div>
+                
+            @endforeach --}}
             <div class="btn-lock">
                 <i id="lock" class="fas fa-lock" onclick="editor.editor_mode='fixed'; changeMode('lock');"></i>
                 <i id="unlock" class="fas fa-lock-open" onclick="editor.editor_mode='edit'; changeMode('unlock');"

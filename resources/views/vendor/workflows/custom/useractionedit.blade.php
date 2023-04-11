@@ -15,7 +15,7 @@
           <div class="d-flex align-items-center justify-content-between mb-4">
             <h6 class="mb-4">SendNotification Content</h6>
             <button type="button" class="btn btn-danger">
-              <a onclick="closeSettings()" style="color:aliceblue">
+              <a href="{{route('workflow.show', $application->id)}}" style="color:aliceblue">
                 <- back</a>
             </button>
           </div>

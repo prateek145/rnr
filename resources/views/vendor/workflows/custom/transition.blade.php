@@ -15,7 +15,7 @@
           <div class="d-flex align-items-center justify-content-between mb-4">
             <h6 class="mb-4">Transition</h6>
             <button type="button" class="btn btn-danger">
-              <a onclick="closeSettings()" style="color:aliceblue">
+              <a href="{{route('workflow.show', $application->id)}}" style="color:aliceblue">
                 <- back</a>
             </button>
           </div>
@@ -24,18 +24,11 @@
             @csrf
 
             <div class="mb-3">
-              <label for="exampleInputEmail1" class="form-label">Name</label>
-              <input type="text" class="form-control" name="name">
-
+              <select class="form-control" name="condition">
+                <option value="success">Success</option>
+                <option value="failure">Failure</option>
+              </select>
             </div>
-
-
-            <div class="mb-3">
-                <label for="exampleInputEmail1" class="form-label">Value</label>
-                <input type="text" class="form-control" name="value" placeholder="Value">
-              </div>
-
-
             <input type="hidden" value="{{ auth()->id() }}" name="userid">
             <input type="hidden" value="{{ $task->id }}" name="taskid">
 

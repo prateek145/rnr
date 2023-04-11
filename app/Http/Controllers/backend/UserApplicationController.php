@@ -14,15 +14,14 @@ use the42coders\Workflows\Workflow;
 use Illuminate\Support\Facades\Log;
 use the42coders\Workflows\Tasks\Task;
 use Illuminate\Support\Facades\Mail;
+use App\Traits\WorkflowTraits;
+
 
 
 class UserApplicationController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    use WorkflowTraits;
+    
     public function index()
     {
         try {
@@ -238,45 +237,48 @@ class UserApplicationController extends Controller
             $tasks = Task::where('workflow_id', $workflow->id)
                 ->latest()
                 ->get();
+            // dd($workflow, $tasks);
+            $this->workflow($tasks);
+            // for ($i = 0; $i < count($tasks); $i++) {
+            //     # code...
+            //     if ($tasks[$i]->name == 'SendNotification') {
+            //         # code...
+            //         $sendmail = false;
+            //         $wdata = json_decode($tasks[$i]->data_fields);
+            //         // dd($data);
+            //         $subject = $wdata->name;
+            //         $notification = $wdata->notification;
 
-            for ($i = 0; $i < count($tasks); $i++) {
-                # code...
-                if ($tasks[$i]->name == 'SendNotification') {
-                    # code...
-                    $sendmail = false;
-                    $wdata = json_decode($tasks[$i]->data_fields);
-                    // dd($data);
-                    $subject = $wdata->name;
-                    $notification = $wdata->notification;
-                }
+
+            //     }
              
-                $parenttask = Task::where('id', $tasks[$i]->parentable_id)->first();
-                // dd($parenttask);
-                if (isset($parenttask->name) && $parenttask->name == 'EvaluateContent') {
-                    $wdata1 = json_decode($parenttask->data_fields);
-                    // dd($wdata1);
-                    for ($j = 0; $j < count($wdata1->fieldname); $j++) {
-                        # code...
-                        if (array_key_exists($wdata1->fieldname[$j], $data)) {
-                            # code...
-                            // dd($wdata1->fieldname[$j], $data);
-                            if ($wdata1->operators[$j] == 'equal') {
-                                # code...
-                                if ($data[$wdata1->fieldname[$j]] == $wdata1->values[$j]) {
+            //     $parenttask = Task::where('id', $tasks[$i]->parentable_id)->first();
+            //     // // dd($parenttask);
+            //     // if (isset($parenttask->name) && $parenttask->name == 'EvaluateContent') {
+            //     //     $wdata1 = json_decode($parenttask->data_fields);
+            //     //     // dd($wdata1);
+            //     //     for ($j = 0; $j < count($wdata1->fieldname); $j++) {
+            //     //         # code...
+            //     //         if (array_key_exists($wdata1->fieldname[$j], $data)) {
+            //     //             # code...
+            //     //             // dd($wdata1->fieldname[$j], $data);
+            //     //             if ($wdata1->operators[$j] == 'equal') {
+            //     //                 # code...
+            //     //                 if ($data[$wdata1->fieldname[$j]] == $wdata1->values[$j]) {
                                     
-                                    # code...
-                                    // dd($notification);
-                                    $mailsend = Mail::send('email.useraction', ['data' => $notification], function ($message) use($notification, $subject) {
-                                        $message->sender('jakpower@omegawebdemo.com.au');
-                                        $message->subject($subject);
-                                        $message->to(auth()->user()->email);
-                                    });
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+            //     //                     # code...
+            //     //                     // dd($notification);
+            //     //                     $mailsend = Mail::send('email.useraction', ['data' => $notification], function ($message) use($notification, $subject) {
+            //     //                         $message->sender('jakpower@omegawebdemo.com.au');
+            //     //                         $message->subject($subject);
+            //     //                         $message->to(auth()->user()->email);
+            //     //                     });
+            //     //                 }
+            //     //             }
+            //     //         }
+            //     //     }
+            //     // }
+            // }
             Log::channel('user')->info('Application Created by -> ' . auth()->user()->name . ' ' . auth()->user()->lastname . ' Application Name -> ' . $application->name . ' Current Data -> ' . $data1['data']);
             dd('Demo purpose only ask if condition match form create or not.');
             Formdata::create($data1);

@@ -14,6 +14,8 @@ use App\Http\Controllers\backend\ImportController;
 use App\Http\Controllers\backend\NotificationController;
 use App\Http\Controllers\backend\AjaxController;
 use App\Http\Controllers\backend\LogController;
+use App\Http\Controllers\backend\CustomWorkflowController;
+// use App\Http\Controllers\backend\Custom;
 
 /*
 |--------------------------------------------------------------------------
@@ -74,3 +76,6 @@ Route::get('logs', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'i
 Route::group(['middleware' => ['auth']], function () {
     \the42coders\Workflows\Workflows::routes();
 });
+
+//Custom Workflow
+Route::resource('custom-workflow',CustomWorkflowController::class );
