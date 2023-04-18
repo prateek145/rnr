@@ -155,7 +155,7 @@ class FieldController extends Controller
             } else {
                 $grouplist = null;
             }
-            // dd($userlist, $grouplist);
+            // dd($userlist, $field);
             return view('backend.field.edit', compact('userlist', 'grouplist', 'field', 'groups', 'selectedgroups', 'users'));
         } catch (\Exception $th) {
             //throw $th;

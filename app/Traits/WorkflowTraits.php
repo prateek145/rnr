@@ -10,7 +10,7 @@ use the42coders\Workflows\Tasks\Task;
 trait WorkflowTraits
 {
     public function workflow($tasks){
-        // dd($tasks);
+        dd($tasks);
         for ($i = 0; $i < count($tasks); $i++) {
                 # code...
                 if ($tasks[$i]->name == 'Stop') {

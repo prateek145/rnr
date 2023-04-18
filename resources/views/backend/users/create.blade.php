@@ -123,7 +123,7 @@
                                 class="form-label @error('department') is-invalid @enderror">Status</label>
                             <select name="status" id="" class="form-control" required>
                                 <option value="">Select Status</option>
-                                <option value="1">Active</option>
+                                <option selected value="1">Active</option>
                                 <option value="0">Inactive</option>
                             </select>
                             @error('group_id')

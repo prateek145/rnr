@@ -32,7 +32,12 @@
 
             <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label">Notification Text</label>
-                <textarea class="form-control" name="notification" id="" cols="30" rows="10"></textarea>
+                <select name="notification" id="" class="form-control">
+                  @foreach ($notifications1 as $item)
+                  <option value="{{$item->name}}">{{$item->name}}</option>
+                      
+                  @endforeach
+                </select>
               </div>
 
 

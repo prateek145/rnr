@@ -256,7 +256,7 @@
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary"
                                                             data-bs-dismiss="modal">Close</button>
-                                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                                        <button type="submit" class="btn btn-primary submitbtn" onclick="disableMe(event)">Submit</button>
                                                     </div>
 
                                                 </div>
@@ -351,6 +351,13 @@
 
 
     <script>
+        function disableMe(event){
+            var button = document.getElementsByClassName('submitbtn')[0];
+            button.className = "d-none";
+            // console.log(button);
+            // event.preventDefault();
+        }
+
         $(function() {
             $("#sortable").sortable({
                 connectWith: '.quadrants',

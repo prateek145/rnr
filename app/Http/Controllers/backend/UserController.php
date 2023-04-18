@@ -135,18 +135,18 @@ class UserController extends Controller
     {
         try {
             //code...
-            // dd($request->all())
+            // dd($request->all());
             $rules = [
                 'email' => 'required',
                 'name' => 'required',
-                'custom_userid' => 'required|unique:users',
+                'custom_userid' => 'required',
 
                 'mobile_no' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
                 'password' => 'required_with:password_confirmation|confirmed',
             ];
 
             $custommessages = [
-                'custom_userid' => 'User Id Is Already Exists.',
+                // 'custom_userid' => 'User Id Is Already Exists.',
             ];
 
             $this->validate($request, $rules, $custommessages);

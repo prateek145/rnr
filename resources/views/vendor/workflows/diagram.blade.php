@@ -77,12 +77,12 @@
                 <i id="log" class="fas fa-binoculars" onclick="loadLogs()"></i>
             </div>
 
-            {{-- @foreach ($tasks as $item)
-            <div style="top: {{$item->pos_x}}px; left: {{$item->pos_y}}px; position: relative;">
+            @foreach ($tasks as $item)
+            <div style="top: 5px; left: 5px; position: relative;">
                 prateek
             </div>
                 
-            @endforeach --}}
+            @endforeach
             <div class="btn-lock">
                 <i id="lock" class="fas fa-lock" onclick="editor.editor_mode='fixed'; changeMode('lock');"></i>
                 <i id="unlock" class="fas fa-lock-open" onclick="editor.editor_mode='edit'; changeMode('unlock');"
@@ -299,6 +299,7 @@
 
     editor.on('nodeMoved', function (node) {
         clearTimeout(nodeDragDelay);
+        // console.log(node, );
         nodeDragDelay = setTimeout(updateNodePosition, 100, node);
     });
 
@@ -311,9 +312,9 @@
     })
 
     editor.on('connectionCreated', function (connection) {
-        console.log(connection);
         $inputNode = editor.getNode(connection.input_id);
         $outputNode = editor.getNode(connection.ouput_id);
+        console.log(connection);
         $.ajax({
             type: "POST",
             url: "{{ route('workflow.addConnection', ['workflow' => $workflow]) }}",
