@@ -104,12 +104,63 @@
                         <div class="col-md-6">
                             <label for="exampleInputEmail1"
                                 class="form-label @error('department') is-invalid @enderror">Groups</label>
-                            <select name="group_id[]" id="" class="form-control" multiple>
+                            {{-- <select name="group_id[]" id="" class="form-control" multiple>
                                 <option value="">Select Group</option>
                                 @foreach ($groups as $item)
                                     <option value="{{ $item->id }}">{{ $item->name }}</option>
                                 @endforeach
-                            </select>
+                            </select> --}}
+                            <div class="col-md-4 showaddbtn">
+                                <button type="button" class="btn btn-primary text-end"
+                                    data-bs-toggle="modal" data-bs-target="#exampleModal"
+                                    data-bs-whatever="@mdo">Add Group</button>
+                            </div>
+                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">New Group</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="mb-3 text-start">
+                                                            <label for="filter">Groups&nbsp;</label><input id="filter" type="text"
+                                                                class="filter form-control" placeholder="Search Groups">
+                                                            <br />
+                
+                                                            <div id="mdi" style="max-height: 10%; overflow:auto;">
+                                                                @foreach ($groups as $item)
+                                                                    <span><input class="talents_idmd-checkbox"
+                                                                            onchange="dragdrop(this.value, this.id);" type="checkbox"
+                                                                            id="{{ $item->name . ' ' . $item->lastname }}"
+                                                                            value="{{ $item->id }}">{{ $item->name . ' ' . $item->lastname }}</span><br>
+                                                                @endforeach
+                                                            </div>
+                
+                
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="mb-3">
+                                                            <label for="users">Selected Groups</label>
+                                                            <select name="group_id[]" id="" class="form-control" multiple>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                {{-- <button type="submit" class="btn btn-primary">Submit</button> --}}
+                                            </div>
+                                        </div>
+                                 
+                                </div>
+                            </div>
                             @error('group_id')
                                 <label id="group_id-error" class="error text-danger"
                                     for="group_id">{{ $message }}</label>
@@ -149,4 +200,41 @@
         </div>
     </div>
     <!-- Recent Sales End -->
+
+    <script>
+        const filterEl = document.querySelector('#filter');
+        const els = Array.from(document.querySelectorAll('#mdi > span'));
+        const labels = els.map(el => el.textContent);
+        const handler = value => {
+            const matching = labels.map((label, idx, arr) => label.toLowerCase().includes(value.toLowerCase()) ? idx :
+                null).filter(el => el != null);
+
+            els.forEach((el, idx) => {
+                if (matching.includes(idx)) {
+                    els[idx].style.display = 'block';
+                } else {
+                    els[idx].style.display = 'none';
+                }
+            });
+        };
+
+        filterEl.addEventListener('keyup', () => handler.call(null, filterEl.value));
+
+        function dragdrop(value, name) {
+            // console.log(value);
+            if (document.getElementById(name).checked) {
+                var userselect = document.getElementsByName('group_id[]')[0];
+                var option = document.createElement('option');
+                option.value = value;
+                option.id = value;
+                option.innerText = name;
+                option.selected = true;
+                userselect.appendChild(option);
+            } else {
+                var userselect = document.getElementsByName('group_id[]')[0];
+                var removeoption = document.getElementById(value);
+                userselect.removeChild(removeoption);
+            }
+        }
+    </script>
 @endsection

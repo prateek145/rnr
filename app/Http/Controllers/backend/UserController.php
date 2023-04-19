@@ -56,13 +56,15 @@ class UserController extends Controller
             $rules = [
                 'email' => 'required',
                 'name' => 'required',
-                'custom_userid' => 'required|unique:users',
+                'custom_userid' => 'required',
                 'mobile_no' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
                 'password' => 'required|min:6',
                 'repassword' => 'required',
             ];
 
-            $custommessages = [];
+            $custommessages = [
+                'mobile_no.regex' => "Please Check Mobile Number"
+            ];
 
             $this->validate($request, $rules, $custommessages);
 

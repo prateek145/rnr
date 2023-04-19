@@ -240,12 +240,12 @@
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="mb-3 text-start">
-                                                    <label for="filter">Users&nbsp;</label><input id="filter" type="text"
-                                                        class="filter form-control" placeholder="Search Username">
+                                                    <label for="filter">Groups&nbsp;</label><input id="filter" type="text"
+                                                        class="filter form-control" placeholder="Search Groups">
                                                     <br />
         
                                                     <div id="mdi" style="max-height: 10%; overflow:auto;">
-                                                        @foreach ($users as $item)
+                                                        @foreach ($groups as $item)
                                                             <span><input class="talents_idmd-checkbox"
                                                                     onchange="dragdrop(this.value, this.id);" type="checkbox"
                                                                     id="{{ $item->name . ' ' . $item->lastname }}"
@@ -258,7 +258,7 @@
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="mb-3">
-                                                    <label for="users">Selected Users</label>
+                                                    <label for="users">Selected Groups</label>
                                                     <select name="groups[]" id="" class="form-control" multiple>
                                                     </select>
                                                 </div>

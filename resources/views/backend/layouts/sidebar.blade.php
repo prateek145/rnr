@@ -140,8 +140,6 @@
                     
                     for ($i = 0; $i < count($application); $i++) {
                         # code...
-                        // dd($application[0]->rolestable()->first()->group_list);
-                        // dd($application[1]->rolestable()->first() == null);
                         if ($application[$i]->rolestable()->first() != 'null' && $application[$i]->rolestable()->first() != null) {
                             echo is_null($application[$i]->rolestable()->first()->group_list);
                             if ($application[$i]->rolestable()->first()->group_list != 'null') {
