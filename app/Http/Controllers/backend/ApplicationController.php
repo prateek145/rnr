@@ -61,13 +61,15 @@ class ApplicationController extends Controller
     {
         try {
             $rules = [
-                'name' => 'required',
+                'name' => 'required|unique:applications',
                 // 'attachments' => 'required|mimes:pdf,jpg,png|min:5|max:2048',
                 'status' => 'required',
                 // 'description' => 'required',
             ];
 
-            $custommessages = [];
+            $custommessages = [
+                'name.unique' => 'Application Name Should be Unique.'
+            ];
 
             $this->validate($request, $rules, $custommessages);
             //code...
@@ -192,7 +194,7 @@ class ApplicationController extends Controller
                 $destination_path = public_path('/application');
                 $request->attachments->move($destination_path, $data['imagename']);
                 // dd($data);
-                $applicaton = Application::find($request->application_id);
+                $application = Application::find($request->application_id);
                 $attachment = Attachments::create($data);
                 Log::channel('custom')->info('Userid -> ' . auth()->user()->custom_userid . ' , Attachment Created by -> ' . auth()->user()->name . ' ' . auth()->user()->lastname . ' Application Name -> ' . $application->name);
                 if ($attachment) {

@@ -5,7 +5,7 @@
         <div class="bg-light text-start rounded p-4">
             <div class="d-flex align-items-center justify-content-between mb-4">
                 <h6 class="mb-0">User Create</h6>
-
+                <a href="{{route('users.index')}}"><button class="btn btn-danger"><-back</button></a> 
             </div>
             <div class="bg-light rounded h-100 p-4">
                 {{-- <h6 class="mb-4">Audit </h6> --}}

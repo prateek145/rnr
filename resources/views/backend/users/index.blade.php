@@ -17,6 +17,7 @@
                             <th scope="col">Name</th>
                             <th scope="col">Email</th>
                             <th scope="col">Status</th>
+                            <th scope="col">Created At</th>
                             <th scope="col">Updated At</th>
                             {{-- <th scope="col">Report Date</th>
                             <th scope="col">Expiry</th> --}}
@@ -40,7 +41,8 @@
                                         In-Active
                                     @endif
                                 </td>
-                                <td>{{ $item->updated_at }}</td>
+                                <td>{{ $item->created_at->toDateString() }}</td>
+                                <td>{{ $item->updated_at->toDateString() }}</td>
                                 {{-- <td>{{ $item->report_date }}</td>
                                 <td>{{ $item->sharewith }}</td> --}}
 

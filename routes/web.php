@@ -35,12 +35,10 @@ Route::get('/', function () {
 Auth::routes();
 
 //after complete backend
-Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
+Route::group(['middleware' => 'auth'], function () {
     //All the routes that belongs to the group goes here
     Route::get('dashboard', function () {});
 });
-//
-
 //backend ROutes
 Route::get('/home', [HomeController::class, 'home'])->name('backend.home');
 Route::get('/user/home', [HomeController::class, 'user_home'])->name('user.backend.home');
@@ -70,6 +68,8 @@ Auth::routes();
 
 //logs functionality
 Route::get('logs', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index']);
+//
+
 
 
 //for workflow

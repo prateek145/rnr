@@ -25,14 +25,14 @@
                                 <div class="mb-3 text-start">
                                     <label for="recipient-name"
                                         class="col-form-label fw-bold @error('name') is-invalid @enderror">Name</label>
-                                    <input type="text" name="name" class="form-control" id="recipient-name">
+                                    <input type="text" name="name" class="form-control" id="recipient-name" required>
                                 </div>
                                 <div class="mb-3 text-start">
                                     <label for="message-text"
                                         class="col-form-label fw-bold text-left @error('status') is-invalid @enderror">Status</label>
                                     <select name="status" id=""
                                         class="form-control @error('status') is-invalid @enderror">
-                                        <option value="0">In Active</option>
+                                        <option value="1">Active</option>
                                     </select>
                                 </div>
 
@@ -53,8 +53,9 @@
                         <tr class="text-dark">
                             <th scope="col">Name</th>
                             <th scope="col">Status</th>
-                            <th scope="col">Updated By</th>
+                            <th scope="col">Created At</th>
                             <th scope="col">Updated At</th>
+                            {{-- <th scope="col">Updated At</th> --}}
                             <th scope="col">Action</th>
                         </tr>
                     </thead>
@@ -73,7 +74,7 @@
                                         In-Active
                                     @endif
                                 </td>
-                                @php
+                                {{-- @php
                                     if ($item->updated_by) {
                                         $user = App\Models\User::find($item->updated_by);
                                         $username = $user->name;
@@ -81,8 +82,9 @@
                                         $username = 'none';
                                     }
                                 @endphp
-                                <td>{{ $username }}</td>
-                                <td>{{ $item->updated_at }}</td>
+                                <td>{{ $username }}</td> --}}
+                                <td>{{ $item->created_at->toDateString() }}</td>
+                                <td>{{ $item->updated_at->toDateString() }}</td>
                                 <td class="d-flex justify-content-betweenx"><a class="btn btn-sm btn-primary"
                                         href="{{ route('application.edit', $item->id) }}">Edit</a>
 

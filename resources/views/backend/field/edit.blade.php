@@ -4,8 +4,9 @@
     <div class="container-fluid pt-4 px-4">
         <div class="bg-light text-start rounded p-4">
             <div class="d-flex align-items-center justify-content-between mb-4">
-                <h6 class="mb-0">Field Details</h6>
-                <a href="{{route('application.edit', $field->application_id)}}"><button class="btn btn-danger"><-back</button></a> 
+                <h6 class="mb-0">Field Edit</h6>
+                <a href="{{ route('application.edit', $field->application_id) }}"><button class="btn btn-danger">
+                        <-back </button></a>
             </div>
             <div class="bg-light rounded h-100 p-4">
                 <div class="row">
@@ -126,23 +127,48 @@
                                                 <label for="">Private</label><br>
                                             </div>
 
-                                            <div class="col-md-2 d-none showaddbtn">
-                                                <button type="button" class="btn btn-primary text-end"
-                                                    data-bs-toggle="modal" data-bs-target="#exampleModal"
-                                                    data-bs-whatever="@mdo">Add Group</button>
+                                        </div>
+                                        <div class="col-md-12 d-none showaddbtn" style="width: 100%">
+
+                                            <div class="d-flex justify-content-between">
+                                                <div class="col-md-6">
+                                                    <button type="button" class="btn btn-primary text-end"
+                                                        data-bs-toggle="modal" data-bs-target="#exampleModalusers"
+                                                        data-bs-whatever="@mdo">Add Users</button>
+
+                                                </div>
+
+                                                <div class="col-md-6">
+                                                    <button type="button" class="btn btn-primary text-end"
+                                                        data-bs-toggle="modal" data-bs-target="#exampleModal"
+                                                        data-bs-whatever="@mdo">Add Groups</button>
+
+                                                </div>
+
                                             </div>
                                         </div>
 
-                                        <div class="d-none groupsname">
-                                            <select id="" class="form-control " multiple disabled>
-                                                @foreach ($selectedgroups as $item)
-                                                    <option selected>
-                                                        {{ $item->name }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-
+                                        <div class="d-none groupsname row">
+                                            <div class="col-md-6">
+                                                <select id="" class="form-control " multiple disabled>
+                                                    @foreach ($selectedusers as $item)
+                                                        <option selected>
+                                                            {{ $item->name }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <select id="" class="form-control " multiple disabled>
+                                                    @foreach ($selectedgroups as $item)
+                                                        <option selected>
+                                                            {{ $item->name }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
                                         </div>
+
 
 
                                     </div>
@@ -161,7 +187,6 @@
                                     <div class="accordion-body changeconfigrations">
 
                                     </div>
-
                                     <div class="showvaluelist d-none">
 
                                         @if (json_decode($field->valuelistvalue) != null)
@@ -188,6 +213,7 @@
                                             value="remove">
 
                                     </div>
+
                                 </div>
                             </div>
                         </div>
@@ -228,55 +254,104 @@
                         </div>
                     </div> --}}
 
-                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal fade" id="exampleModalusers" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
                         <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">New Group</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="mb-3 text-start">
-                                                    <label for="filter">Groups&nbsp;</label><input id="filter" type="text"
-                                                        class="filter form-control" placeholder="Search Groups">
-                                                    <br />
-        
-                                                    <div id="mdi" style="max-height: 10%; overflow:auto;">
-                                                        @foreach ($groups as $item)
-                                                            <span><input class="talents_idmd-checkbox"
-                                                                    onchange="dragdrop(this.value, this.id);" type="checkbox"
-                                                                    id="{{ $item->name . ' ' . $item->lastname }}"
-                                                                    value="{{ $item->id }}">{{ $item->name . ' ' . $item->lastname }}</span><br>
-                                                        @endforeach
-                                                    </div>
-        
-        
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Add Users</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="mb-3 text-start">
+                                                <label for="filter">Users&nbsp;</label><input id="filter"
+                                                    type="text" class="filter form-control"
+                                                    placeholder="Search Users">
+                                                <br />
+
+                                                <div id="mdi" style="max-height: 10%; overflow:auto;">
+                                                    @foreach ($users as $item)
+                                                        <span><input class="talents_idmd-checkbox"
+                                                                onchange="dragdrop1(this.value, this.id);" type="checkbox"
+                                                                id="{{ $item->name . ' ' . $item->lastname }}"
+                                                                value="{{ $item->id }}">{{ $item->name . ' ' . $item->lastname }}</span><br>
+                                                    @endforeach
                                                 </div>
+
+
                                             </div>
-                                            <div class="col-md-6">
-                                                <div class="mb-3">
-                                                    <label for="users">Selected Groups</label>
-                                                    <select name="groups[]" id="" class="form-control" multiple>
-                                                    </select>
-                                                </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label for="users">Selected Users</label>
+                                                <select name="users[]" id="" class="form-control" multiple>
+                                                </select>
                                             </div>
                                         </div>
                                     </div>
-        
-        
-        
-        
-                                    <input type="hidden" value="{{ auth()->id() }}" name="user_id">
-        
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                        {{-- <button type="submit" class="btn btn-primary">Submit</button> --}}
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Close</button>
+                                    {{-- <button type="submit" class="btn btn-primary">Submit</button> --}}
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Add Group</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="mb-3 text-start">
+                                                <label for="filter">Groups&nbsp;</label><input id="filter"
+                                                    type="text" class="filter form-control"
+                                                    placeholder="Search Groups">
+                                                <br />
+
+                                                <div id="mdi" style="max-height: 10%; overflow:auto;">
+                                                    @foreach ($groups as $item)
+                                                        <span><input class="talents_idmd-checkbox"
+                                                                onchange="dragdrop(this.value, this.id);" type="checkbox"
+                                                                id="{{ $item->name . ' ' . $item->lastname }}"
+                                                                value="{{ $item->id }}">{{ $item->name . ' ' . $item->lastname }}</span><br>
+                                                    @endforeach
+                                                </div>
+
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label for="users">Selected Groups</label>
+                                                <select name="groups[]" id="" class="form-control" multiple>
+                                                </select>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                         
+
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Close</button>
+                                    {{-- <button type="submit" class="btn btn-primary">Submit</button> --}}
+                                </div>
+                            </div>
+
                         </div>
                     </div>
 
@@ -289,7 +364,6 @@
     <!-- Recent Sales End -->
 
     <script>
-
         var type = "{{ $field->type }}";
         var currenttype = document.getElementsByName('type')[0];
         // console.log(type, currenttype);
@@ -361,6 +435,7 @@
             if (value == 'date') {
                 var accordion = document.getElementsByClassName('changeconfigrations')[0];
                 accordion.innerText = "";
+                document.getElementsByClassName('showvaluelist')[0].className = 'showvaluelist d-none m-5';
                 // console.log(accordion);
                 var div = document.createElement('div');
                 div.className = 'form-check';
@@ -401,12 +476,15 @@
 
                 accordion.appendChild(div);
                 accordion.appendChild(div1);
+                var accordian3 = document.getElementById('collapseThree');
+                accordian3.classList.add("show");
                 // console.log(input);
             }
 
             if (value == 'attachment') {
                 var accordion = document.getElementsByClassName('changeconfigrations')[0];
                 accordion.innerText = "";
+                document.getElementsByClassName('showvaluelist')[0].className = 'showvaluelist d-none m-5';
                 var div = document.createElement('div');
                 div.className = 'form-check d-flex justify-content-between';
 
@@ -452,6 +530,8 @@
 
                 div.appendChild(select1);
                 accordion.appendChild(div);
+                var accordian3 = document.getElementById('collapseThree');
+                accordian3.classList.add("show");
             }
 
             if (value == 'value_list') {
@@ -558,38 +638,60 @@
                 accordion.appendChild(div3);
                 accordion.appendChild(div4);
                 // console.log(input);
-            } else {
-                document.getElementsByClassName('showvaluelist')[0].className = 'showvaluelist d-none m-5';
+                var accordian3 = document.getElementById('collapseThree');
+                accordian3.classList.add("show");
 
+                var valuelisttype1 = "{{ $field->valuelisttype }}";
+                var valuelisttype2 = document.getElementsByName('valuelisttype');
+                // console.log(valuelisttype1);
+                for (let index = 0; index < valuelisttype2.length; index++) {
+                    console.log(valuelisttype2[index]);
+                    if (valuelisttype2[index].value == valuelisttype1) {
+                        valuelisttype2[index].checked = true;
+                    }
+
+                }
             }
 
             if (value == 'user_group_list') {
                 var accordion = document.getElementsByClassName('changeconfigrations')[0];
                 accordion.innerText = "";
+                document.getElementsByClassName('showvaluelist')[0].className = 'showvaluelist d-none m-5';
+                var accordian3 = document.getElementById('collapseThree');
+                accordian3.classList.add("show");
 
-            } else {
-                var usergrouplist = document.getElementsByClassName('usergrouplist')[0];
-                usergrouplist.className = 'usergrouplist d-none';
             }
 
             if (value == 'images') {
                 var accordion = document.getElementsByClassName('changeconfigrations')[0];
                 accordion.innerText = "";
+                document.getElementsByClassName('showvaluelist')[0].className = 'showvaluelist d-none m-5';
+                var accordian3 = document.getElementById('collapseThree');
+                accordian3.classList.add("show");
             }
 
             if (value == 'ip_address') {
                 var accordion = document.getElementsByClassName('changeconfigrations')[0];
                 accordion.innerText = "";
+                document.getElementsByClassName('showvaluelist')[0].className = 'showvaluelist d-none m-5';
+                var accordian3 = document.getElementById('collapseThree');
+                accordian3.classList.add("show");
             }
 
             if (value == 'number') {
                 var accordion = document.getElementsByClassName('changeconfigrations')[0];
                 accordion.innerText = "";
+                document.getElementsByClassName('showvaluelist')[0].className = 'showvaluelist d-none m-5';
+                var accordian3 = document.getElementById('collapseThree');
+                accordian3.classList.add("show");
             }
 
             if (value == 'text') {
                 var accordion = document.getElementsByClassName('changeconfigrations')[0];
                 accordion.innerText = "";
+                document.getElementsByClassName('showvaluelist')[0].className = 'showvaluelist d-none m-5';
+                var accordian3 = document.getElementById('collapseThree');
+                accordian3.classList.add("show");
             }
 
         }
@@ -834,7 +936,7 @@
             var valuelisttype2 = document.getElementsByName('valuelisttype');
             // console.log(valuelisttype1);
             for (let index = 0; index < valuelisttype2.length; index++) {
-                console.log(valuelisttype2[index]);
+                // console.log(valuelisttype2[index]);
                 if (valuelisttype2[index].value == valuelisttype1) {
                     valuelisttype2[index].checked = true;
                 }
@@ -900,6 +1002,21 @@
             }
         }
 
-
+        function dragdrop1(value, name) {
+            // console.log(value);
+            if (document.getElementById(name).checked) {
+                var userselect = document.getElementsByName('users[]')[0];
+                var option = document.createElement('option');
+                option.value = value;
+                option.id = value;
+                option.innerText = name;
+                option.selected = true;
+                userselect.appendChild(option);
+            } else {
+                var userselect = document.getElementsByName('users[]')[0];
+                var removeoption = document.getElementById(value);
+                userselect.removeChild(removeoption);
+            }
+        }
     </script>
 @endsection

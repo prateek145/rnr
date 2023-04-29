@@ -149,6 +149,7 @@ class UserController extends Controller
 
             $custommessages = [
                 // 'custom_userid' => 'User Id Is Already Exists.',
+                'password.confirmed' => 'Password Does Not Match'
             ];
 
             $this->validate($request, $rules, $custommessages);

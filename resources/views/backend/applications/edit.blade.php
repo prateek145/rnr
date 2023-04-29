@@ -29,7 +29,13 @@
                 </ul>
                 <div class="tab-content" id="pills-tabContent">
                     <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-                        <h6 class="mb-4">Application Edit</h6>
+                        <div class="d-flex align-items-center justify-content-between mb-4">
+                            <h6 class="mb-4">Application Edit</h6>
+                            <a href="{{ route('application.index') }}">
+                                <button type="button" class="btn btn-danger"><-back</button>
+                            </a>
+
+                        </div>
                         <form action="{{ route('application.update', $application->id) }}" class="form-horizontal"
                             enctype="multipart/form-data" method="post">
                             @method('PUT')
@@ -200,10 +206,12 @@
                             <div class="bg-light text-center rounded">
                                 <div class="d-flex align-items-center justify-content-between mb-4">
                                     <h6 class="mb-0">Fields Table</h6>
-                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                        data-bs-target="#exampleModa" data-bs-whatever="@mdo">New</button>
-                                </div>
 
+                                    <a href="{{route('field.show', $application->id)}}">
+                                        <button type="button" class="btn btn-primary">New</button>
+                                    </a>
+                                </div>
+{{-- 
                                 <div class="modal fade" id="exampleModa" tabindex="-1"
                                     aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div class="modal-dialog">
@@ -245,7 +253,7 @@
                                                             class="form-label fw-bold">Status</label>
                                                         <select name="status" id=""
                                                             class="form-control @error('status') is-invalid @enderror">
-                                                            {{-- <option value="1">Active</option> --}}
+
                                                             <option value="0" selected>In-Active</option>
                                                         </select>
                                                     </div>
@@ -265,7 +273,7 @@
                                             </div>
                                         </form>
                                     </div>
-                                </div>
+                                </div> --}}
 
 
                                 <div class="table-responsive">
@@ -277,6 +285,7 @@
                                                 <th scope="col">Status</th>
                                                 <th scope="col">Access</th>
                                                 <th scope="col">Updated By</th>
+                                                <th scope="col">Created At</th>
                                                 <th scope="col">Updated At</th>
                                                 <th scope="col">Action</th>
                                             </tr>
@@ -300,15 +309,18 @@
                                                     <td>{{ $item->access }}</td>
 
                                                     @php
-                                                        if ($item->updated_by) {
-                                                            $udpated = App\Models\User::find($item->user_id);
+                                                        // dd($item->updated_by);
+                                                        if ($item->updated_by != null) {
+                                                            // dd('prateek',$item->updated_by, $item->updated_by == "null");
+                                                            $udpated = App\Models\User::find($item->updated_by);
                                                             $udpatedby = $udpated->name;
                                                         } else {
                                                             $udpatedby = 'none';
                                                         }
                                                     @endphp
-                                                    <td>{{ $udpatedby }}</td>
-                                                    <td>{{ $item->updated_at }}</td>
+                                                    <td>{{ $udpatedby}}</td>
+                                                    <td>{{ $item->created_at->toDateString() }}</td>
+                                                    <td>{{ $item->updated_at->toDateString() }}</td>
                                                     <td class="d-flex justify-content-betweenx">
 
                                                         <a class="btn btn-sm btn-primary"

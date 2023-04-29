@@ -29,7 +29,16 @@ class FieldController extends Controller
      */
     public function create()
     {
-        //
+        //code...
+        $field = Field::find($id);
+        $groups = Group::where(['status' => 1])
+            ->latest()
+            ->get();
+        $users = User::where('status', 1)
+            ->latest()
+            ->get();
+
+        return view('backend.field.create', compact('field', 'groups', 'users'));
     }
 
     /**
@@ -46,21 +55,84 @@ class FieldController extends Controller
             'status' => 'required',
         ];
 
-        $custommessages = [];
+        $custommessages = [
+            'name.required' => "Required"
+        ];
 
         $this->validate($request, $rules, $custommessages);
         try {
             //code...
+            // dd($request->all());
             $data = $request->all();
-            unset($data['_token']);
-            $data['access'] = 'public';
-            // dd($data);
+            unset($data['applicationid']);
+    
             $application = Application::find($request->application_id);
+            // dd($application);
             $applicationfields = Field::where('application_id', $application->id)->get();
+            for ($i=0; $i <count($applicationfields) ; $i++) { 
+                # code...
+                if ($applicationfields[$i]->keyfield == 1) {
+                    # code...
+                    // dd('prateek');
+                    if (isset($request->keyfield) && $request->keyfield == 1) {
+                        # code...
+                        throw new \Exception("Already Assign Key field");
+                    }
+                    
+                }
+            }
+    
+            
+            
+    
+            unset($data['_token']);
+            if ($request->valuelistvalue) {
+                # code...
+                unset($data['valuelistvalue']);
+                $data['valuelistvalue'] = json_encode($request->valuelistvalue);
+            }
+    
+            if ($request->user_list) {
+                # code...
+                unset($data['user_list']);
+                $data['user_list'] = json_encode($request->user_list);
+            }
+    
+            if ($request->group_list) {
+                # code...
+                unset($data['group_list']);
+                $data['group_list'] = json_encode($request->group_list);
+            }
+    
+            // dd($data);
+            if ($request->groups) {
+                # code...
+                if (count($request->groups) > 0) {
+                    // dd($request->groups);
+                    # code...
+                    $data['groups'] = json_encode($request->groups);
+                }
+            }
+    
+            if ($request->users) {
+                # code...
+                if (count($request->users) > 0) {
+                    // dd($request->groups);
+                    # code...
+                    $data['users'] = json_encode($request->users);
+                }
+            }
+    
+            if ($request->access == 'public') {
+                # code...
+                $data['groups'] = null;
+            }
+            // dd($data);
             $data['forder'] = count($applicationfields) + 1;
+            // dd($data);
             $field = Field::create($data);
             Log::channel('custom')->info('Userid -> ' . auth()->user()->custom_userid . ' , Field Created by -> ' . auth()->user()->name . ' ' . auth()->user()->lastname . ' Field Name -> ' . $field->name . ' Field Type -> ' . $field->type);
-
+    
             // dd($field, $field->id);
             if ($application->fields == null) {
                 # code...
@@ -75,9 +147,9 @@ class FieldController extends Controller
                 $application->fields = json_encode($fieldid);
                 $application->save();
             }
-
+    
             return redirect()
-                ->back()
+                ->route('application.edit', $application->id)
                 ->with(['success' => 'Field Created.', 'field' => 'active']);
         } catch (\Exception $th) {
             //throw $th;
@@ -95,7 +167,17 @@ class FieldController extends Controller
      */
     public function show($id)
     {
-        //
+        //code...
+        $field = Field::find($id);
+        $groups = Group::where(['status' => 1])
+            ->latest()
+            ->get();
+        $users = User::where('status', 1)
+            ->latest()
+            ->get();
+        $application = Application::find($id);
+
+        return view('backend.field.create', compact('field', 'groups', 'users', 'application'));
     }
 
     /**
@@ -128,6 +210,19 @@ class FieldController extends Controller
                 }
             }
 
+            $selectedusers = [];
+            if ($field->users != null) {
+                $userids = json_decode($field->users);
+                // dd($userids);
+                # code...
+                for ($i = 0; $i < count($userids); $i++) {
+                    # code...
+                    $user = User::find($userids[$i]);
+                    array_push($selectedusers, $user);
+                }
+            }
+            // dd($selectedusers, $selectedgroups);
+
             if ($field->user_list != null) {
                 # code...
                 $userid = json_decode($field->user_list);
@@ -156,7 +251,7 @@ class FieldController extends Controller
                 $grouplist = null;
             }
             // dd($userlist, $field);
-            return view('backend.field.edit', compact('userlist', 'grouplist', 'field', 'groups', 'selectedgroups', 'users'));
+            return view('backend.field.edit', compact('userlist', 'selectedusers', 'grouplist', 'field', 'groups', 'selectedgroups', 'users'));
         } catch (\Exception $th) {
             //throw $th;
             return redirect()
