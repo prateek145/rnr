@@ -90,7 +90,12 @@
                                 <td class="d-flex justify-content-betweenx">
                                     <a class="btn btn-sm btn-primary" href="{{ route('role.edit', $item->id) }}">Edit</a>
 
-                                    <a class="btn btn-sm btn-danger" href="{{ route('role.edit', $item->id) }}">Delete</a>
+                                    <form action="{{ route('role.destroy', $item->id) }}" method="post">
+                                        @csrf
+                                        @method('DELETE')
+                                        <input class="btn btn-sm btn-danger" onclick="return confirm('Are You Sure ?')"
+                                            type="submit" value="Delete">
+                                    </form>
                                 </td>
                             </tr>
                         @endforeach

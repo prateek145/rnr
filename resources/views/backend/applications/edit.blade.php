@@ -144,8 +144,8 @@
                                                     <td>{{ $item->name }}</td>
                                                     <td>{{ $item->size }}</td>
                                                     <td>{{ $item->type }}</td>
-                                                    <td>{{ $item->created_at }}</td>
-                                                    <td>{{ $item->updated_at }}</td>
+                                                    <td>{{ $item->created_at->toDateString() }}</td>
+                                                    <td>{{ $item->updated_at->toDateString() }}</td>
                                                     <td class="d-flex justify-content-between">
 
                                                         <form action="{{ route('attachment.delete', $item->id) }}"

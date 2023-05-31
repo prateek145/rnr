@@ -5,6 +5,7 @@ use App\Models\backend\Group;
 
 class Helper
 {
+
     public static function findusers($data)
     {
         $array = json_decode($data);
@@ -21,4 +22,6 @@ class Helper
         }
         return $userids;
     }
+
+
 }

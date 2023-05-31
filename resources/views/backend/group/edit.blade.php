@@ -9,7 +9,13 @@
             </div>
 
             <div class="bg-light rounded h-100 p-4">
-                <h6 class="mb-4">Group Edit</h6>
+                <div class="d-flex align-items-center justify-content-between mb-4">
+                    <h6 class="mb-4">Group Edit</h6>
+                    <a href="{{ route('group.index') }}">
+                        <button type="button" class="btn btn-danger"><-back</button>
+                    </a>
+
+                </div>
                 <form action="{{ route('group.update', $group->id) }}" class="form-horizontal" method="post">
                     @method('PUT')
                     @csrf

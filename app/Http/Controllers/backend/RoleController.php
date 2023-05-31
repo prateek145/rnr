@@ -60,16 +60,15 @@ class RoleController extends Controller
             $data['group_list'] = json_encode($request->group_list);
             $application = Application::find($request->application_id);
             // dd($application);
-            Role::create($data);
+            $role1 = Role::create($data);
             Log::channel('custom')->info('Userid -> ' . auth()->user()->custom_userid . ' , Role Created by -> ' . auth()->user()->name . ' ' . auth()->user()->lastname . ' Application Name -> ' . $application->name);
 
             return redirect()
-                ->route('role.index')
+                ->route('role.edit', $role1->id)
                 ->with('success', 'Successfully Roles Created.');
             if ($request->user_list == null && $request->group_list == null) {
                 # code...
                 throw new \Exception('Select Atleast User or Group.');
-            } else {
             }
         } catch (\Exception $th) {
             //throw $th;
@@ -143,6 +142,7 @@ class RoleController extends Controller
             $groups = Group::where('status', 1)
                 ->latest()
                 ->get();
+
             return view('backend.role.edit', compact('selectedgroups', 'selectedusers', 'application', 'applicationrole', 'users', 'groups'));
         } catch (\Exception $th) {
             //throw $th;
@@ -390,6 +390,21 @@ class RoleController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+            //code...
+            // dd($id);
+            $role = Role::find($id);
+            Log::channel('user')->info('Userid ' . auth()->user()->custom_userid . ' , Role Deleted by ' . auth()->user()->name . ' ' . auth()->user()->lastname . ' Role Name -> ' . $role->name);
+            Role::destroy($id);
+            return redirect()
+                ->back()
+                ->with('success', 'Successfully Deleted.');
+            // dd($audit);
+        } catch (\Exception $th) {
+            //throw $th;
+            return redirect()
+                ->back()
+                ->with('error', $th->getMessage());
+        }
     }
 }

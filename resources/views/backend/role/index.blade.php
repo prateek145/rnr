@@ -16,6 +16,7 @@
                             {{-- <th scope="col">Name</th> --}}
                             <th scope="col">Status</th>
                             <th scope="col">Updated By</th>
+                            <th scope="col">Created At</th>
                             <th scope="col">Updated At</th>
                             <th scope="col">Action</th>
                         </tr>
@@ -44,6 +45,7 @@
                                     }
                                 @endphp
                                 <td>{{ $username }}</td>
+                                <td>{{ $item->created_at->toDateString() }}</td>
                                 <td>{{ $item->updated_at->toDateString() }}</td>
                                 <td class="d-flex justify-content-betweenx"><a class="btn btn-sm btn-primary"
                                         href="{{ route('multiplerole.show', $item->id) }}">Assign Role</a>

@@ -34,6 +34,7 @@ return new class extends Migration {
             $table->integer('requireuniquevalue')->default(0);
             $table->integer('keyfield')->default(0);
             $table->longText('groups')->nullable();
+            $table->longText('users')->nullable();
             // $table->string('name')->nullable();
             $table->timestamps();
         });

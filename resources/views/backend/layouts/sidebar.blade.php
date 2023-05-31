@@ -119,7 +119,7 @@
                     <a href="#" class="nav-item nav-link dropdown-toggle " data-bs-toggle="dropdown"><i
                             class="fa fa-exclamation-triangle me-2"></i>Notifications</a>
                     <div class="dropdown-menu bg-transparent border-0">
-                        <a href="{{route('notifications.index')}}" class="dropdown-item">View All</a>
+                        <a href="{{ route('notifications.index') }}" class="dropdown-item">View All</a>
                         {{-- <a href="{{ route('group.create') }}" class="dropdown-item">New</a> --}}
 
                     </div>
@@ -131,7 +131,7 @@
                     $loggedinuser = auth()->id();
                     // dd($userid);
                     $application = App\Models\backend\Application::where('status', 1)
-                        ->latest()
+                        // ->latest()
                         ->get();
                     
                     $userapplication = [];
@@ -140,16 +140,19 @@
                     
                     for ($i = 0; $i < count($application); $i++) {
                         # code...
-                        if ($application[$i]->rolestable()->first() != 'null' && $application[$i]->rolestable()->first() != null) {
-                            echo is_null($application[$i]->rolestable()->first()->group_list);
-                            if ($application[$i]->rolestable()->first()->group_list != 'null') {
-                                # code...
-                                array_push($userid, Helper::findusers($application[$i]->rolestable()->first()->group_list));
-                            }
+                        if ($application[$i]->rolestable()->get() != 'null' && $application[$i]->rolestable()->get() != null) {
+                            $rolestablearray = $application[$i]->rolestable()->get();
                     
-                            if ($application[$i]->rolestable()->first()->user_list != 'null') {
-                                # code...
-                                array_push($userid, json_decode($application[$i]->rolestable()->first()->user_list));
+                            for ($k = 0; $k < count($rolestablearray); $k++) {
+                                if ($rolestablearray[$k]->group_list != 'null') {
+                                    # code...
+                                    array_push($userid, Helper::findusers($rolestablearray[$k]->group_list));
+                                }
+                                // dd(json_decode($rolestablearray[0]->user_list));
+                                if ($rolestablearray[$k]->user_list != 'null') {
+                                    # code...
+                                    array_push($userid, json_decode($rolestablearray[$k]->user_list));
+                                }
                             }
                     
                             $useridfound = 'false';
@@ -166,11 +169,9 @@
                             }
                         }
                     }
-                    $userapplication1 = App\Models\backend\Application::where(['access' => 'public', 'status' => 1])->get();
-                    
-                    // dd($userapplication, $userapplication1);
                     
                 @endphp
+
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-item nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
                             class="fa fa-tasks me-2"></i>Applications</a>
@@ -178,11 +179,6 @@
                         {{-- <a href="{{ route('user-application.index') }}" class="dropdown-item">View All</a> --}}
                         {{-- <a href="{{ route('application.create') }}" class="dropdown-item">New</a> --}}
                         @foreach ($userapplication as $item)
-                            <a class="dropdown-item" href="{{ route('userapplication.list', $item->id) }}">
-                                {{ $item->name }}</a>
-                        @endforeach
-
-                        @foreach ($userapplication1 as $item)
                             <a class="dropdown-item" href="{{ route('userapplication.list', $item->id) }}">
                                 {{ $item->name }}</a>
                         @endforeach

@@ -320,6 +320,7 @@ class FieldController extends Controller
         if ($request->access == 'public') {
             # code...
             $data['groups'] = null;
+            $data['users'] = null;
         }
         // dd($data);
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\backend\Application;
 use App\Models\backend\Group;
+use App\Helpers\Helper;
 
 class HomeController extends Controller
 {
@@ -38,33 +39,53 @@ class HomeController extends Controller
     {
         try {
             //code...
-            // dd('prateek');
-            // $loggedinuser = auth()->id();
-            // // dd($userid);
-            // $application = Application::latest()->get();
-            // $showappication = [];
-            // $userid = [];
 
-            // for ($i = 0; $i < count($application); $i++) {
-            //     if ($application[$i]->groups != null) {
-            //         $groupids = json_decode($application[$i]->groups);
-            //         for ($j = 0; $j < count($groupids); $j++) {
-            //             # code...
-            //             $userids = Group::find($groupids[$j]);
-            //             // dd($userids,);
-            //             $userid = array_merge($userid, json_decode($userids->userids));
-            //         }
-            //         if (in_array($loggedinuser, $userid)) {
-            //             # code...
-            //             array_push($showappication, $application[$i]->id);
-            //         }
-            //     }
-            // }
+            $loggedinuser = auth()->id();
+            // dd($userid);
+            $application = Application::where('status', 1)
+                // ->latest()
+                ->get();
 
-            // $userapplication = Application::where(['id' => $showappication])->get();
-            // $userapplication1 = Application::where(['access' => 'public', 'status' => 1])->get();
+            $userapplication = [];
+            $userid = [];
+            // dd($application[1]->rolestable()->first());
 
-            // dd(array_merge($userapplication, $userapplication1));
+            for ($i = 0; $i < count($application); $i++) {
+                # code...
+                if ($application[$i]->rolestable()->get() != 'null' && $application[$i]->rolestable()->get() != null) {
+
+                    $rolestablearray = $application[$i]->rolestable()->get();
+
+                    for ($k=0; $k < count($rolestablearray) ; $k++) { 
+                        // dd($rolestablearray[$k]->group_list);
+                        if ($rolestablearray[$k]->group_list != 'null') {
+                            # code...
+                            array_push($userid, Helper::findusers($rolestablearray[$k]->group_list));
+                        }
+                        // dd(json_decode($rolestablearray[0]->user_list));
+                        if ($rolestablearray[$k]->user_list != 'null') {
+                            # code...
+                            array_push($userid, json_decode($rolestablearray[$k]->user_list));
+                        }
+                    }
+
+                    $useridfound = 'false';
+                    // dd(in_array(auth()->id(), $userid[2]));
+                    for ($j = 0; $j < count($userid); $j++) {
+                        if (in_array(auth()->id(), $userid[$j])) {
+                            $useridfound = 'true';
+                        }
+                    }
+                    // dd($useridfound);
+
+                    if ($useridfound == 'true') {
+                        array_push($userapplication, $application[$i]);
+                    }
+                }
+            }
+  
+            // dd($userapplication);
+
             return view('backend.backenduserhome');
         } catch (\Exception $th) {
             //throw $th;

@@ -16,12 +16,10 @@ use the42coders\Workflows\Tasks\Task;
 use Illuminate\Support\Facades\Mail;
 use App\Traits\WorkflowTraits;
 
-
-
 class UserApplicationController extends Controller
 {
     use WorkflowTraits;
-    
+
     public function index()
     {
         try {
@@ -38,10 +36,8 @@ class UserApplicationController extends Controller
 
             for ($i = 0; $i < count($application); $i++) {
                 # code...
-                // dd($application[0]->rolestable()->first()->group_list);
-                // dd($application[1]->rolestable()->first() == null);
                 if ($application[$i]->rolestable()->first() != 'null' && $application[$i]->rolestable()->first() != null) {
-                    // echo is_null($application[$i]->rolestable()->first()->group_list);
+                    dd($application[$i]->rolestable()->first()->group_list);
                     if ($application[$i]->rolestable()->first()->group_list != 'null') {
                         # code...
                         array_push($userid, $this->findusers($application[$i]->rolestable()->first()->group_list));
@@ -233,12 +229,12 @@ class UserApplicationController extends Controller
             $data1['application_id'] = $id;
             // dd($data);
             //workflow functionality
-            $workflow = Workflow::where('application_id', $id)->first();
-            $tasks = Task::where('workflow_id', $workflow->id)
-                ->latest()
-                ->get();
+            // $workflow = Workflow::where('application_id', $id)->first();
+            // $tasks = Task::where('workflow_id', $workflow->id)
+            //     ->latest()
+            //     ->get();
             // dd($workflow, $tasks);
-            $this->workflow($tasks);
+            // $this->workflow($tasks);
             // for ($i = 0; $i < count($tasks); $i++) {
             //     # code...
             //     if ($tasks[$i]->name == 'SendNotification') {
@@ -249,9 +245,8 @@ class UserApplicationController extends Controller
             //         $subject = $wdata->name;
             //         $notification = $wdata->notification;
 
-
             //     }
-             
+
             //     $parenttask = Task::where('id', $tasks[$i]->parentable_id)->first();
             //     // // dd($parenttask);
             //     // if (isset($parenttask->name) && $parenttask->name == 'EvaluateContent') {
@@ -265,7 +260,7 @@ class UserApplicationController extends Controller
             //     //             if ($wdata1->operators[$j] == 'equal') {
             //     //                 # code...
             //     //                 if ($data[$wdata1->fieldname[$j]] == $wdata1->values[$j]) {
-                                    
+
             //     //                     # code...
             //     //                     // dd($notification);
             //     //                     $mailsend = Mail::send('email.useraction', ['data' => $notification], function ($message) use($notification, $subject) {
@@ -280,7 +275,7 @@ class UserApplicationController extends Controller
             //     // }
             // }
             Log::channel('user')->info('Application Created by -> ' . auth()->user()->name . ' ' . auth()->user()->lastname . ' Application Name -> ' . $application->name . ' Current Data -> ' . $data1['data']);
-            dd('Demo purpose only ask if condition match form create or not.');
+            // dd('Demo purpose only ask if condition match form create or not.');
             Formdata::create($data1);
             return redirect()
                 ->route('userapplication.list', $id)

@@ -20,6 +20,6 @@ class Application extends Model
 
     public function rolestable()
     {
-        return $this->hasOne(Role::class);
+        return $this->hasMany(Role::class);
     }
 }

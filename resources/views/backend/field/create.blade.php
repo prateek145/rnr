@@ -323,7 +323,7 @@
         }
 
         function fieldtype(value) {
-            // console.log(value);
+
             if (value == 'date') {
                 var accordion = document.getElementsByClassName('changeconfigrations')[0];
                 accordion.innerText = "";

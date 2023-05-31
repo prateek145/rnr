@@ -270,7 +270,7 @@ class UserController extends Controller
         try {
             //code...
             $user = User::find($id);
-            Log::channel('custom')->info('Userid -> ' . auth()->user()->custom_userid . ' , User Edited by -> ' . auth()->user()->name . ' ' . auth()->user()->lastname . ' User Name -> ' . $user->name);
+            Log::channel('custom')->info('Userid -> ' . auth()->user()->custom_userid . ' , User Deleted by -> ' . auth()->user()->name . ' ' . auth()->user()->lastname . ' User Name -> ' . $user->name);
             User::destroy($id);
 
             return redirect()
